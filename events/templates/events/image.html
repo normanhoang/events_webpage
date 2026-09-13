@@ -1,0 +1,6 @@
+{% load static %}
+<div class="event-image">
+  <img class="image-fallback" src="{% static event.fallback_image %}" alt="" width="800" height="600" aria-hidden="true">
+  {% if event.image_url %}<img data-remote-image src="{{ event.image_url }}" alt="" width="800" height="600" loading="lazy" decoding="async" referrerpolicy="no-referrer">{% endif %}
+  <span class="image-caption">{{ event.get_category_display }}</span>
+</div>

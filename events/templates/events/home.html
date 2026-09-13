@@ -1,0 +1,38 @@
+{% extends "events/base.html" %}
+{% block content %}
+<section class="hero">
+  <div><p class="eyebrow">THE CITY IS FULL OF POSSIBILITIES</p><h1>Norman’s NYC Events</h1><p class="hero-deck">A little art. A great night out.<br>Something worth leaving home for.</p><p class="intro">A personal edit of things to do across New York. Pick an interest, find a neighborhood, and make a day of it.</p></div>
+  <div class="city-note" aria-hidden="true"><span>FIVE BOROUGHS.<br>ENDLESS GOOD DAYS.</span><div class="city-lines">NYC</div><span>GO FIND YOUR SOMETHING ↗</span></div>
+</section>
+<nav class="interest-chips" aria-label="Explore interests">
+  <a href="{% querystring category=None page=None %}" {% if not request.GET.category %}aria-current="true"{% endif %}>All interests</a>
+  {% for value, label in categories %}<a href="{% querystring category=value page=None %}" {% if request.GET.category == value %}aria-current="true"{% endif %}>{{ label }}</a>{% endfor %}
+</nav>
+<section id="discover" class="discovery" aria-labelledby="discover-heading">
+  <div class="section-heading"><div><p class="eyebrow">YOUR NEXT GOOD PLAN</p><h2 id="discover-heading">Find something you’ll love</h2></div><p>Local time · New York</p></div>
+  <form method="get" class="filters" action="{% url 'home' %}">
+    {% if form.errors %}<div class="filter-errors" role="alert"><p>Please correct the filters</p>{{ form.non_field_errors }}</div>{% endif %}
+    <div class="filter-grid">{% for field in form %}{% if field.name != 'free' %}<div class="field field-{{ field.name }}">{{ field.label_tag }}{{ field }}{{ field.errors }}</div>{% endif %}{% endfor %}</div>
+    <datalist id="neighborhoods">{% for neighborhood in neighborhoods %}<option value="{{ neighborhood }}">{% endfor %}</datalist>
+    <div class="filter-actions"><label class="checkbox" for="{{ form.free.id_for_label }}">{{ form.free }} Free only</label><span class="filter-help">Budget filters use starting prices in USD.</span><a href="{% url 'home' %}">Clear filters</a><button type="submit">Find events <span aria-hidden="true">→</span></button></div>
+  </form>
+  {% if top_picks %}
+  <section class="top-picks" aria-labelledby="top-picks-heading">
+    <div class="results-heading"><h2 id="top-picks-heading">Top picks for Norman</h2><p>A few especially strong matches</p></div>
+    <div class="event-grid event-grid-featured">
+      {% for occurrence in top_picks %}{% include "events/card.html" with event=occurrence.event %}{% endfor %}
+    </div>
+  </section>
+  {% endif %}
+  <div class="results-heading"><h2>All upcoming events</h2><p>{{ total_count }} upcoming date{{ total_count|pluralize }} · Ordered by date</p></div>
+  <div class="event-grid">
+    {% for occurrence in page_obj %}{% include "events/card.html" with event=occurrence.event %}
+    {% empty %}{% if not top_picks %}<section class="empty-state"><span class="empty-symbol" aria-hidden="true">✳</span><h2>No upcoming events found</h2><p>Try another date or a broader search. More good days out are on their way.</p><a href="/">Clear filters</a></section>{% endif %}{% endfor %}
+  </div>
+  {% if page_obj.has_other_pages %}<nav class="pagination" aria-label="Pagination">
+    {% if page_obj.has_previous %}<a href="{% querystring page=page_obj.previous_page_number %}" rel="prev">← Previous</a>{% endif %}
+    <span aria-current="page">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}<a href="{% querystring page=page_obj.next_page_number %}" rel="next">Next →</a>{% endif %}
+  </nav>{% endif %}
+</section>
+{% endblock %}

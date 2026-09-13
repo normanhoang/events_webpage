@@ -1,0 +1,23 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Norman’s personal edit of NYC events. Discover art, music, food, and good days out, with links to official sources.">
+  <link rel="icon" href="{% static 'events/favicon.svg' %}" type="image/svg+xml">
+  <title>{% block title %}Norman’s NYC Events{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'events/site.css' %}">
+  <script src="{% static 'events/images.js' %}" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="brand" href="{% url 'home' %}" aria-label="Norman’s NYC Events home"><span class="brand-mark" aria-hidden="true">n.</span> Norman<span class="brand-dot">’s</span></a>
+    <span class="header-note">A personal guide to New York</span>
+    <a class="header-link" href="{% url 'home' %}#discover">Find your next outing <span aria-hidden="true">↗</span></a>
+  </header>
+  <main id="main" class="wrap" tabindex="-1">{% block content %}{% endblock %}</main>
+  <footer class="site-footer wrap"><p>Made for curious days in New York.</p><p>Norman’s independent edit. Confirm times, availability, and prices with the official source.</p></footer>
+</body>
+</html>

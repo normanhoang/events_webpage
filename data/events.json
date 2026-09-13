@@ -1,0 +1,553 @@
+[
+  {
+    "title": "Urban Bear NYC Street Fair",
+    "description": "The 18th annual Urban Bear street fair takes over Little West 12th Street with music, vendors, community groups, and a large outdoor bear-community gathering.",
+    "category": "queer",
+    "tags": [
+      "gay events",
+      "queer community",
+      "street fair",
+      "music",
+      "Chelsea"
+    ],
+    "venue": "Little West 12th Street between Washington Street and 10th Avenue",
+    "neighborhood": "Meatpacking District",
+    "borough": "Manhattan",
+    "official_url": "https://www.theurbanbear.com/",
+    "image_url": "https://images.squarespace-cdn.com/content/v1/582e31b0e3df28442375b2f1/1756767718310-412KNOAJXKZBJBYTN4OX/20220918-ET3A8436.jpg",
+    "price_label": "Free street fair",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "A major gay community event in Manhattan with an easygoing outdoor format.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": true,
+    "occurrences": [
+      {
+        "source_key": "urban-bear-street-fair-2026",
+        "starts_at": "2026-09-20T13:00:00-04:00",
+        "ends_at": "2026-09-20T19:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Broadway Flea Market & Grand Auction",
+    "description": "Broadway Cares celebrates the event’s 40th year with more than 60 tables of theatrical collectibles, an autograph and photo area, and live and silent auctions.",
+    "category": "theater",
+    "tags": [
+      "Broadway",
+      "musicals",
+      "collectibles",
+      "Times Square",
+      "fundraiser"
+    ],
+    "venue": "Shubert Alley, West 44th and West 45th Streets, and Times Square",
+    "neighborhood": "Theater District",
+    "borough": "Manhattan",
+    "official_url": "https://broadwaycares.org/pre-event/broadway-flea-market-and-grand-auction-2026/",
+    "image_url": "https://broadwaycares.org/wp-content/uploads/2026/08/FM-2026-hero-1000x528.jpg",
+    "price_label": "Free to browse; auction and merchandise prices vary",
+    "currency": "USD",
+    "fit_reason": "A Broadway-lover’s treasure hunt near Hell’s Kitchen, with memorabilia and performers.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": true,
+    "occurrences": [
+      {
+        "source_key": "broadway-flea-2026",
+        "starts_at": "2026-09-27T10:00:00-04:00",
+        "ends_at": "2026-09-27T19:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "2026 Magical Girls Festival",
+    "description": "An all-ages convention devoted to magical-girl anime and manga, with screenings, vendors, activities, panels, cosplay, voice actors, and a Madoka Magica anniversary spotlight.",
+    "category": "comics",
+    "tags": [
+      "anime",
+      "manga",
+      "cosplay",
+      "voice actors",
+      "convention"
+    ],
+    "venue": "5-2-A at Industry City, 33 35th Street, 2nd Floor",
+    "neighborhood": "Sunset Park",
+    "borough": "Brooklyn",
+    "official_url": "https://www.magicalgirlsfestival.com/",
+    "image_url": "https://images.squarespace-cdn.com/content/v1/686c9bc31f6bca68f123a1fa/10c7ecb8-c327-49f5-9aca-46f7bc6b90dd/Magical+Girls+Festival+Group+Photo.jpg",
+    "price_label": "$20 adults; $10 children 12 and under",
+    "price_min": 10,
+    "price_max": 20,
+    "currency": "USD",
+    "fit_reason": "A focused anime-and-manga day with screenings and fan programming at a modest price.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "magical-girls-festival-2026",
+        "starts_at": "2026-09-26T10:00:00-04:00",
+        "ends_at": "2026-09-26T22:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Give Us Our Daily Dread: Horror Comics",
+    "description": "James Tynion IV, Chris Condon, and Ezra Claytan Daniels discuss the continuing growth of horror comics and their recent graphic novels at the Brooklyn Book Festival.",
+    "category": "comics",
+    "tags": [
+      "comics",
+      "graphic novels",
+      "horror",
+      "authors",
+      "books"
+    ],
+    "venue": "Borough Hall Courtroom, 209 Joralemon Street",
+    "neighborhood": "Downtown Brooklyn",
+    "borough": "Brooklyn",
+    "official_url": "https://brooklynbookfestival.org/event/give-us-our-daily-dread-horror-comics/",
+    "image_url": "",
+    "price_label": "Free",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "A free panel squarely about comics, graphic novels, and genre storytelling.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "daily-dread-horror-comics-2026",
+        "starts_at": "2026-09-27T10:00:00-04:00",
+        "ends_at": null
+      }
+    ]
+  },
+  {
+    "title": "Fall Into Fantasy",
+    "description": "Fantasy authors Sarah Beth Durst, Amélie Wen Zhao, and Shannon J. Spann discuss worldbuilding, magic, romance, power, and family in their recent novels.",
+    "category": "books",
+    "tags": [
+      "fantasy",
+      "fiction",
+      "authors",
+      "worldbuilding",
+      "books"
+    ],
+    "venue": "Brooklyn Law School Student Lounge, 250 Joralemon Street",
+    "neighborhood": "Downtown Brooklyn",
+    "borough": "Brooklyn",
+    "official_url": "https://brooklynbookfestival.org/event/fall-into-fantasy/",
+    "image_url": "",
+    "price_label": "Free",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "A free fiction event devoted to imaginative worlds and the craft behind them.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "fall-into-fantasy-2026",
+        "starts_at": "2026-09-27T12:00:00-04:00",
+        "ends_at": null
+      }
+    ]
+  },
+  {
+    "title": "Call of Games presented by NYU",
+    "description": "Novelists and nonfiction writers discuss how video games and novels influence one another and expand storytelling across both media in this virtual Brooklyn Book Festival program.",
+    "category": "gaming",
+    "tags": [
+      "video games",
+      "fiction",
+      "books",
+      "storytelling",
+      "virtual"
+    ],
+    "venue": "Online via Zoom",
+    "neighborhood": "Online",
+    "borough": "Online",
+    "official_url": "https://brooklynbookfestival.org/event/call-of-games-presented-by-nyu/",
+    "image_url": "",
+    "price_label": "Free; registration required",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "It directly combines video games and fiction, and it is free to join from home.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "call-of-games-2026",
+        "starts_at": "2026-09-20T12:00:00-04:00",
+        "ends_at": null
+      }
+    ]
+  },
+  {
+    "title": "Game-A-Palooza 2026",
+    "description": "IGDA NYC’s curated indie-game showcase opens its locally made and unreleased games to the public, with opportunities to play and meet New York developers.",
+    "category": "gaming",
+    "tags": [
+      "video games",
+      "indie games",
+      "game development",
+      "playable demos",
+      "PS5"
+    ],
+    "venue": "339 Adams Street",
+    "neighborhood": "Downtown Brooklyn",
+    "borough": "Brooklyn",
+    "official_url": "https://gameapalooza.love/",
+    "image_url": "https://res.cloudinary.com/hxn9dbuhd/image/upload/f_auto,c_limit,w_1200,q_auto/v1786241353/organizations/2/8/9/e/289eccd3-f44b-4a5c-b02e-32666b0df56e/d698c9f0-9fd7-4910-9ecd-7c8405c544cc.png",
+    "price_label": "$10 per public session",
+    "price_min": 10,
+    "price_max": 10,
+    "currency": "USD",
+    "fit_reason": "Hands-on access to unreleased games and local developers for only $10.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": true,
+    "occurrences": [
+      {
+        "source_key": "game-a-palooza-2026",
+        "starts_at": "2026-10-07T13:00:00-04:00",
+        "ends_at": "2026-10-07T19:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "New York Comic Con 2026",
+    "description": "NYCC’s 20th-anniversary edition spans comics, anime, manga, science fiction, gaming, authors, cosplay, film, television, exhibitors, and creator appearances.",
+    "category": "comics",
+    "tags": [
+      "comic books",
+      "anime",
+      "manga",
+      "science fiction",
+      "gaming",
+      "cosplay"
+    ],
+    "venue": "Jacob K. Javits Convention Center, 429 11th Avenue",
+    "neighborhood": "Hell's Kitchen",
+    "borough": "Manhattan",
+    "official_url": "https://www.newyorkcomiccon.com/",
+    "image_url": "https://www.newyorkcomiccon.com/content/dam/sitebuilder/rna/new-york-comic-con/2026/img/homepage/hero-celebrate-nycc-20-years.jpg/_jcr_content/renditions/original.image_file.2047.1358.file/890495914/hero-celebrate-nycc-20-years.jpg",
+    "price_label": "Adult single-day tickets $103.98–$114.86 including taxes and fees; availability varies",
+    "price_min": 103.98,
+    "price_max": 114.86,
+    "currency": "USD",
+    "fit_reason": "A nearby convention bringing comics, manga, anime, science fiction, and gaming together.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": true,
+    "occurrences": [
+      {
+        "source_key": "nycc-2026",
+        "starts_at": "2026-10-08T10:00:00-04:00",
+        "ends_at": "2026-10-11T17:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Extreme Codesign for Efficient AI: Algorithms, Software, and Hardware",
+    "description": "Cornell Tech professor Mohamed Abdelfattah presents techniques for reducing AI inference bottlenecks across numerical representation, tensor compression, software, and accelerator hardware.",
+    "category": "tech",
+    "tags": [
+      "artificial intelligence",
+      "LLM inference",
+      "hardware",
+      "software",
+      "lecture"
+    ],
+    "venue": "NYU Tandon School of Engineering, 370 Jay Street, Room 825",
+    "neighborhood": "Downtown Brooklyn",
+    "borough": "Brooklyn",
+    "official_url": "https://engineering.nyu.edu/events/2026/09/17/extreme-codesign-efficient-ai-algorithms-software-and-hardware",
+    "image_url": "https://engineering.nyu.edu/sites/default/files/styles/content_header_default_1x/public/2026-08/Screenshot%202026-08-24%20at%204.14.30%E2%80%AFPM.png?h=9b8fd413&itok=6tf6pJ6O",
+    "price_label": "See official source",
+    "currency": "USD",
+    "fit_reason": "A technical deep dive at the hardware-software boundary of modern AI systems.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "nyu-extreme-codesign-2026",
+        "starts_at": "2026-09-17T11:00:00-04:00",
+        "ends_at": "2026-09-17T12:30:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Maker Faire Coney Island 2026",
+    "description": "A three-day interactive festival of inventions and DIY projects with exhibits, demonstrations, workshops, competitions, robotics, engineering, crafts, and 3D printing.",
+    "category": "tech",
+    "tags": [
+      "maker",
+      "DIY",
+      "electronics",
+      "robotics",
+      "engineering",
+      "3D printing"
+    ],
+    "venue": "Coney Island Amphitheater",
+    "neighborhood": "Coney Island",
+    "borough": "Brooklyn",
+    "official_url": "https://www.eventbrite.com/e/maker-faire-coney-island-2026-tickets-1999335985754",
+    "image_url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1192331931%2F3012479104352%2F1%2Foriginal.20260901-015941?crop=focalpoint&fit=crop&w=940&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.091&fp-y=0.384&s=37a9e9c74e09dd2b469b53343efd7c58",
+    "price_label": "$17.85–$28.52",
+    "price_min": 17.85,
+    "price_max": 28.52,
+    "currency": "USD",
+    "fit_reason": "The strongest hands-on match for maker, electronics, robotics, and prototyping interests.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": true,
+    "occurrences": [
+      {
+        "source_key": "maker-faire-coney-island-2026",
+        "starts_at": "2026-09-19T11:00:00-04:00",
+        "ends_at": "2026-09-21T17:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Climate Resilience in the Age of AI",
+    "description": "A Climate Week NYC panel examines FloodNet sensors, the ClimateIQ risk platform, next-generation flood maps, and privacy, equity, and energy questions around climate technology.",
+    "category": "tech",
+    "tags": [
+      "artificial intelligence",
+      "climate tech",
+      "urban technology",
+      "sensors",
+      "networking"
+    ],
+    "venue": "NYU Tandon MakerSpace, 6 MetroTech Center, Room 116",
+    "neighborhood": "Downtown Brooklyn",
+    "borough": "Brooklyn",
+    "official_url": "https://engineering.nyu.edu/events/2026/09/22/climate-resilience-age-ai",
+    "image_url": "https://engineering.nyu.edu/sites/default/files/styles/content_header_default_1x/public/2026-08/Skyline-New-York-City-sm.jpg?h=2e92d662&itok=BrLZHcYQ",
+    "price_label": "See official source",
+    "currency": "USD",
+    "fit_reason": "It combines AI, NYC infrastructure, sensors, and a MakerSpace setting.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "nyu-climate-resilience-ai-2026",
+        "starts_at": "2026-09-22T15:00:00-04:00",
+        "ends_at": "2026-09-22T16:30:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "From Risk Maps to Resilience Investments: Making Climate AI Decision-Ready",
+    "description": "Researchers and leaders from city government, infrastructure planning, finance, and insurance examine how climate-risk models can guide resilience investment through a demo, workshop, panel, and networking.",
+    "category": "tech",
+    "tags": [
+      "artificial intelligence",
+      "climate risk",
+      "finance",
+      "insurance",
+      "infrastructure"
+    ],
+    "venue": "NYU Tandon CUSP Learning Commons, 370 Jay Street, Floor 13",
+    "neighborhood": "Downtown Brooklyn",
+    "borough": "Brooklyn",
+    "official_url": "https://engineering.nyu.edu/events/2026/09/25/risk-maps-resilience-investments-making-climate-ai-decision-ready",
+    "image_url": "https://engineering.nyu.edu/sites/default/files/styles/content_header_default_1x/public/2026-08/Superstorm_Sandy_on_10-30-2012-sm.jpg?h=ce96b22b&itok=HqBUPlSE",
+    "price_label": "See official source",
+    "currency": "USD",
+    "fit_reason": "A direct connection between quantitative modeling, finance, insurance, and NYC infrastructure decisions.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": true,
+    "occurrences": [
+      {
+        "source_key": "nyu-risk-maps-resilience-2026",
+        "starts_at": "2026-09-25T13:00:00-04:00",
+        "ends_at": "2026-09-25T16:30:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Zumba in the Park",
+    "description": "A free, high-energy full-body workout combining aerobic exercise with Latin-inspired dance moves. All fitness levels are welcome.",
+    "category": "fitness",
+    "tags": [
+      "free",
+      "outdoor fitness",
+      "Zumba",
+      "dance",
+      "beginner-friendly"
+    ],
+    "venue": "Fort Tryon Park volleyball courts by the 190th Street station elevators",
+    "neighborhood": "Hudson Heights",
+    "borough": "Manhattan",
+    "official_url": "https://www.nycgovparks.org/events/2026/09/15/zumba-in-the-park",
+    "image_url": "",
+    "price_label": "Free",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "A free and approachable outdoor class for easing back into a fitness routine.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "zumba-fort-tryon-2026-09-15",
+        "starts_at": "2026-09-15T18:30:00-04:00",
+        "ends_at": "2026-09-15T19:30:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Dance Fitness at West Harlem Piers",
+    "description": "A free Shape Up NYC dance-fitness class in West Harlem with rotating instructors and programming suitable for all fitness levels.",
+    "category": "fitness",
+    "tags": [
+      "free",
+      "dance fitness",
+      "Shape Up NYC",
+      "all levels",
+      "Harlem"
+    ],
+    "venue": "West Harlem Piers Park, 125th Street and Marginal Street",
+    "neighborhood": "West Harlem",
+    "borough": "Manhattan",
+    "official_url": "https://www.nycgovparks.org/events/2026/09/19/dance-fitness1",
+    "image_url": "",
+    "price_label": "Free",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "A nearby, social, no-cost way to restart a fitness routine without a gym commitment.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": true,
+    "occurrences": [
+      {
+        "source_key": "dance-fitness-west-harlem-2026-09-19",
+        "starts_at": "2026-09-19T11:00:00-04:00",
+        "ends_at": "2026-09-19T12:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Jazz in the Park at Ralph Ellison",
+    "description": "Berta Indeed presents Let the Music Play, a free community concert featuring local jazz musicians and vocalists at Ralph Ellison Plaza.",
+    "category": "music",
+    "tags": [
+      "free",
+      "jazz",
+      "community concert",
+      "outdoors",
+      "Harlem"
+    ],
+    "venue": "Ralph Ellison Plaza, Riverside Drive and West 150th Street",
+    "neighborhood": "Hamilton Heights",
+    "borough": "Manhattan",
+    "official_url": "https://www.nycgovparks.org/events/2026/09/20/jazz-in-the-park-at-ralph-ellison",
+    "image_url": null,
+    "price_label": "Free",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "Free community jazz uptown, close enough to feel genuinely easy rather than aspirationally nearby.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": true,
+    "occurrences": [
+      {
+        "source_key": "jazz-ralph-ellison-2026-09-20",
+        "starts_at": "2026-09-20T14:00:00-04:00",
+        "ends_at": "2026-09-20T17:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Harvest Festival at Randall’s Island",
+    "description": "A free outdoor fall festival with a pumpkin patch, seasonal cooking demonstrations, live performances, face painting, and hands-on nature activities.",
+    "category": "outdoors",
+    "tags": [
+      "free",
+      "food",
+      "harvest",
+      "outdoors",
+      "live performances"
+    ],
+    "venue": "Urban Farm and Fields 62/63, Randall's Island Park",
+    "neighborhood": "Randall's Island",
+    "borough": "Manhattan",
+    "official_url": "https://www.nycgovparks.org/events/2026/10/04/harvest-festival",
+    "image_url": null,
+    "price_label": "Free",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "A free fall afternoon combining food programming, light activity, nature, and community entertainment.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "randalls-island-harvest-2026",
+        "starts_at": "2026-10-04T12:00:00-04:00",
+        "ends_at": "2026-10-04T15:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "The 51st Annual Atlantic Antic",
+    "description": "A mile-long neighborhood street festival with hundreds of vendors, food, crafts, shopping, live music, entertainment, and family areas along Atlantic Avenue.",
+    "category": "food",
+    "tags": [
+      "street festival",
+      "food",
+      "live music",
+      "crafts",
+      "community"
+    ],
+    "venue": "Atlantic Avenue from Hicks Street to Fourth Avenue",
+    "neighborhood": "Boerum Hill and Brooklyn Heights",
+    "borough": "Brooklyn",
+    "official_url": "https://www.iloveny.com/thebeat/post/the-51st-annual-atlantic-antic-returns-to-atlantic-avenue-on-sunday-september-27-2026/",
+    "image_url": "",
+    "price_label": "Free admission; food and merchandise vary",
+    "price_min": 0,
+    "currency": "USD",
+    "fit_reason": "A big food-and-culture street festival with live music and plenty to browse.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "atlantic-antic-2026",
+        "starts_at": "2026-09-27T12:00:00-04:00",
+        "ends_at": "2026-09-27T18:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Piano in Bryant Park",
+    "description": "A free outdoor piano program featuring ragtime, stride, and jazz on Bryant Park’s Upper Terrace during lunchtime.",
+    "category": "music",
+    "tags": [
+      "free",
+      "jazz",
+      "ragtime",
+      "piano",
+      "outdoors"
+    ],
+    "venue": "Upper Terrace, Bryant Park",
+    "neighborhood": "Midtown",
+    "borough": "Manhattan",
+    "official_url": "https://www.nycgovparks.org/events/2026/09/24/piano-in-bryant-park",
+    "image_url": null,
+    "price_label": "Free",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "A casual, free daytime jazz option that does not require a full evening commitment.",
+    "verified_at": "2026-09-13T12:00:00-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "piano-bryant-park-2026-09-24",
+        "starts_at": "2026-09-24T12:30:00-04:00",
+        "ends_at": "2026-09-24T14:30:00-04:00"
+      }
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+{% extends "events/base.html" %}
+{% block title %}{{ event.title }} · Norman’s NYC Events{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'home' %}">← Back to the shortlist</a>
+<div class="detail-heading"><p class="eyebrow">{{ event.get_category_display }}{% if event.top_pick %} · TOP PICK{% endif %}</p><h1>{{ event.title }}</h1><p class="location">{{ event.venue }}{% if event.neighborhood %} · {{ event.neighborhood }}{% endif %}{% if event.borough %} · {{ event.borough }}{% endif %}</p></div>
+<div class="detail-layout">
+  <div>{% include "events/image.html" %}<section class="description"><h2>A little more about it</h2>{{ event.description|linebreaks }}</section>
+    {% if event.fit_reason %}<aside class="why"><p class="eyebrow">WHY IT’S ON THE LIST</p><p>{{ event.fit_reason }}</p></aside>{% endif %}
+    {% if event.tags %}<ul class="tags" aria-label="Interests">{% for tag in event.tags %}<li>{{ tag }}</li>{% endfor %}</ul>{% endif %}
+  </div>
+  <aside class="visit-info" aria-label="Plan your visit"><h2>Make a plan</h2><p class="detail-price">{{ event.price_label|default:"See official source for price" }}</p>
+    <h3>Upcoming dates</h3><p class="timezone-note">All times New York</p><ul class="occurrence-list">{% for occurrence in occurrences %}<li><time datetime="{{ occurrence.starts_at|date:'c' }}">{{ occurrence.starts_at|date:"D, M j, Y · g:i A" }}</time>{% if occurrence.ends_at %}<br><span>Until <time datetime="{{ occurrence.ends_at|date:'c' }}">{{ occurrence.ends_at|date:"M j, Y · g:i A" }}</time></span>{% endif %}</li>{% endfor %}</ul>
+    <a class="cta" href="{{ event.official_url }}" rel="noopener noreferrer">Official source &amp; tickets ↗</a>
+    <p class="source-note">Check the organizer’s page for availability and the latest details.</p>
+    {% if event.verified_at %}<p class="verified">Verified {{ event.verified_at|date:"M j, Y" }}</p>{% endif %}
+  </aside>
+</div>
+{% endblock %}

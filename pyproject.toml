@@ -1,0 +1,22 @@
+[project]
+name = "normans-events"
+version = "0.1.0"
+description = "A personalized, public NYC events guide."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "Django==6.1.1",
+  "dj-database-url>=3.0,<4",
+  "psycopg[binary]>=3.2,<4",
+  "whitenoise>=6.9,<7",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.4,<9",
+  "pytest-django>=4.11,<5",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.testing"
+python_files = ["test_*.py"]
+addopts = "-q"
