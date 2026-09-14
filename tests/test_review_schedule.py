@@ -6,7 +6,13 @@ from zoneinfo import ZoneInfo
 import pytest
 
 from automation.publish_update import MAX_EVENTS, VERIFICATION_MAX_AGE_DAYS
-from automation.review_schedule import ROTATION_DAYS, assign_review_phases, review_status
+from automation.review_schedule import (
+    IMMINENT_BUDGET,
+    ROTATION_DAYS,
+    assign_review_phases,
+    review_status,
+    split_worklist,
+)
 
 NOW = datetime(2030, 5, 2, 12, tzinfo=ZoneInfo("America/New_York"))
 KEYS = [f"event-{index}" for index in range(MAX_EVENTS)]
@@ -19,10 +25,18 @@ CEILING = math.ceil(MAX_EVENTS / ROTATION_DAYS)
 CONVERGED_THROUGH = 39
 
 
-def night(verified, offset):
-    """Run one night at NOW+offset: refresh everything due, return (load, oldest age after)."""
+def night(verified, offset, starts=STARTS):
+    """Run one night at NOW+offset, refreshing every label the consumer treats as work.
+
+    The real consumer refreshes both "nightly" and "due"; a harness that refreshed only "due"
+    would model a caller that skips imminent events, so it would measure the wrong thing.
+    """
     day = NOW + timedelta(days=offset)
-    due = [key for key, stamp in verified.items() if review_status(PHASES[key], stamp, STARTS, day) == "due"]
+    due = [
+        key
+        for key, stamp in verified.items()
+        if review_status(PHASES[key], stamp, starts, day) in ("nightly", "due")
+    ]
     for key in due:
         verified[key] = day
     return len(due), max((day - stamp).days for stamp in verified.values())
@@ -40,6 +54,18 @@ def after_outage(missed):
     """State after skipping `missed` consecutive nights from the steady ladder."""
     verified = converge()
     return night(verified, CONVERGED_THROUGH + missed + 1)
+
+
+def entries(count, *, days_until=0, status="nightly", age_days=0, offset=0):
+    return [
+        {
+            "key": f"event-{offset + index}",
+            "status": status,
+            "days_until": days_until + index,
+            "age_days": age_days,
+        }
+        for index in range(count)
+    ]
 
 
 def test_imminent_events_are_reviewed_every_night():
@@ -92,7 +118,9 @@ def test_refreshing_every_due_event_keeps_the_catalog_inside_the_gate():
         # inside the gate — even when the recovery night is the whole catalog. Production safety
         # therefore rests on the run completing: a run cut off by the scheduler writes no prepare
         # state, and the publisher refuses to act at all rather than shipping a stale catalog.
-        assert age < VERIFICATION_MAX_AGE_DAYS
+        # The tightened bound is what the boundary rule actually delivers: carried events sit at
+        # most at gate-2, so loosening the boundary would now fail the suite instead of passing.
+        assert age <= VERIFICATION_MAX_AGE_DAYS - 2
         assert load <= MAX_EVENTS
 
 
@@ -118,6 +146,8 @@ def test_naive_timestamps_are_rejected_rather_than_classified():
     with pytest.raises(ValueError, match="aware datetime"):
         review_status(0, naive, STARTS, NOW)
     with pytest.raises(ValueError, match="aware datetime"):
+        review_status(0, NOW, naive, NOW)
+    with pytest.raises(ValueError, match="aware datetime"):
         review_status(0, NOW, STARTS, naive)
 
 
@@ -142,3 +172,50 @@ def test_the_rotation_slot_follows_new_york_time_not_the_caller_offset():
     starts = nyc + timedelta(days=90)
 
     assert review_status(PHASES[key], stamp, starts, utc) == "due"
+
+
+def test_a_clustered_catalog_cannot_overrun_the_run_budget():
+    # Replaying the shipped catalog reaches 16 due events on its heaviest night — roughly 256s of
+    # verification against the scheduler's 180s interrupt. The budget is what keeps it runnable.
+    heavy = entries(16)
+
+    review, deferred = split_worklist(heavy)
+
+    assert len(review) == IMMINENT_BUDGET
+    assert len(deferred) == len(heavy) - IMMINENT_BUDGET
+
+
+def test_imminent_work_takes_the_budget_before_rotation_work():
+    imminent = entries(4)
+    rotation = entries(20, days_until=20, status="due", age_days=5, offset=200)
+
+    review, deferred = split_worklist(imminent + rotation)
+
+    reviewed = {entry["key"] for entry in review}
+    # Every imminent entry is reviewed, and rotation work fills only the leftover budget.
+    assert {entry["key"] for entry in imminent} <= reviewed
+    assert {entry["key"] for entry in review if entry["status"] == "due"} == {
+        entry["key"] for entry in rotation[: IMMINENT_BUDGET - 4]
+    }
+    assert len(deferred) == len(rotation) - (IMMINENT_BUDGET - 4)
+
+
+def test_rotation_work_yields_entirely_on_a_fully_loaded_night():
+    # If imminent work already exhausts the budget, no rotation work is scheduled at all — it
+    # keeps gate slack and the boundary rule pulls it in later.
+    imminent = entries(IMMINENT_BUDGET)
+    rotation = entries(6, days_until=20, status="due", age_days=5, offset=300)
+
+    review, deferred = split_worklist(imminent + rotation)
+
+    assert all(entry["status"] == "nightly" for entry in review)
+    assert {entry["key"] for entry in deferred} == {entry["key"] for entry in rotation}
+
+
+def test_worklist_orders_imminent_work_by_proximity():
+    shuffled = list(reversed(entries(6)))
+
+    review, _ = split_worklist(shuffled)
+
+    days = [entry["days_until"] for entry in review]
+    assert days == sorted(days)
