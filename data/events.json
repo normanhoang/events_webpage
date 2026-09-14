@@ -21,7 +21,7 @@
     "currency": "USD",
     "fit_reason": "A major gay community event in Manhattan with an easygoing outdoor format.",
     "verified_at": "2026-09-13T21:25:48-04:00",
-    "top_pick": true,
+    "top_pick": false,
     "occurrences": [
       {
         "source_key": "urban-bear-street-fair-2026",
@@ -205,7 +205,7 @@
     "currency": "USD",
     "fit_reason": "Hands-on access to unreleased games and local developers for only $10.",
     "verified_at": "2026-09-13T12:00:00-04:00",
-    "top_pick": true,
+    "top_pick": false,
     "occurrences": [
       {
         "source_key": "game-a-palooza-2026",
@@ -237,7 +237,7 @@
     "currency": "USD",
     "fit_reason": "A nearby convention bringing comics, manga, anime, science fiction, and gaming together.",
     "verified_at": "2026-09-13T12:00:00-04:00",
-    "top_pick": true,
+    "top_pick": false,
     "occurrences": [
       {
         "source_key": "nycc-2026",
@@ -298,7 +298,7 @@
     "currency": "USD",
     "fit_reason": "The strongest hands-on match for maker, electronics, robotics, and prototyping interests.",
     "verified_at": "2026-09-13T21:25:48-04:00",
-    "top_pick": true,
+    "top_pick": false,
     "occurrences": [
       {
         "source_key": "maker-faire-coney-island-2026",
@@ -356,7 +356,7 @@
     "currency": "USD",
     "fit_reason": "A direct connection between quantitative modeling, finance, insurance, and NYC infrastructure decisions.",
     "verified_at": "2026-09-13T12:00:00-04:00",
-    "top_pick": true,
+    "top_pick": false,
     "occurrences": [
       {
         "source_key": "nyu-risk-maps-resilience-2026",
@@ -449,7 +449,7 @@
     "currency": "USD",
     "fit_reason": "Free community jazz uptown, close enough to feel genuinely easy rather than aspirationally nearby.",
     "verified_at": "2026-09-13T21:25:48-04:00",
-    "top_pick": true,
+    "top_pick": false,
     "occurrences": [
       {
         "source_key": "jazz-ralph-ellison-2026-09-20",
@@ -602,7 +602,7 @@
     "currency": "USD",
     "fit_reason": "A substantial cultural celebration in the Bronx with botanical displays, art, music, crafts, and community traditions.",
     "verified_at": "2026-09-13T21:11:49-04:00",
-    "top_pick": true,
+    "top_pick": false,
     "occurrences": [
       {
         "source_key": "nybg-dia-de-los-muertos-2026",

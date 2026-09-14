@@ -33,17 +33,54 @@ def records(count=12):
     ]
 
 
-def test_validate_catalog_accepts_twelve_to_twenty_current_verified_events():
-    from automation.publish_update import validate_catalog
+def test_validate_catalog_enforces_the_configured_bounds():
+    from automation.publish_update import MAX_EVENTS, MIN_EVENTS, TARGET_EVENTS, validate_catalog
 
     now = datetime(2030, 5, 2, tzinfo=ZoneInfo("America/New_York"))
-    validate_catalog(records(12), now=now)
-    validate_catalog(records(20), now=now)
+    validate_catalog(records(MIN_EVENTS), now=now)
+    validate_catalog(records(TARGET_EVENTS), now=now)
+    validate_catalog(records(MAX_EVENTS), now=now)
 
-    with pytest.raises(ValueError, match="12 to 20"):
-        validate_catalog(records(11), now=now)
-    with pytest.raises(ValueError, match="12 to 20"):
-        validate_catalog(records(21), now=now)
+    with pytest.raises(ValueError, match=f"{MIN_EVENTS} to {MAX_EVENTS}"):
+        validate_catalog(records(MIN_EVENTS - 1), now=now)
+    with pytest.raises(ValueError, match=f"{MIN_EVENTS} to {MAX_EVENTS}"):
+        validate_catalog(records(MAX_EVENTS + 1), now=now)
+
+
+def test_catalog_bounds_leave_headroom_above_the_target():
+    from automation.publish_update import MAX_EVENTS, MIN_EVENTS, TARGET_EVENTS
+
+    # Headroom above the target is what lets a festival week grow without evicting events.
+    assert MIN_EVENTS < TARGET_EVENTS < MAX_EVENTS
+
+
+def test_validate_catalog_caps_top_picks_so_the_headline_stays_a_curation():
+    from automation.publish_update import MAX_TOP_PICKS, MIN_EVENTS, validate_catalog
+
+    now = datetime(2030, 5, 2, tzinfo=ZoneInfo("America/New_York"))
+
+    over = records(MIN_EVENTS)
+    for record in over[: MAX_TOP_PICKS + 1]:
+        record["top_pick"] = True
+    with pytest.raises(ValueError, match=f"At most {MAX_TOP_PICKS} events"):
+        validate_catalog(over, now=now)
+
+    allowed = records(MIN_EVENTS)
+    for record in allowed[:MAX_TOP_PICKS]:
+        record["top_pick"] = True
+    validate_catalog(allowed, now=now)
+
+
+def test_validate_catalog_rejects_a_non_boolean_top_pick():
+    from automation.publish_update import MIN_EVENTS, validate_catalog
+
+    now = datetime(2030, 5, 2, tzinfo=ZoneInfo("America/New_York"))
+    catalog = records(MIN_EVENTS)
+    # A truthy string would otherwise count toward the cap while the importer rejects it.
+    catalog[0]["top_pick"] = "false"
+
+    with pytest.raises(ValueError, match="top_pick must be a JSON boolean"):
+        validate_catalog(catalog, now=now)
 
 
 def test_validate_catalog_requires_unique_https_official_sources():

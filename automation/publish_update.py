@@ -13,7 +13,11 @@ from pathlib import Path, PurePosixPath
 from zoneinfo import ZoneInfo
 
 MIN_EVENTS = 12
-MAX_EVENTS = 20
+TARGET_EVENTS = 20
+MAX_EVENTS = 24
+# The headline section is a curation, not a slice of the feed; cap it explicitly.
+MAX_TOP_PICKS = 3
+VERIFICATION_MAX_AGE_DAYS = 7
 NYC = ZoneInfo("America/New_York")
 DEFAULT_HEALTH_URL = "https://events-webpage-gamma.vercel.app/health/"
 POLL_SECONDS = 90
@@ -288,15 +292,26 @@ def publish(
 
 def validate_catalog(records, *, now):
     if not isinstance(records, list) or not MIN_EVENTS <= len(records) <= MAX_EVENTS:
-        raise ValueError("Catalog must contain 12 to 20 events.")
+        raise ValueError(f"Catalog must contain {MIN_EVENTS} to {MAX_EVENTS} events.")
     urls = [record.get("official_url") for record in records]
     if any(not isinstance(url, str) or not url.startswith("https://") for url in urls) or len(set(urls)) != len(urls):
         raise ValueError("Every event must have a unique HTTPS official source URL.")
+    # Require a real boolean, matching the importer, instead of accepting any truthy value.
+    for record in records:
+        if "top_pick" in record and not isinstance(record["top_pick"], bool):
+            raise ValueError("top_pick must be a JSON boolean.")
+    top_picks = [record for record in records if record.get("top_pick")]
+    if len(top_picks) > MAX_TOP_PICKS:
+        raise ValueError(
+            f"At most {MAX_TOP_PICKS} events may be flagged top_pick; found {len(top_picks)}."
+        )
     horizon = now + timedelta(days=30)
     for record in records:
         verified_at = _aware(record.get("verified_at"))
-        if verified_at > now or verified_at < now - timedelta(days=7):
-            raise ValueError("Every event verified_at must be within the previous seven days.")
+        if verified_at > now or verified_at < now - timedelta(days=VERIFICATION_MAX_AGE_DAYS):
+            raise ValueError(
+                f"Every event verified_at must be within the previous {VERIFICATION_MAX_AGE_DAYS} days."
+            )
         occurrences = record.get("occurrences")
         if not isinstance(occurrences, list) or not occurrences:
             raise ValueError("Every event must have at least one occurrence.")
