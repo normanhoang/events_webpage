@@ -73,3 +73,8 @@ def test_every_referenced_ui_icon_exists_on_disk():
         # Production uses CompressedManifestStaticFilesStorage, where a missing entry raises at
         # render time — and base.html includes an icon, so one bad name would 500 every page.
         assert (icon_dir / f"{name}.svg").is_file(), f"missing icon asset: {name}"
+
+    # The existence check above only sees literal names, so a dynamic reference would silently
+    # skip it — and it would also put template data into a CSS url() inside a style attribute.
+    for template in (ROOT / "events/templates/events").glob("*.html"):
+        assert 'icon="{{' not in template.read_text(), template.name

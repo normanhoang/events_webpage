@@ -256,6 +256,35 @@ def test_theater_archive_lock_refuses_a_preexisting_symbolic_link(tmp_path, monk
     assert victim.read_text() == "do not truncate"
 
 
+def test_validate_theater_deals_raises_value_error_never_attribute_error():
+    from automation.theater_deals import validate_theater_deals
+
+    # The publisher only catches ValueError; an AttributeError here would escape and abort the
+    # events publish, so every malformed shape must normalise to ValueError.
+    now = timezone.now()
+    for records in [["not-a-record"], [None], [42], [["nested"]]]:
+        with pytest.raises(ValueError):
+            validate_theater_deals(records, now=now)
+    with pytest.raises(ValueError):
+        validate_theater_deals({"not": "an array"}, now=now)
+
+
+def test_validate_theater_deals_rejects_non_string_timestamps_as_value_error():
+    from automation.theater_deals import validate_theater_deals
+
+    now = timezone.now()
+    record = sample_deal()
+    record["verified_at"] = 1893456000
+    with pytest.raises(ValueError, match="verified_at"):
+        validate_theater_deals([record], now=now)
+
+    record = sample_deal()
+    record["verified_at"] = (timezone.now() - timedelta(minutes=1)).isoformat()
+    record["offers"][0]["eligible_until"] = 1893456000
+    with pytest.raises(ValueError, match="eligible_until"):
+        validate_theater_deals([record], now=now)
+
+
 def test_archive_theater_deals_refuses_malformed_records_instead_of_dropping_them(tmp_path):
     from django.core.management.base import CommandError
 

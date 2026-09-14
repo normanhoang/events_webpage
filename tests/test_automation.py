@@ -242,7 +242,9 @@ def test_publish_returns_no_change_without_committing_or_deploying(tmp_path):
     result = publish(tmp_path, now=datetime(2030, 5, 2, tzinfo=ZoneInfo("America/New_York")))
 
     after = subprocess.run(["git", "rev-parse", "HEAD"], cwd=tmp_path, check=True, capture_output=True, text=True).stdout
-    assert result == {"status": "no_change", "event_count": 12}
+    assert result == {
+        "status": "no_change", "event_count": 12, "theater": {"status": "not_changed"},
+    }
     assert after == before
 
 
@@ -295,7 +297,8 @@ def test_publish_validates_commits_pushes_and_confirms_changed_catalog(tmp_path)
     ).stdout)
     assert result == {
         "status": "deployed", "event_count": 12, "revision": local_revision,
-        "theater": {"status": "updated"},
+        # No theater seed in this fixture, so the honest answer is that theater did not ship.
+        "theater": {"status": "not_changed"},
     }
     assert remote_revision == local_revision
     assert remote_catalog[0]["title"] == "Updated title"
@@ -445,6 +448,110 @@ def test_publish_still_ships_events_when_the_theater_seed_is_stale(tmp_path):
     ).stdout.split()
     assert "data/events.json" in pushed
     assert "data/theater-deals.json" not in pushed
+
+
+def build_publishable_repo(tmp_path, *, theater_seed_text, add_theater=True):
+    """A repo whose events catalog has a pending change and whose theater seed is as given."""
+    import json
+    import subprocess
+
+    remote = tmp_path / "remote.git"
+    root = tmp_path / "work"
+    subprocess.run(["git", "init", "-q", "--bare", str(remote)], check=True)
+    subprocess.run(["git", "init", "-q", "-b", "main", str(root)], check=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=root, check=True)
+    subprocess.run(["git", "config", "user.email", "test@example.org"], cwd=root, check=True)
+    (root / "data").mkdir()
+    catalog = records()
+    (root / "data/events.json").write_text(json.dumps(catalog))
+    if add_theater:
+        (root / "data/theater-deals.json").write_text(theater_seed_text)
+    subprocess.run(["git", "add", "."], cwd=root, check=True)
+    subprocess.run(["git", "commit", "-qm", "initial"], cwd=root, check=True)
+    subprocess.run(["git", "remote", "add", "origin", str(remote)], cwd=root, check=True)
+    subprocess.run(["git", "push", "-qu", "origin", "main"], cwd=root, check=True)
+    catalog[0]["title"] = "Events still ship"
+    (root / "data/events.json").write_text(json.dumps(catalog))
+    return remote, root
+
+
+def publish_here(root):
+    from automation.publish_update import publish
+
+    return publish(
+        root,
+        now=datetime(2030, 5, 2, tzinfo=ZoneInfo("America/New_York")),
+        quality_check=lambda path: None,
+        candidate_check=lambda path, blob: None,
+        deployment_check=lambda revision, count: count == 12,
+    )
+
+
+@pytest.mark.parametrize(
+    "seed",
+    [
+        "{not json",                              # unparseable
+        '{"oops": 1}',                            # valid JSON, not an array
+        "[42]",                                   # array of non-objects
+        '[{"title": "no verified_at"}]',          # missing required field
+        '[{"title": "bad ts", "classification": "broadway", "official_url": "https://example.org/x",'
+        ' "verified_at": 1893456000, "offers": [{"source_key": "a", "label": "L", "price_label": "p",'
+        ' "official_url": "https://example.org/x/a"}]}]',   # non-string timestamp
+    ],
+)
+def test_publish_still_ships_events_when_the_theater_seed_is_malformed(tmp_path, seed):
+    # Reading AND validating must be guarded: load_catalog raises for unparseable/non-array
+    # seeds, and a non-string timestamp raises TypeError, neither of which is a ValueError.
+    remote, root = build_publishable_repo(tmp_path, theater_seed_text=seed)
+
+    result = publish_here(root)
+
+    assert result["status"] == "deployed"
+    assert result["theater"]["status"] == "retained"
+    assert result["theater"]["reason"]
+    pushed = subprocess_names(remote)
+    assert "data/events.json" in pushed
+    assert "data/theater-deals.json" not in pushed
+
+
+def subprocess_names(remote):
+    import subprocess
+
+    return subprocess.run(
+        ["git", "--git-dir", str(remote), "show", "--name-only", "--format=", "main"],
+        check=True, capture_output=True, text=True,
+    ).stdout.split()
+
+
+def test_publish_reports_theater_not_changed_when_no_theater_seed_exists(tmp_path):
+    remote, root = build_publishable_repo(tmp_path, theater_seed_text="[]", add_theater=False)
+
+    result = publish_here(root)
+
+    assert result["status"] == "deployed"
+    # Reporting must reflect what shipped, not merely that validation did not raise.
+    assert result["theater"] == {"status": "not_changed"}
+
+
+def test_publish_reports_theater_updated_when_the_seed_actually_ships(tmp_path):
+    import json
+
+    remote, root = build_publishable_repo(
+        tmp_path, theater_seed_text=json.dumps(theater_records(verified_at="2030-05-01T12:00:00-04:00"))
+    )
+
+    seed_path = root / "data/theater-deals.json"
+    rows = json.loads(seed_path.read_text())
+    rows[0]["title"] = "Renamed show"
+    seed_path.write_text(json.dumps(rows))
+
+    result = publish_here(root)
+
+    assert result["status"] == "deployed"
+    assert result["theater"] == {"status": "updated"}
+    pushed = subprocess_names(remote)
+    assert "data/events.json" in pushed
+    assert "data/theater-deals.json" in pushed
 
 
 def test_cli_prints_machine_readable_result(monkeypatch, capsys):

@@ -223,6 +223,28 @@ def run_candidate_import_check(root, catalog_blob, theater_blob=None):
                 )
 
 
+def read_theater_problem(root, *, now):
+    """Reason the theater seed cannot ship, or None when it is absent or valid.
+
+    Reading and validating share one guard: an unparseable or non-array seed raises from
+    ``load_catalog``, so catching only around validation would still abort the events publish.
+    """
+    path = Path(root) / "data/theater-deals.json"
+    if not path.exists():
+        return None
+    try:
+        validate_theater_deals(load_catalog(path), now=now)
+    except (ValueError, TypeError, AttributeError) as exc:
+        return str(exc)
+    return None
+
+
+def theater_result(problem, *, changed):
+    if problem:
+        return {"status": "retained", "reason": problem}
+    return {"status": "updated" if changed else "not_changed"}
+
+
 def fetch_health(url, *, timeout=10):
     request = urllib.request.Request(
         url,
@@ -256,25 +278,18 @@ def publish(
 ):
     root = Path(root)
     records = load_catalog(root / "data/events.json")
-    theater_path = root / "data/theater-deals.json"
-    theater_records = load_catalog(theater_path) if theater_path.exists() else []
     validate_catalog(records, now=now)
-    # Theater deals publish independently of the events feed: a stale or malformed theater seed
-    # loses only its own changes, so the last verified deals stay live and the events site keeps
-    # updating. The events catalog itself stays fail-closed — a broken events seed ships nothing.
-    theater_problem = None
-    if theater_path.exists() and theater_records:
-        try:
-            validate_theater_deals(theater_records, now=now)
-        except ValueError as exc:
-            theater_problem = str(exc)
+    # Theater deals publish independently of the events feed: any problem reading or validating
+    # the theater seed loses only the theater changes, so the last verified deals stay live and
+    # the events site keeps updating. The events catalog itself stays fail-closed — a broken
+    # events seed still publishes nothing.
+    theater_problem = read_theater_problem(root, now=now)
     paths = changed_paths(root)
     if theater_problem:
         paths = [path for path in paths if not is_theater_path(path)]
     if not paths:
         result = {"status": "no_change", "event_count": len(records)}
-        if theater_problem:
-            result["theater"] = {"status": "retained", "reason": theater_problem}
+        result["theater"] = theater_result(theater_problem, changed=False)
         return result
     assert_only_catalog_changes(paths)
     if _git(root, "branch", "--show-current").stdout.strip() != "main":
@@ -289,7 +304,9 @@ def publish(
     _git(root, "add", "--", *paths)
     staged_paths = _staged_paths(root)
     if not staged_paths:
-        return {"status": "no_change", "event_count": len(records)}
+        result = {"status": "no_change", "event_count": len(records)}
+        result["theater"] = theater_result(theater_problem, changed=False)
+        return result
     if set(staged_paths) != set(paths):
         raise RuntimeError("The candidate Git index changed during publication; refusing to commit.")
     assert_only_catalog_changes(staged_paths)
@@ -349,10 +366,9 @@ def publish(
     )
     status = "deployed" if verifier(revision, len(staged_records)) else "deployment_unconfirmed"
     result = {"status": status, "event_count": len(staged_records), "revision": revision}
-    result["theater"] = (
-        {"status": "retained", "reason": theater_problem}
-        if theater_problem
-        else {"status": "updated"}
+    # Report off what actually shipped, not off "validation happened not to fail".
+    result["theater"] = theater_result(
+        theater_problem, changed="data/theater-deals.json" in candidate_paths
     )
     return result
 
