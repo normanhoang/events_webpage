@@ -267,13 +267,20 @@ def committed_theater_problem(root, tree, paths, *, now):
 
 
 def _rename_sources(root):
-    """Index paths that are rename SOURCES — a move, not a deletion."""
-    output = _git(root, "diff", "--cached", "--name-status", "--find-renames", check=False).stdout
+    """Index paths that are rename SOURCES whose destination is also a theater path.
+
+    NUL-delimited parsing matters: git C-quotes a path containing a tab, newline, quote or
+    backslash, so tab-splitting the line form would build a name that never matches. Requiring
+    the destination to be a theater path keeps a genuine deletion from being excused when git
+    happens to pair it with an unrelated staged addition.
+    """
+    output = _git(root, "diff", "--cached", "--name-status", "-z", "--find-renames", check=False).stdout
+    fields = [part for part in output.split("\0") if part]
     sources = set()
-    for line in output.splitlines():
-        parts = line.split("\t")
-        if len(parts) >= 3 and parts[0].startswith("R"):
-            sources.add(parts[1])
+    for index in range(0, len(fields) - 2, 3):
+        status, source, destination = fields[index], fields[index + 1], fields[index + 2]
+        if status.startswith("R") and is_theater_path(source) and is_theater_path(destination):
+            sources.add(source)
     return sources
 
 
@@ -444,14 +451,13 @@ def publish(
     if not isinstance(staged_records, list):
         raise ValueError("Active event seed must be a JSON array.")
     validate_catalog(staged_records, now=now)
-    theater_blob = None
-    if "data/theater-deals.json" in candidate_paths:
-        theater_blob = _tree_blob(root, candidate_tree, "data/theater-deals.json")
-        try:
-            staged_theater_records = json.loads(theater_blob)
-        except ValueError as exc:
-            raise ValueError("Active theater-deals seed must contain valid JSON.") from exc
-        validate_theater_deals(staged_theater_records, now=now)
+    # committed_theater_problem already parsed and validated this exact blob from this exact
+    # tree when theater survived the checks above, so this only re-reads it for the importer.
+    theater_blob = (
+        _tree_blob(root, candidate_tree, "data/theater-deals.json")
+        if "data/theater-deals.json" in candidate_paths
+        else None
+    )
     if candidate_check:
         candidate_check(root, catalog_blob)
     else:
