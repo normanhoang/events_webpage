@@ -12,6 +12,8 @@ from datetime import datetime, timedelta
 from pathlib import Path, PurePosixPath
 from zoneinfo import ZoneInfo
 
+from automation.theater_deals import validate_theater_deals
+
 MIN_EVENTS = 12
 TARGET_EVENTS = 20
 MAX_EVENTS = 24
@@ -51,8 +53,11 @@ def changed_paths(root):
 def assert_only_catalog_changes(paths):
     for value in paths:
         path = PurePosixPath(value)
-        allowed = path == PurePosixPath("data/events.json") or bool(
-            path.parent == PurePosixPath("data/archive")
+        allowed = path in {
+            PurePosixPath("data/events.json"),
+            PurePosixPath("data/theater-deals.json"),
+        } or bool(
+            path.parent in {PurePosixPath("data/archive"), PurePosixPath("data/theater-archive")}
             and re.fullmatch(r"\d{4}-(0[1-9]|1[0-2])\.json", path.name)
         )
         if ".." in path.parts or not allowed:
@@ -103,6 +108,25 @@ def validate_archive_blob(blob):
     return records
 
 
+def validate_theater_archive_blob(blob):
+    try:
+        records = json.loads(blob)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("Theater archive file must contain valid JSON.") from exc
+    if not isinstance(records, list):
+        raise ValueError("Theater archive file must be a JSON array.")
+    for record in records:
+        if not isinstance(record, dict) or not isinstance(record.get("offers"), list) or not record["offers"]:
+            raise ValueError("Every theater archive record must contain offers.")
+        if not isinstance(record.get("archive_reason"), str) or not record["archive_reason"]:
+            raise ValueError("Every theater archive record must include an archive reason.")
+        _aware(record.get("archived_at"))
+        for offer in record["offers"]:
+            if not isinstance(offer, dict) or not offer.get("source_key"):
+                raise ValueError("Every archived theater offer must include a source key.")
+    return records
+
+
 def _git(root, *args, check=True):
     return subprocess.run(
         ["git", *args], cwd=root, check=check, capture_output=True, text=True
@@ -148,6 +172,7 @@ def run_quality_checks(root):
     commands = [
         [str(python), "manage.py", "migrate", "--noinput"],
         [str(python), "manage.py", "import_events", "--sync"],
+        [str(python), "manage.py", "import_theater_deals", "--sync"],
         [str(python), "-m", "pytest", "-p", "django", "-q"],
         [str(python), "manage.py", "check"],
         [str(python), "manage.py", "makemigrations", "--check", "--dry-run"],
@@ -164,7 +189,7 @@ def run_quality_checks(root):
             )
 
 
-def run_candidate_import_check(root, catalog_blob):
+def run_candidate_import_check(root, catalog_blob, theater_blob=None):
     python = root / ".venv/bin/python"
     if not python.exists():
         python = Path(sys.executable)
@@ -172,23 +197,22 @@ def run_candidate_import_check(root, catalog_blob):
     env["DEBUG"] = "1"
     for key in ("DATABASE_URL", "SECRET_KEY", "ALLOWED_HOSTS", "CSRF_TRUSTED_ORIGINS", "VERCEL", "VERCEL_ENV"):
         env.pop(key, None)
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".json") as handle:
-        handle.write(catalog_blob)
-        handle.flush()
-        completed = subprocess.run(
-            [str(python), "manage.py", "import_events", handle.name, "--sync"],
-            cwd=root,
-            env=env,
-            check=False,
-            capture_output=True,
-            text=True,
-        )
-    if completed.returncode:
-        detail = (completed.stderr or completed.stdout).strip().splitlines()
-        raise RuntimeError(
-            "Candidate catalog failed importer validation: "
-            + (detail[-1] if detail else f"exit {completed.returncode}")
-        )
+    with tempfile.TemporaryDirectory() as directory:
+        event_path = Path(directory) / "events.json"
+        event_path.write_text(catalog_blob, encoding="utf-8")
+        commands = [[str(python), "manage.py", "import_events", str(event_path), "--sync"]]
+        if theater_blob is not None:
+            theater_path = Path(directory) / "theater-deals.json"
+            theater_path.write_text(theater_blob, encoding="utf-8")
+            commands.append([str(python), "manage.py", "import_theater_deals", str(theater_path), "--sync"])
+        for command in commands:
+            completed = subprocess.run(command, cwd=root, env=env, check=False, capture_output=True, text=True)
+            if completed.returncode:
+                detail = (completed.stderr or completed.stdout).strip().splitlines()
+                raise RuntimeError(
+                    "Candidate catalog failed importer validation: "
+                    + (detail[-1] if detail else f"exit {completed.returncode}")
+                )
 
 
 def fetch_health(url, *, timeout=10):
@@ -224,7 +248,11 @@ def publish(
 ):
     root = Path(root)
     records = load_catalog(root / "data/events.json")
+    theater_path = root / "data/theater-deals.json"
+    theater_records = load_catalog(theater_path) if theater_path.exists() else []
     validate_catalog(records, now=now)
+    if theater_path.exists():
+        validate_theater_deals(theater_records, now=now)
     paths = changed_paths(root)
     if not paths:
         return {"status": "no_change", "event_count": len(records)}
@@ -257,10 +285,23 @@ def publish(
     if not isinstance(staged_records, list):
         raise ValueError("Active event seed must be a JSON array.")
     validate_catalog(staged_records, now=now)
-    (candidate_check or run_candidate_import_check)(root, catalog_blob)
+    theater_blob = None
+    if "data/theater-deals.json" in candidate_paths:
+        theater_blob = _tree_blob(root, candidate_tree, "data/theater-deals.json")
+        try:
+            staged_theater_records = json.loads(theater_blob)
+        except ValueError as exc:
+            raise ValueError("Active theater-deals seed must contain valid JSON.") from exc
+        validate_theater_deals(staged_theater_records, now=now)
+    if candidate_check:
+        candidate_check(root, catalog_blob)
+    else:
+        run_candidate_import_check(root, catalog_blob, theater_blob)
     for path in candidate_paths:
         if path.startswith("data/archive/"):
             validate_archive_blob(_tree_blob(root, candidate_tree, path))
+        elif path.startswith("data/theater-archive/"):
+            validate_theater_archive_blob(_tree_blob(root, candidate_tree, path))
 
     if before_commit:
         before_commit()

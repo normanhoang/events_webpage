@@ -132,8 +132,11 @@ def test_validate_catalog_requires_recent_nonfuture_verification():
 def test_publish_guard_allows_only_active_and_archive_json_changes():
     from automation.publish_update import assert_only_catalog_changes
 
-    assert_only_catalog_changes(["data/events.json", "data/archive/2030-05.json"])
-    for path in ["README.md", "events/models.py", "data/archive/../events.json"]:
+    assert_only_catalog_changes([
+        "data/events.json", "data/archive/2030-05.json", "data/theater-deals.json",
+        "data/theater-archive/2030-05.json",
+    ])
+    for path in ["README.md", "events/models.py", "data/archive/../events.json", "data/theater-archive/notes.json"]:
         with pytest.raises(ValueError, match="outside the catalog"):
             assert_only_catalog_changes([path])
 
@@ -219,7 +222,7 @@ def test_quality_checks_migrate_local_schema_before_importing(tmp_path, monkeypa
     publish_update.run_quality_checks(tmp_path)
 
     management_commands = [command[2] for command in calls if len(command) > 2 and command[1] == "manage.py"]
-    assert management_commands[:2] == ["migrate", "import_events"]
+    assert management_commands[:3] == ["migrate", "import_events", "import_theater_deals"]
 
 
 def test_publish_returns_no_change_without_committing_or_deploying(tmp_path):

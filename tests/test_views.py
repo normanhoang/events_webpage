@@ -7,16 +7,28 @@ pytestmark = pytest.mark.django_db
 
 
 def test_health_reports_deployed_revision_and_public_catalog_size(client, make_occurrence, settings):
+    from events.models import TheaterDeal, TheaterOffer
+
     settings.DEPLOYMENT_REVISION = "abc123"
     make_occurrence(title="Visible")
     hidden = make_occurrence(title="Hidden")
     hidden.is_active = False
     hidden.save()
+    deal = TheaterDeal.objects.create(
+        title="Live deal", slug="live-deal", classification="broadway",
+        official_url="https://example.org/live-deal", verified_at=timezone.now(),
+    )
+    TheaterOffer.objects.create(
+        deal=deal, source_key="live", label="Rush", price_label="$30", price_min=30,
+        official_url="https://example.org/live-deal/rush",
+    )
 
     response = client.get("/health/")
 
     assert response.status_code == 200
-    assert response.json() == {"status": "ok", "revision": "abc123", "upcoming_occurrences": 1}
+    assert response.json() == {
+        "status": "ok", "revision": "abc123", "upcoming_occurrences": 1, "active_theater_deals": 1,
+    }
     assert response.headers["Cache-Control"] == "no-store"
 
 

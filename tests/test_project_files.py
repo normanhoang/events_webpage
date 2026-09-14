@@ -37,3 +37,20 @@ def test_the_removed_filter_panel_leaves_no_dead_css():
         assert retired not in css
     assert ".interest-chips" in css
     assert ".free-filter" in css
+
+
+def test_all_category_art_uses_local_lucide_svgs_and_templates_have_no_unicode_icons():
+    image_dir = ROOT / "events/static/events/images"
+    categories = {
+        "art", "books", "comics", "community", "fitness", "food", "gaming", "music",
+        "other", "outdoors", "queer", "tech", "theater",
+    }
+    for category in categories:
+        svg = (image_dir / f"{category}.svg").read_text()
+        assert "lucide" in svg
+        assert "<svg" in svg
+
+    for template in (ROOT / "events/templates/events").glob("*.html"):
+        text = template.read_text()
+        for legacy_glyph in ("↗", "←", "✳"):
+            assert legacy_glyph not in text, template.name

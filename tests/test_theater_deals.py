@@ -1,0 +1,256 @@
+import json
+from datetime import timedelta
+
+import pytest
+from django.core.management import call_command
+from django.utils import timezone
+
+pytestmark = pytest.mark.django_db
+
+
+def sample_deal():
+    return {
+        "title": "Example Musical",
+        "slug": "example-musical",
+        "classification": "broadway",
+        "venue": "Example Theatre",
+        "neighborhood": "Theater District",
+        "official_url": "https://example.org/shows/example-musical",
+        "image_url": "",
+        "verified_at": "2030-01-01T12:00:00-05:00",
+        "offers": [
+            {
+                "source_key": "digital-rush",
+                "label": "Digital rush",
+                "price_label": "$49 before fees",
+                "price_min": "49.00",
+                "price_max": "49.00",
+                "fees_included": False,
+                "restrictions": "Daily at 9 AM; limit two.",
+                "eligible_until": "2030-05-20T23:59:59-04:00",
+                "official_url": "https://example.org/deals/example-musical-rush",
+            },
+            {
+                "source_key": "lottery",
+                "label": "Digital lottery",
+                "price_label": "$45 before fees",
+                "price_min": "45.00",
+                "price_max": "45.00",
+                "fees_included": False,
+                "restrictions": "Enter the day before the performance.",
+                "eligible_until": "2030-05-20T23:59:59-04:00",
+                "official_url": "https://example.org/deals/example-musical-lottery",
+            },
+        ],
+    }
+
+
+def test_import_theater_deals_groups_multiple_offers_under_one_active_show(tmp_path):
+    from events.models import TheaterDeal, TheaterOffer
+
+    path = tmp_path / "theater-deals.json"
+    path.write_text(json.dumps([sample_deal()]))
+
+    call_command("import_theater_deals", str(path), sync=True)
+
+    deal = TheaterDeal.objects.get()
+    assert deal.title == "Example Musical"
+    assert deal.classification == TheaterDeal.Classification.BROADWAY
+    assert deal.is_active is True
+    assert list(deal.offers.order_by("price_min", "source_key").values_list("source_key", flat=True)) == [
+        "lottery", "digital-rush"
+    ]
+    assert TheaterOffer.objects.filter(deal=deal, is_active=True).count() == 2
+
+
+def test_import_theater_deals_accepts_unknown_fee_status(tmp_path):
+    path = tmp_path / "theater-deals.json"
+    record = sample_deal()
+    record["offers"][0]["fees_included"] = None
+    path.write_text(json.dumps([record]))
+
+    call_command("import_theater_deals", str(path), sync=True)
+
+    from events.models import TheaterOffer
+    assert TheaterOffer.objects.get(source_key="digital-rush").fees_included is None
+
+
+def test_import_theater_deals_rejects_more_than_fifty_active_shows(tmp_path):
+    from django.core.management.base import CommandError
+
+    path = tmp_path / "theater-deals.json"
+    records = []
+    for index in range(51):
+        record = sample_deal()
+        record["title"] = f"Show {index}"
+        record["official_url"] = f"https://example.org/shows/{index}"
+        record["offers"][0]["official_url"] = f"https://example.org/deals/{index}-rush"
+        record["offers"][1]["official_url"] = f"https://example.org/deals/{index}-lottery"
+        records.append(record)
+    path.write_text(json.dumps(records))
+
+    with pytest.raises(CommandError, match="at most 50"):
+        call_command("import_theater_deals", str(path), sync=True)
+
+
+def test_theater_sync_deactivates_missing_deals_without_touching_regular_events(tmp_path, make_occurrence):
+    from events.models import TheaterDeal, TheaterOffer
+
+    regular = make_occurrence(title="Ordinary event")
+    path = tmp_path / "theater-deals.json"
+    path.write_text(json.dumps([sample_deal()]))
+    call_command("import_theater_deals", str(path), sync=True)
+
+    path.write_text("[]")
+    call_command("import_theater_deals", str(path), sync=True)
+
+    deal = TheaterDeal.objects.get()
+    assert deal.is_active is False
+    assert TheaterOffer.objects.get(deal=deal, source_key="lottery").is_active is False
+    regular.event.refresh_from_db()
+    regular.refresh_from_db()
+    assert regular.event.is_active is True
+    assert regular.is_active is True
+
+
+def test_active_deal_records_exclude_expired_offers_but_preserve_history():
+    from events.models import TheaterDeal, TheaterOffer
+
+    deal = TheaterDeal.objects.create(
+        title="Current production", slug="current-production", classification="off_broadway",
+        official_url="https://example.org/current", verified_at=timezone.now(),
+    )
+    expired = TheaterOffer.objects.create(
+        deal=deal, source_key="expired", label="Expired rush", price_label="$30", price_min=30,
+        official_url="https://example.org/current/expired",
+        eligible_until=timezone.now() - timedelta(minutes=1),
+    )
+    live = TheaterOffer.objects.create(
+        deal=deal, source_key="live", label="Live rush", price_label="$30", price_min=30,
+        official_url="https://example.org/current/live",
+        eligible_until=timezone.now() + timedelta(days=1),
+    )
+
+    assert list(TheaterOffer.objects.active()) == [live]
+    assert TheaterOffer.objects.filter(pk=expired.pk).exists()
+
+
+def make_deal(*, title, classification, verified_at=None, price=49, offer_label="Digital rush"):
+    from events.models import TheaterDeal, TheaterOffer
+
+    slug = title.lower().replace(" ", "-")
+    deal = TheaterDeal.objects.create(
+        title=title, slug=slug, classification=classification,
+        official_url=f"https://example.org/shows/{slug}", verified_at=verified_at or timezone.now(),
+        venue="Example Theatre", neighborhood="Theater District",
+    )
+    TheaterOffer.objects.create(
+        deal=deal, source_key="main", label=offer_label, price_label=f"${price}", price_min=price,
+        official_url=f"https://example.org/deals/{slug}", eligible_until=timezone.now() + timedelta(days=2),
+    )
+    return deal
+
+
+def test_theater_deals_page_groups_offers_by_show_and_prioritizes_classifications(client):
+    broadway = make_deal(title="Broadway First", classification="broadway", price=49)
+    off_broadway = make_deal(title="Off Broadway Second", classification="off_broadway", price=39)
+    other = make_deal(title="Opera Third", classification="other", price=25)
+
+    response = client.get("/theater-deals/")
+
+    assert response.status_code == 200
+    body = response.content.decode()
+    assert body.index(broadway.title) < body.index(off_broadway.title) < body.index(other.title)
+    assert "Theater deals" in body
+    assert "All theater" in body
+    assert "Broadway" in body
+    assert "Off-Broadway" in body
+    assert "Other NYC theater" in body
+    assert "Last checked" in body
+    assert "Digital rush" in body
+    assert 'href="?type=off_broadway"' in body
+    assert 'href="?type=other"' in body
+
+
+def test_theater_deals_page_type_bubbles_filter_shows_and_retired_params_do_not_propagate(client):
+    make_deal(title="Broadway First", classification="broadway")
+    off_broadway = make_deal(title="Off Broadway Second", classification="off_broadway")
+
+    response = client.get("/theater-deals/", {"type": "off_broadway", "q": "stale"})
+
+    assert response.status_code == 200
+    assert list(response.context["deals"]) == [off_broadway]
+    body = response.content.decode()
+    assert "Broadway First" not in body
+    assert "Off Broadway Second" in body
+    assert "q=stale" not in body
+    assert 'aria-current="true"' in body
+
+
+def test_theater_deals_page_hides_shows_without_live_offers(client):
+    from events.models import TheaterOffer
+
+    stale = make_deal(title="Stale Deal", classification="broadway")
+    TheaterOffer.objects.filter(deal=stale).update(eligible_until=timezone.now() - timedelta(seconds=1))
+
+    response = client.get("/theater-deals/")
+
+    assert response.status_code == 200
+    assert "Stale Deal" not in response.content.decode()
+    assert "No verified theater deals right now" in response.content.decode()
+
+
+def test_theater_deals_page_hides_unverified_open_ended_offers(client):
+    stale = make_deal(
+        title="Stale verification", classification="broadway",
+        verified_at=timezone.now() - timedelta(days=8),
+    )
+    assert stale.offers.get().eligible_until is not None
+    stale.offers.update(eligible_until=None)
+
+    response = client.get("/theater-deals/")
+
+    assert response.status_code == 200
+    assert "Stale verification" not in response.content.decode()
+
+
+def test_archive_theater_deals_removes_expired_offers_and_preserves_monthly_history(tmp_path):
+    archive_dir = tmp_path / "theater-archive"
+    active_path = tmp_path / "theater-deals.json"
+    record = sample_deal()
+    record["offers"][0]["eligible_until"] = "2030-05-01T23:59:59-04:00"
+    record["offers"][1]["eligible_until"] = "2030-05-03T23:59:59-04:00"
+    active_path.write_text(json.dumps([record]))
+
+    call_command(
+        "archive_theater_deals", active_path=str(active_path), archive_dir=str(archive_dir),
+        now="2030-05-02T12:00:00-04:00",
+    )
+
+    active = json.loads(active_path.read_text())
+    archive = json.loads((archive_dir / "2030-05.json").read_text())
+    assert [offer["source_key"] for offer in active[0]["offers"]] == ["lottery"]
+    assert archive[0]["title"] == "Example Musical"
+    assert archive[0]["archive_reason"] == "expired"
+    assert [offer["source_key"] for offer in archive[0]["offers"]] == ["digital-rush"]
+
+
+def test_theater_archive_lock_refuses_a_preexisting_symbolic_link(tmp_path, monkeypatch):
+    from events.management.commands.archive_events import archive_lock_path
+
+    runtime = tmp_path / "runtime"
+    monkeypatch.setenv("XDG_RUNTIME_DIR", str(runtime))
+    active_path = tmp_path / "theater-deals.json"
+    active_path.write_text(json.dumps([sample_deal()]))
+    victim = tmp_path / "victim.txt"
+    victim.write_text("do not truncate")
+    lock_path = archive_lock_path(active_path)
+    lock_path.symlink_to(victim)
+
+    with pytest.raises(OSError):
+        call_command(
+            "archive_theater_deals", active_path=str(active_path), archive_dir=str(tmp_path / "archive"),
+            now="2030-05-02T12:00:00-04:00",
+        )
+
+    assert victim.read_text() == "do not truncate"

@@ -1,1 +1,2 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><path fill="#dce4ce" d="M0 0h800v600H0z"/><g fill="#4d6d51"><circle cx="570" cy="150" r="65" fill="#efbe66"/><path d="M0 470 240 180 460 470z"/><path d="m300 480 260-270 240 270z" fill="#8aa278"/><path d="M0 490q400-130 800 0v110H0z" fill="#b6c99d"/></g></svg>
+<!-- lucide:trees -->
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path fill="#344d39" d="M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10a3 3 0 0 1 6 0m-3 6v6m6-3v3"/><path fill="#344d39" d="M12 19h8.3a1 1 0 0 0 .7-1.7L18 14h.3a1 1 0 0 0 .7-1.7L16 9h.2a1 1 0 0 0 .8-1.7L13 3l-1.4 1.5"/></g></svg>
