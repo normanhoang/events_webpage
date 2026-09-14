@@ -20,3 +20,6 @@ dev = [
 DJANGO_SETTINGS_MODULE = "config.testing"
 python_files = ["test_*.py"]
 addopts = "-q"
+
+[tool.vercel.scripts]
+build = "python manage.py migrate --noinput && python manage.py import_events --sync"

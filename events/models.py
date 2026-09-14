@@ -38,6 +38,7 @@ class Event(models.Model):
     fit_reason = models.TextField(blank=True)
     verified_at = models.DateTimeField(null=True, blank=True)
     top_pick = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -79,7 +80,9 @@ class Event(models.Model):
 class OccurrenceQuerySet(models.QuerySet):
     def upcoming(self, at=None):
         at = at or timezone.now()
-        return self.filter(models.Q(ends_at__gt=at) | models.Q(ends_at__isnull=True, starts_at__gte=at))
+        return self.filter(is_active=True, event__is_active=True).filter(
+            models.Q(ends_at__gt=at) | models.Q(ends_at__isnull=True, starts_at__gte=at)
+        )
 
 
 class Occurrence(models.Model):
@@ -89,6 +92,7 @@ class Occurrence(models.Model):
     source_key = models.CharField(max_length=240)
     starts_at = models.DateTimeField(db_index=True)
     ends_at = models.DateTimeField(null=True, blank=True, db_index=True)
+    is_active = models.BooleanField(default=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -12,7 +12,7 @@ class OccurrenceInline(admin.TabularInline):
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     list_display = ("title", "category", "neighborhood", "borough", "top_pick", "verified_at", "updated_at")
-    list_filter = ("category", "borough", "top_pick", "verified_at")
+    list_filter = ("category", "borough", "top_pick", "is_active", "verified_at")
     search_fields = ("title", "official_url", "venue", "neighborhood", "description")
     prepopulated_fields = {"slug": ("title",)}
     readonly_fields = ("created_at", "updated_at")

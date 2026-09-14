@@ -5,6 +5,7 @@ import dj_database_url
 from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+DEPLOYMENT_REVISION = os.environ.get("VERCEL_GIT_COMMIT_SHA", "local")
 DEBUG = os.environ.get("DEBUG", "0").lower() in {"1", "true", "yes"}
 SECRET_KEY = os.environ.get("SECRET_KEY", "local-development-only-key-do-not-use-in-production" if DEBUG else "")
 ALLOWED_HOSTS = [host.strip() for host in os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1" if DEBUG else "").split(",") if host.strip()]

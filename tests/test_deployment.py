@@ -82,3 +82,12 @@ def test_static_and_vercel_configuration_are_explicit():
 
     config = json.loads((ROOT / "vercel.json").read_text())
     assert config["functions"]["config/wsgi.py"]["maxDuration"] == 30
+
+
+def test_vercel_build_synchronizes_schema_and_active_seed():
+    import tomllib
+
+    config = tomllib.loads((ROOT / "pyproject.toml").read_text())
+    assert config["tool"]["vercel"]["scripts"]["build"] == (
+        "python manage.py migrate --noinput && python manage.py import_events --sync"
+    )

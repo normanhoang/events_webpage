@@ -2,14 +2,26 @@ import re
 from datetime import datetime, time, timedelta
 
 from django.core.paginator import Paginator
+from django.conf import settings
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.views.decorators.http import require_safe
 
 from .forms import EventFilters
 from .models import Event, Occurrence
+
+
+@require_safe
+def health(request):
+    response = JsonResponse({
+        "status": "ok",
+        "revision": settings.DEPLOYMENT_REVISION,
+        "upcoming_occurrences": Occurrence.objects.upcoming().count(),
+    })
+    response["Cache-Control"] = "no-store"
+    return response
 
 
 def filtered_occurrences(occurrences, data):

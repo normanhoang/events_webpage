@@ -35,6 +35,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("path", nargs="?", default=str(settings.BASE_DIR / "data/events.json"))
+        parser.add_argument("--sync", action="store_true", help="Deactivate records missing from this active seed.")
 
     @transaction.atomic
     def handle(self, *args, **options):
@@ -44,11 +45,20 @@ class Command(BaseCommand):
             raise CommandError(f"Cannot read events JSON: {exc}") from exc
         if not isinstance(records, list):
             raise CommandError("Expected a JSON array of event objects.")
+        active_urls = []
+        active_occurrence_ids = []
         for index, record in enumerate(records, 1):
             try:
-                self.import_record(record)
+                event, occurrence_ids = self.import_record(record)
+                active_urls.append(event.official_url)
+                active_occurrence_ids.extend(occurrence_ids)
             except (ValidationError, ValueError, TypeError, KeyError, IntegrityError) as exc:
                 raise CommandError(f"Invalid record {index}: {exc}") from exc
+        if options["sync"]:
+            Event.objects.exclude(official_url__in=active_urls).update(is_active=False)
+            Event.objects.filter(official_url__in=active_urls).update(is_active=True)
+            Occurrence.objects.exclude(pk__in=active_occurrence_ids).update(is_active=False)
+            Occurrence.objects.filter(pk__in=active_occurrence_ids).update(is_active=True)
         self.stdout.write(self.style.SUCCESS(f"Imported {len(records)} events. Existing sources updated; no records deleted."))
 
     def import_record(self, record):
@@ -83,8 +93,10 @@ class Command(BaseCommand):
             event = Event(official_url=url, slug=f"{slugify(fields['title'])[:230] or 'event'}-{suffix}")
         for key, value in fields.items():
             setattr(event, key, value)
+        event.is_active = True
         event.full_clean()
         event.save()
+        occurrence_ids = []
         for date in dates:
             if not isinstance(date, dict) or set(date) - OCCURRENCE_FIELDS:
                 raise ValueError("Each occurrence must contain only source_key, starts_at, and ends_at.")
@@ -92,5 +104,8 @@ class Command(BaseCommand):
             occurrence = Occurrence.objects.filter(event=event, source_key=key).first() or Occurrence(event=event, source_key=key)
             occurrence.starts_at = aware_datetime(date["starts_at"])
             occurrence.ends_at = aware_datetime(date["ends_at"]) if date.get("ends_at") is not None else None
+            occurrence.is_active = True
             occurrence.full_clean()
             occurrence.save()
+            occurrence_ids.append(occurrence.pk)
+        return event, occurrence_ids

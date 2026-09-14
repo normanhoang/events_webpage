@@ -43,6 +43,28 @@ def test_import_reruns_update_stable_source_keys_without_duplicates(tmp_path):
     assert occurrence.starts_at.hour == 23
 
 
+def test_sync_deactivates_records_missing_from_active_seed(tmp_path):
+    from copy import deepcopy
+
+    first = sample_event()
+    second = deepcopy(sample_event())
+    second["title"] = "Second event"
+    second["official_url"] = "https://example.org/second-event"
+    second["occurrences"][0]["source_key"] = "second-session"
+    path = tmp_path / "events.json"
+    path.write_text(json.dumps([first, second]))
+
+    call_command("import_events", str(path), sync=True)
+    path.write_text(json.dumps([first]))
+    call_command("import_events", str(path), sync=True)
+
+    assert Event.objects.get(official_url=first["official_url"]).is_active is True
+    assert Occurrence.objects.get(source_key="session-a").is_active is True
+    assert Event.objects.get(official_url=second["official_url"]).is_active is False
+    assert Occurrence.objects.get(source_key="second-session").is_active is False
+    assert list(Occurrence.objects.upcoming()) == [Occurrence.objects.get(source_key="session-a")]
+
+
 def test_invalid_import_is_atomic_and_reports_actionable_errors(tmp_path):
     from copy import deepcopy
     from django.core.management.base import CommandError

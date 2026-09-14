@@ -6,6 +6,20 @@ from django.utils import timezone
 pytestmark = pytest.mark.django_db
 
 
+def test_health_reports_deployed_revision_and_public_catalog_size(client, make_occurrence, settings):
+    settings.DEPLOYMENT_REVISION = "abc123"
+    make_occurrence(title="Visible")
+    hidden = make_occurrence(title="Hidden")
+    hidden.is_active = False
+    hidden.save()
+
+    response = client.get("/health/")
+
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok", "revision": "abc123", "upcoming_occurrences": 1}
+    assert response.headers["Cache-Control"] == "no-store"
+
+
 def test_home_shows_top_picks_section_then_chronological_occurrences(client, make_occurrence):
     now = timezone.now()
     later = make_occurrence(title="Later ordinary", starts_at=now + timedelta(days=3))
