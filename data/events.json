@@ -549,5 +549,66 @@
         "ends_at": "2026-09-24T14:30:00-04:00"
       }
     ]
+  },
+  {
+    "title": "Art History Happy Hour: Sculpting the Senses",
+    "description": "A lighthearted evening of short talks by experts in art, mathematics, and material science, followed by after-hours access to Iris van Herpen: Sculpting the Senses.",
+    "category": "art",
+    "tags": [
+      "art history",
+      "fashion",
+      "design",
+      "mathematics",
+      "museum social"
+    ],
+    "venue": "Brooklyn Museum, 200 Eastern Parkway",
+    "neighborhood": "Prospect Heights",
+    "borough": "Brooklyn",
+    "official_url": "https://brooklynmuseum.org/programs/art-history-happy-hour-iris-van-herpen-september-2026/09-24-2026",
+    "image_url": "",
+    "price_label": "$30; $18 for members; includes exhibition access and one specialty drink",
+    "price_min": 18,
+    "price_max": 30,
+    "currency": "USD",
+    "fit_reason": "A museum social combining art, fashion, mathematics, material science, and after-hours exhibition access.",
+    "verified_at": "2026-09-13T21:11:49-04:00",
+    "top_pick": true,
+    "occurrences": [
+      {
+        "source_key": "brooklyn-museum-art-history-happy-hour-iris-van-herpen-2026",
+        "starts_at": "2026-09-24T19:00:00-04:00",
+        "ends_at": "2026-09-24T21:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Día de los Muertos at NYBG",
+    "description": "A monthlong celebration of memory, life, and renewal featuring marigold displays, a community ofrenda, calaveras, a flower-covered Catrina, weekend music and crafts, and special performances.",
+    "category": "art",
+    "tags": [
+      "Día de los Muertos",
+      "Mexican culture",
+      "marigolds",
+      "community ofrenda",
+      "music",
+      "crafts"
+    ],
+    "venue": "New York Botanical Garden, 2900 Southern Boulevard",
+    "neighborhood": "Bronx Park",
+    "borough": "Bronx",
+    "official_url": "https://www.nybg.org/event/dia-de-los-muertos/",
+    "image_url": "https://www.nybg.org/content/uploads/2026/07/iStock-619074442-edit-3.1-160x53.jpg",
+    "price_label": "Included with Garden admission",
+    "currency": "USD",
+    "fit_reason": "A substantial cultural celebration in the Bronx with botanical displays, art, music, crafts, and community traditions.",
+    "verified_at": "2026-09-13T21:11:49-04:00",
+    "top_pick": true,
+    "occurrences": [
+      {
+        "source_key": "nybg-dia-de-los-muertos-2026",
+        "starts_at": "2026-10-03T10:00:00-04:00",
+        "ends_at": "2026-11-02T18:00:00-05:00"
+      }
+    ]
   }
 ]
