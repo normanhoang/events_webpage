@@ -706,17 +706,26 @@ def test_publish_leaves_the_index_alone_when_it_refuses(tmp_path):
     import json
     import subprocess
 
-    # Theater problems now pull paths out of the index, but only after every hard guard, so a
-    # refused run must not silently discard the operator's staged work.
+    # Theater problems pull paths out of the index, but only after every hard guard, so a
+    # refused run must not discard the operator's staged work. The staged theater edit is what
+    # makes this discriminating: without it there is nothing for an early reset to unstage.
     remote, root = build_publishable_repo(tmp_path, theater_seed_text="{not json")
+    archive = root / "data/theater-archive"
+    archive.mkdir()
+    (archive / "2030-10.json").write_text(valid_archive_blob())
     catalog = json.loads((root / "data/events.json").read_text())
     catalog[0]["title"] = "Also change events"
     (root / "data/events.json").write_text(json.dumps(catalog))
     subprocess.run(["git", "add", "."], cwd=root, check=True)
     subprocess.run(["git", "checkout", "-q", "-b", "feature"], cwd=root, check=True)
-    staged_before = subprocess.run(
-        ["git", "diff", "--cached", "--name-only"], cwd=root, check=True, capture_output=True, text=True
-    ).stdout.split()
+
+    def staged_bytes():
+        return subprocess.run(
+            ["git", "diff", "--cached", "--binary"], cwd=root, check=True, capture_output=True, text=True
+        ).stdout
+
+    staged_before = staged_bytes()
+    assert "data/theater-archive/2030-10.json" in staged_before
 
     from automation.publish_update import publish
 
@@ -729,10 +738,118 @@ def test_publish_leaves_the_index_alone_when_it_refuses(tmp_path):
             deployment_check=lambda revision, count: True,
         )
 
-    staged_after = subprocess.run(
-        ["git", "diff", "--cached", "--name-only"], cwd=root, check=True, capture_output=True, text=True
-    ).stdout.split()
-    assert staged_after == staged_before
+    assert staged_bytes() == staged_before
+
+
+def test_publish_still_ships_events_when_a_theater_archive_is_deleted(tmp_path):
+    import json
+    import subprocess
+
+    remote, root = build_publishable_repo(tmp_path, theater_seed_text="[]")
+    archive = root / "data/theater-archive"
+    archive.mkdir()
+    (archive / "2030-10.json").write_text(valid_archive_blob())
+    subprocess.run(["git", "add", "."], cwd=root, check=True)
+    subprocess.run(["git", "commit", "-qm", "archive"], cwd=root, check=True)
+    subprocess.run(["git", "push", "-q", "origin", "main"], cwd=root, check=True)
+    events = json.loads((root / "data/events.json").read_text())
+    events[0]["title"] = "Events still ship v2"
+    (root / "data/events.json").write_text(json.dumps(events))
+    subprocess.run(["git", "rm", "-q", "data/theater-archive/2030-10.json"], cwd=root, check=True)
+
+    result = publish_here(root)
+
+    assert result["status"] == "deployed"
+    assert result["theater"]["status"] == "retained"
+    assert "data/events.json" in subprocess_names(remote)
+
+
+def test_publish_still_ships_events_when_a_theater_archive_is_deleted_unstaged(tmp_path):
+    import json
+    import subprocess
+
+    remote, root = build_publishable_repo(tmp_path, theater_seed_text="[]")
+    archive = root / "data/theater-archive"
+    archive.mkdir()
+    (archive / "2030-10.json").write_text(valid_archive_blob())
+    subprocess.run(["git", "add", "."], cwd=root, check=True)
+    subprocess.run(["git", "commit", "-qm", "archive"], cwd=root, check=True)
+    subprocess.run(["git", "push", "-q", "origin", "main"], cwd=root, check=True)
+    events = json.loads((root / "data/events.json").read_text())
+    events[0]["title"] = "Events still ship v2"
+    (root / "data/events.json").write_text(json.dumps(events))
+    (archive / "2030-10.json").unlink()
+    subprocess.run(["git", "add", "-A"], cwd=root, check=True)
+
+    result = publish_here(root)
+
+    assert result["status"] == "deployed"
+    assert result["theater"]["status"] == "retained"
+    assert "data/events.json" in subprocess_names(remote)
+
+
+def test_a_renamed_theater_archive_is_a_move_not_a_deletion(tmp_path):
+    import json
+    import subprocess
+
+    # Moving a file must not read as "tracked but missing", which would pin the theater side in
+    # a retained state and silently unstage the operator's rename.
+    remote, root = build_publishable_repo(
+        tmp_path, theater_seed_text=json.dumps(theater_records(verified_at="2030-05-01T12:00:00-04:00"))
+    )
+    archive = root / "data/theater-archive"
+    archive.mkdir()
+    (archive / "2030-09.json").write_text(valid_archive_blob())
+    subprocess.run(["git", "add", "."], cwd=root, check=True)
+    subprocess.run(["git", "commit", "-qm", "archive"], cwd=root, check=True)
+    subprocess.run(["git", "push", "-q", "origin", "main"], cwd=root, check=True)
+    events = json.loads((root / "data/events.json").read_text())
+    events[0]["title"] = "Events still ship v2"
+    (root / "data/events.json").write_text(json.dumps(events))
+    subprocess.run(["git", "mv", "data/theater-archive/2030-09.json",
+                    "data/theater-archive/2030-08.json"], cwd=root, check=True)
+
+    result = publish_here(root)
+
+    assert result["status"] == "deployed"
+    assert result["theater"] == {"status": "updated"}
+    assert "data/theater-archive/2030-08.json" in subprocess_names(remote)
+
+
+def test_a_theater_seed_mutated_mid_run_is_not_committed(tmp_path):
+    import json
+    import subprocess
+
+    # The same window that applies to archives applies to the seed, and a seed failure must drop
+    # the theater side rather than abort the events publish.
+    remote, root = build_publishable_repo(
+        tmp_path, theater_seed_text=json.dumps(theater_records(verified_at="2030-05-01T12:00:00-04:00"))
+    )
+    pending = theater_records(verified_at="2030-05-01T12:00:00-04:00")
+    pending[0]["title"] = "Renamed show"
+    (root / "data/theater-deals.json").write_text(json.dumps(pending))
+
+    def corrupt_the_seed(path):
+        (path / "data/theater-deals.json").write_text("{not json")
+
+    from automation.publish_update import publish
+
+    result = publish(
+        root,
+        now=datetime(2030, 5, 2, tzinfo=ZoneInfo("America/New_York")),
+        quality_check=corrupt_the_seed,
+        candidate_check=lambda path, blob: None,
+        deployment_check=lambda revision, count: count == 12,
+    )
+
+    assert result["status"] == "deployed"
+    assert result["theater"]["status"] == "retained"
+    assert "theater-deals.json" in result["theater"]["reason"]
+    committed = subprocess.run(
+        ["git", "--git-dir", str(remote), "show", "main:data/theater-deals.json"],
+        check=True, capture_output=True, text=True,
+    ).stdout
+    assert json.loads(committed)[0]["title"] != "Renamed show"
 
 
 def test_publish_still_ships_events_when_a_theater_archive_is_staged_for_rename(tmp_path):

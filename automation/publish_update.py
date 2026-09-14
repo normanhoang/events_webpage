@@ -245,30 +245,55 @@ def _drop_theater_from_index(root):
     return targets
 
 
-def committed_theater_archive_problem(root, tree, paths):
-    """Inspect the theater-archive bytes that will actually be committed, not the worktree's."""
+def committed_theater_problem(root, tree, paths, *, now):
+    """Inspect the theater bytes that will actually be committed, not the worktree's.
+
+    Covers the seed as well as the archives, so a corruption landing during the quality-check
+    stage drops the theater side instead of aborting the events publish. Validating the seed
+    here means the later seed-blob check can only re-confirm the same tree.
+    """
     for path in paths:
-        if not path.startswith("data/theater-archive/"):
+        if not is_theater_path(path):
             continue
         try:
-            validate_theater_archive_blob(_tree_blob(root, tree, path))
+            blob = _tree_blob(root, tree, path)
+            if path == "data/theater-deals.json":
+                validate_theater_deals(json.loads(blob), now=now)
+            else:
+                validate_theater_archive_blob(blob)
         except Exception as exc:
             return f"{path}: {_reason(exc)}"
     return None
 
 
+def _rename_sources(root):
+    """Index paths that are rename SOURCES — a move, not a deletion."""
+    output = _git(root, "diff", "--cached", "--name-status", "--find-renames", check=False).stdout
+    sources = set()
+    for line in output.splitlines():
+        parts = line.split("\t")
+        if len(parts) >= 3 and parts[0].startswith("R"):
+            sources.add(parts[1])
+    return sources
+
+
 def tracked_theater_paths_missing_from_worktree(root):
     """Theater paths git knows about that are gone from the worktree.
 
-    Both sources are needed: a staged deletion (``git rm``) leaves nothing in the index, and an
-    unstaged deletion leaves nothing in HEAD's tree comparison.
+    Two sources are needed: a staged-but-uncommitted theater path deleted from the worktree
+    appears only in ``ls-files``, while a staged deletion (``git rm``) of a committed path
+    leaves nothing there and appears only in HEAD. Output is NUL-delimited so a path containing
+    a space is never split into a phantom entry, and rename sources are excluded because moving
+    a file is not deleting it.
     """
-    listed = set(_git(root, "ls-files", "--", "data/theater-deals.json", "data/theater-archive",
-                      check=False).stdout.split())
-    in_head = set(_git(root, "ls-tree", "-r", "--name-only", "HEAD", "--",
-                       "data/theater-deals.json", "data/theater-archive", check=False).stdout.split())
-    return sorted(path for path in listed | in_head
-                  if is_theater_path(path) and not (root / path).exists())
+    listed = _git(root, "ls-files", "-z", "--", "data/theater-deals.json", "data/theater-archive",
+                  check=False).stdout
+    in_head = _git(root, "ls-tree", "-r", "--name-only", "-z", "HEAD", "--",
+                   "data/theater-deals.json", "data/theater-archive", check=False).stdout
+    known = {part for part in (listed + in_head).split("\0") if part}
+    moved = _rename_sources(root)
+    return sorted(path for path in known
+                  if is_theater_path(path) and path not in moved and not (root / path).exists())
 
 
 def theater_archive_problem(root):
@@ -391,11 +416,11 @@ def publish(
     if candidate_paths != staged_paths:
         raise RuntimeError("The candidate Git tree does not match the reviewed catalog paths.")
 
-    # Validate the theater-archive bytes that will actually be committed, from the immutable
-    # tree rather than the mutable worktree. A failure drops the theater side instead of
-    # shipping unverified bytes or withholding the events publish.
+    # Validate the theater bytes that will actually be committed, from the immutable tree rather
+    # than the mutable worktree. A failure drops the theater side instead of shipping unverified
+    # bytes or withholding the events publish.
     if theater_problem is None:
-        theater_problem = committed_theater_archive_problem(root, candidate_tree, candidate_paths)
+        theater_problem = committed_theater_problem(root, candidate_tree, candidate_paths, now=now)
     if theater_problem and any(is_theater_path(path) for path in candidate_paths):
         _drop_theater_from_index(root)
         paths = [path for path in paths if not is_theater_path(path)]
