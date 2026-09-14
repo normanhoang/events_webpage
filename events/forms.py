@@ -4,8 +4,6 @@ from .models import Event
 
 
 class EventFilters(forms.Form):
-    q = forms.CharField(label="Search", required=False, max_length=200,
-                        widget=forms.TextInput(attrs={"placeholder": "Art, live music, a favorite venue…"}))
     date = forms.DateField(label="Date", required=False, widget=forms.DateInput(attrs={"type": "date"}))
     category = forms.ChoiceField(required=False, choices=[("", "All interests"), *Event.Category.choices])
     neighborhood = forms.CharField(required=False, max_length=120,

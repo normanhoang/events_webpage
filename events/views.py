@@ -1,4 +1,3 @@
-import re
 from datetime import datetime, time, timedelta
 
 from django.core.paginator import Paginator
@@ -25,20 +24,6 @@ def health(request):
 
 
 def filtered_occurrences(occurrences, data):
-    if keyword := data.get("q"):
-        if len(keyword) <= 3:
-            pattern = rf"(^|\W){re.escape(keyword)}($|\W)"
-            occurrences = occurrences.filter(
-                Q(event__title__iregex=pattern) | Q(event__description__iregex=pattern)
-                | Q(event__venue__iregex=pattern) | Q(event__tags__iregex=pattern)
-                | Q(event__fit_reason__iregex=pattern)
-            )
-        else:
-            occurrences = occurrences.filter(
-                Q(event__title__icontains=keyword) | Q(event__description__icontains=keyword)
-                | Q(event__venue__icontains=keyword) | Q(event__tags__icontains=keyword)
-                | Q(event__fit_reason__icontains=keyword)
-            )
     if category := data.get("category"):
         occurrences = occurrences.filter(event__category=category)
     if neighborhood := data.get("neighborhood"):

@@ -66,27 +66,6 @@ def test_home_shows_every_top_pick_once_and_paginates_only_non_top_pick_occurren
     assert list(second.context["page_obj"]) == ordinary[12:]
 
 
-def test_keyword_search_matches_editorial_fields_and_tags_case_insensitively(client, make_occurrence):
-    matches = [make_occurrence(**fields) for fields in [
-        {"title": "Jazz night"}, {"description": "Listen to jazz"}, {"venue": "Jazz House"},
-        {"tags": ["jazz"]}, {"fit_reason": "Explore jazz"},
-    ]]
-    make_occurrence(title="Unrelated")
-    response = client.get("/", {"q": "  JAZZ  "})
-    assert set(response.context["page_obj"]) == set(matches)
-
-
-def test_short_keyword_search_matches_words_not_incidental_substrings(client, make_occurrence):
-    make_occurrence(title="AI systems lecture", description="Hardware and software")
-    make_occurrence(title="A musical fair", description="Broadway songs")
-
-    response = client.get("/", {"q": "AI"})
-    body = response.content.decode()
-
-    assert "AI systems lecture" in body
-    assert "A musical fair" not in body
-
-
 def test_category_filter(client, make_occurrence):
     art = make_occurrence(category="art")
     make_occurrence(category="music")
@@ -145,10 +124,10 @@ def test_pagination_has_twelve_per_page_and_preserves_all_query_parameters(clien
 
     for _ in range(14):
         make_occurrence(category="art", title="Art & walks", price_min=0, price_max=0, neighborhood="West Village")
-    query = {"q": "Art & walks", "category": "art", "neighborhood": "West Village", "free": "1"}
+    query = {"category": "art", "neighborhood": "West Village", "free": "1"}
     first = client.get("/", query)
     assert len(first.context["page_obj"]) == 12
-    assert '?q=Art+%26+walks&category=art&neighborhood=West+Village&free=1&page=2' in unescape(first.content.decode())
+    assert '?category=art&neighborhood=West+Village&free=1&page=2' in unescape(first.content.decode())
     second = client.get("/", {**query, "page": "2"})
     assert len(second.context["page_obj"]) == 2
     assert not set(first.context["page_obj"]) & set(second.context["page_obj"])
@@ -157,10 +136,26 @@ def test_pagination_has_twelve_per_page_and_preserves_all_query_parameters(clien
     assert client.get("/", {**query, "page": "999"}).context["page_obj"].number == 2
 
 
-def test_empty_state_offers_a_filter_reset(client):
-    response = client.get("/", {"q": "nonexistent"})
+def test_empty_state_offers_a_filter_reset(client, make_occurrence):
+    # A real event exists, so the emptiness is caused by the filter rather than by an empty
+    # database; the old trigger was a search term, which is gone.
+    make_occurrence(neighborhood="Chelsea")
+    response = client.get("/", {"neighborhood": "Nowhere"})
     assert b"No upcoming events found" in response.content
+    assert b"Try another date, interest, or neighborhood." in response.content
     assert b'href="/">Clear filters' in response.content
+
+
+def test_a_stale_search_parameter_renders_the_full_list_instead_of_erroring(client, make_occurrence):
+    # Old ?q= links are in the wild. The parameter is simply no longer read, so it must fall
+    # through to the unfiltered list rather than erroring or 404ing.
+    make_occurrence(title="Jazz night")
+    make_occurrence(title="Pottery class")
+
+    response = client.get("/", {"q": "jazz"})
+
+    assert response.status_code == 200
+    assert len(response.context["page_obj"]) == 2
 
 
 def test_detail_shows_editorial_data_upcoming_times_and_official_cta(client, make_occurrence):
@@ -210,12 +205,16 @@ def test_home_has_accessible_get_filters_public_interest_chips_and_editorial_car
                                  price_label="Free", price_min=0, price_max=0, top_pick=True,
                                  fit_reason="Meet local makers.")
     body = client.get("/", {"category": "art"}).content.decode()
-    for text in ['method="get"', 'href="#main"', 'id="main"', 'name="q"', 'name="date"',
+    for text in ['method="get"', 'href="#main"', 'id="main"', 'name="date"',
                  'name="category"', 'name="neighborhood"', 'name="min_price"', 'name="max_price"',
-                 'name="free"', 'for="id_q"', 'value="art" selected', 'Art &amp; culture',
+                 'name="free"', 'value="art" selected', 'Art &amp; culture',
                  'Food &amp; drink', 'Outdoors', 'Music', 'Community', 'Top pick', 'Meet local makers.',
                  'Open Studio', 'Free', 'events/site.css', 'class="event-grid"', 'datetime=']:
         assert text in body
+    # Search was removed deliberately: the catalog is small enough that interest chips plus
+    # filters cover discovery, so a search box must not creep back in unnoticed.
+    assert 'name="q"' not in body
+    assert 'for="id_q"' not in body
     assert occurrence.event.get_absolute_url() in body
     assert 'rel="icon"' in body
     from django.contrib.staticfiles import finders
