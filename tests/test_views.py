@@ -158,6 +158,27 @@ def test_a_stale_search_parameter_renders_the_full_list_instead_of_erroring(clie
     assert len(response.context["page_obj"]) == 2
 
 
+def test_the_filter_form_no_longer_exposes_a_search_field():
+    from events.forms import EventFilters
+
+    # Assert on the form rather than the markup: a substring check for name="q" would miss an
+    # input rendered with different quoting.
+    assert "q" not in EventFilters().fields
+
+
+def test_a_stale_search_parameter_is_not_carried_into_generated_links(client, make_occurrence):
+    # Ignoring the parameter is not enough on its own: {% querystring %} copies the current GET
+    # params, so a stale q would ride along in every chip and pagination link forever.
+    from html import unescape
+
+    for _ in range(14):
+        make_occurrence(category="art")
+
+    body = unescape(client.get("/", {"q": "jazz", "category": "art"}).content.decode())
+
+    assert "q=jazz" not in body
+
+
 def test_detail_shows_editorial_data_upcoming_times_and_official_cta(client, make_occurrence):
     from events.models import Occurrence
 
