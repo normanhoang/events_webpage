@@ -40,6 +40,13 @@ def validate_theater_deals(records, *, now):
     if any(not isinstance(url, str) or not url.startswith("https://") for url in urls) or len(set(urls)) != len(urls):
         raise ValueError("Every theater deal must have a unique HTTPS official source URL.")
 
+    # image_url is optional but lands in a template src attribute, so only https may pass. A
+    # non-string must raise ValueError too, because that is the only type the publisher catches.
+    for record in records:
+        image = record.get("image_url")
+        if image and (not isinstance(image, str) or not image.startswith("https://")):
+            raise ValueError("Every theater deal image_url must be an HTTPS URL when present.")
+
     seen_offers = set()
     for record in records:
         verified = aware_iso(record.get("verified_at"), "verified_at")

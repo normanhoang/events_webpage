@@ -1,0 +1,6 @@
+{% load static %}
+<div class="event-image theater-image">
+  <img class="image-fallback" src="{% static deal.fallback_image %}" alt="" width="800" height="600" aria-hidden="true">
+  {% if deal.image_url %}<img data-remote-image src="{{ deal.image_url }}" alt="" width="800" height="600" loading="lazy" decoding="async" referrerpolicy="no-referrer">{% endif %}
+  <span class="image-caption">{{ deal.get_classification_display }}</span>
+</div>

@@ -130,9 +130,20 @@ class TheaterDeal(models.Model):
 
     def clean(self):
         super().clean()
+        # https only, matching the seed validator in automation/theater_deals.py: two gates that
+        # disagree about the same field let one accept what the other rejects. image_url also lands
+        # in a template src attribute, so any other scheme is a scripting vector.
         for field in ("official_url", "image_url"):
             if value := getattr(self, field):
-                URLValidator(schemes=["http", "https"])(value)
+                URLValidator(schemes=["https"])(value)
+
+    @property
+    def fallback_image(self):
+        """Local illustration shown under the poster, and alone when there is no poster."""
+        classification = (
+            self.classification if self.classification in self.Classification.values else "other"
+        )
+        return f"events/images/theater-{classification.replace('_', '-')}.svg"
 
     def __str__(self):
         return self.title

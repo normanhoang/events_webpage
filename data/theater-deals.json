@@ -5,13 +5,13 @@
     "venue": "Longacre Theatre",
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-two-strangers-carry-a-cake-across-new-york",
-    "image_url": "",
+    "image_url": "https://assets.playbill.com/playbill-covers/Two-Strangers-Carry-A-Cake-Playbill-2025-11-01_Web.jpg",
     "verified_at": "2026-09-14T09:05:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
         "label": "Select-performance discount code",
-        "price_label": "$49\u2013$229 \u00b7 up to 40% off \u00b7 before Telecharge service fees",
+        "price_label": "$49–$229 · up to 40% off · before Telecharge service fees",
         "price_min": 49,
         "price_max": 229,
         "fees_included": false,
@@ -22,7 +22,7 @@
       {
         "source_key": "digital-lottery",
         "label": "Digital lottery",
-        "price_label": "$48 \u00b7 fees not stated",
+        "price_label": "$48 · fees not stated",
         "price_min": 48,
         "price_max": 48,
         "fees_included": null,
@@ -36,15 +36,15 @@
     "title": "Parcel from America",
     "classification": "off_broadway",
     "venue": "A.R.T./New York Theatres",
-    "neighborhood": "Hell\u2019s Kitchen",
+    "neighborhood": "Hell’s Kitchen",
     "official_url": "https://playbill.com/discount/playbill-discount-for-parcel-from-america",
-    "image_url": "",
+    "image_url": "https://assets.playbill.com/playbill-covers/PfA-649-x-1024-px.jpg",
     "verified_at": "2026-09-14T09:05:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
         "label": "Select-performance discount code",
-        "price_label": "$44 including fees \u00b7 regularly $89",
+        "price_label": "$44 including fees · regularly $89",
         "price_min": 44,
         "price_max": 44,
         "fees_included": true,
@@ -60,13 +60,13 @@
     "venue": "Theater 555",
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-going-bacharach-2",
-    "image_url": "",
+    "image_url": "https://assets.playbill.com/playbill-covers/Going-Bacharach-Playbill-2026-09-09_Web.jpg",
     "verified_at": "2026-09-14T09:05:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
         "label": "Select-performance discount code",
-        "price_label": "$49\u2013$69 \u00b7 before fees",
+        "price_label": "$49–$69 · before fees",
         "price_min": 49,
         "price_max": 69,
         "fees_included": false,
@@ -82,17 +82,17 @@
     "venue": "Players Theatre",
     "neighborhood": "West Village",
     "official_url": "https://www.broadwaybox.com/shows/christmas-carol-players-theatre/",
-    "image_url": "",
+    "image_url": "https://img.broadwaybox.com/event/poster/480x720_2025_9498_1.jpg",
     "verified_at": "2026-09-14T09:05:00-04:00",
     "offers": [
       {
         "source_key": "broadwaybox-discount-code",
         "label": "Select-performance discount code",
-        "price_label": "$34\u2013$54 \u00b7 before fees",
+        "price_label": "$34–$54 · before fees",
         "price_min": 34,
         "price_max": 54,
         "fees_included": false,
-        "restrictions": "Code BBOX; Nov 29\u2013Dec 30; VIP gift-bag option excluded.",
+        "restrictions": "Code BBOX; Nov 29–Dec 30; VIP gift-bag option excluded.",
         "eligible_until": "2026-12-30T23:59:59-05:00",
         "official_url": "https://www.broadwaybox.com/shows/christmas-carol-players-theatre/"
       }

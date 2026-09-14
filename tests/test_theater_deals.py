@@ -135,20 +135,94 @@ def test_active_deal_records_exclude_expired_offers_but_preserve_history():
     assert TheaterOffer.objects.filter(pk=expired.pk).exists()
 
 
-def make_deal(*, title, classification, verified_at=None, price=49, offer_label="Digital rush"):
+def make_deal(*, title, classification, verified_at=None, price=49, offer_label="Digital rush",
+              image_url=""):
     from events.models import TheaterDeal, TheaterOffer
 
     slug = title.lower().replace(" ", "-")
     deal = TheaterDeal.objects.create(
         title=title, slug=slug, classification=classification,
         official_url=f"https://example.org/shows/{slug}", verified_at=verified_at or timezone.now(),
-        venue="Example Theatre", neighborhood="Theater District",
+        venue="Example Theatre", neighborhood="Theater District", image_url=image_url,
     )
     TheaterOffer.objects.create(
         deal=deal, source_key="main", label=offer_label, price_label=f"${price}", price_min=price,
         official_url=f"https://example.org/deals/{slug}", eligible_until=timezone.now() + timedelta(days=2),
     )
     return deal
+
+
+def test_theater_card_renders_the_official_show_image_when_available(client):
+    # The events side already renders a remote image with a local fallback underneath; the theater
+    # card must use the same mechanism so a blocked or broken poster degrades instead of vanishing.
+    url = "https://example.org/art/broadway-first.jpg"
+    make_deal(title="Broadway First", classification="broadway", image_url=url)
+
+    body = client.get("/theater-deals/").content.decode()
+
+    assert f'src="{url}"' in body
+    assert "data-remote-image" in body
+    assert "referrerpolicy=\"no-referrer\"" in body
+
+
+def test_theater_card_falls_back_to_local_art_when_a_show_has_no_image(client):
+    make_deal(title="Off Broadway Second", classification="off_broadway")
+
+    body = client.get("/theater-deals/").content.decode()
+
+    assert "theater-off-broadway.svg" in body
+    assert "data-remote-image" not in body
+
+
+def test_theater_deal_fallback_image_maps_each_classification_to_its_own_art():
+    from events.models import TheaterDeal
+
+    seen = set()
+    for classification in TheaterDeal.Classification.values:
+        deal = TheaterDeal(classification=classification)
+        expected = f"events/images/theater-{classification.replace('_', '-')}.svg"
+        assert deal.fallback_image == expected
+        seen.add(deal.fallback_image)
+    assert len(seen) == len(TheaterDeal.Classification.values)
+
+
+def test_theater_fallback_art_exists_for_every_classification():
+    from pathlib import Path
+
+    from events.models import TheaterDeal
+
+    root = Path(__file__).resolve().parents[1] / "events/static/events/images"
+    for classification in TheaterDeal.Classification.values:
+        asset = root / f"theater-{classification.replace('_', '-')}.svg"
+        assert asset.exists(), asset
+        svg = asset.read_text()
+        assert 'viewBox="0 0 800 600"' in svg, "illustration art must be 4:3 for the card image box"
+        assert "lucide" in svg, "keep the provenance comment"
+        assert "currentColor" not in svg, "an <img> cannot inherit colour; bake the ink"
+
+
+def test_validate_theater_deals_rejects_unsafe_image_urls():
+    from automation.theater_deals import validate_theater_deals
+
+    # image_url lands in a template src attribute, so anything but https must be refused. A
+    # non-string must also surface as ValueError, which is the only type the publisher catches.
+    for bad in ["javascript:alert(1)", "http://example.org/art.jpg",
+                "data:image/svg+xml,<svg onload=alert(1)>", 42, {"u": 1}]:
+        record = sample_deal()
+        record["verified_at"] = timezone.now().isoformat()
+        record["image_url"] = bad
+        with pytest.raises(ValueError, match="image_url"):
+            validate_theater_deals([record], now=timezone.now())
+
+
+def test_validate_theater_deals_allows_a_missing_or_https_image_url():
+    from automation.theater_deals import validate_theater_deals
+
+    for good in ["", None, "https://example.org/art.jpg"]:
+        record = sample_deal()
+        record["verified_at"] = timezone.now().isoformat()
+        record["image_url"] = good
+        validate_theater_deals([record], now=timezone.now())
 
 
 def test_theater_deals_page_groups_offers_by_show_and_prioritizes_classifications(client):

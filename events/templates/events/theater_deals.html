@@ -16,6 +16,7 @@
   <div class="theater-grid">
     {% for deal in deals %}
     <article class="theater-card">
+      {% include "events/theater_image.html" with deal=deal %}
       <div class="theater-card-heading"><p class="card-meta"><span>{{ deal.get_classification_display }}</span></p><h3><a href="{{ deal.official_url }}" rel="noopener noreferrer">{{ deal.title }}</a></h3>{% if deal.venue or deal.neighborhood %}<p class="location">{{ deal.venue }}{% if deal.neighborhood %} · {{ deal.neighborhood }}{% endif %}</p>{% endif %}</div>
       <ul class="offer-list" aria-label="Current deals for {{ deal.title }}">
         {% for offer in deal.active_offers %}<li><div><strong>{{ offer.label }}</strong><span class="offer-price">{{ offer.price_label }}</span>{% if offer.restrictions %}<p>{{ offer.restrictions }}</p>{% endif %}</div><a href="{{ offer.official_url }}" rel="noopener noreferrer">Get deal {% include "events/icon.html" with icon="arrow-up-right" %}</a></li>{% endfor %}
