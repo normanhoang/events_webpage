@@ -82,13 +82,13 @@ def deployment_matches(payload, *, revision, minimum_count):
     )
 
 
-def load_catalog(path):
+def load_catalog(path, *, label="active event seed"):
     try:
         records = json.loads(Path(path).read_text(encoding="utf-8"))
-    except (OSError, ValueError) as exc:
-        raise ValueError(f"Cannot read the active event seed: {exc}") from exc
+    except (OSError, ValueError, RecursionError) as exc:
+        raise ValueError(f"Cannot read the {label}: {exc}") from exc
     if not isinstance(records, list):
-        raise ValueError("Active event seed must be a JSON array.")
+        raise ValueError(f"The {label} must be a JSON array.")
     return records
 
 
@@ -226,15 +226,26 @@ def run_candidate_import_check(root, catalog_blob, theater_blob=None):
 def read_theater_problem(root, *, now):
     """Reason the theater seed cannot ship, or None when it is absent or valid.
 
-    Reading and validating share one guard: an unparseable or non-array seed raises from
-    ``load_catalog``, so catching only around validation would still abort the events publish.
+    This guard must never be able to abort the events publish, so it catches broadly: reading
+    and validation share one block, and a deeply nested seed raises RecursionError rather than
+    ValueError. A broad catch here costs at most a retained theater page, which the result
+    reports explicitly.
     """
-    path = Path(root) / "data/theater-deals.json"
+    root = Path(root)
+    path = root / "data/theater-deals.json"
     if not path.exists():
+        # A seed tracked in git but deleted from the working tree is still a staged deletion,
+        # which would abort the whole publish. Treat it as a theater problem instead.
+        tracked = subprocess.run(
+            ["git", "ls-files", "--error-unmatch", "--", "data/theater-deals.json"],
+            cwd=root, capture_output=True, text=True, check=False,
+        )
+        if tracked.returncode == 0:
+            return "The theater-deals seed is tracked but missing from the working tree."
         return None
     try:
-        validate_theater_deals(load_catalog(path), now=now)
-    except (ValueError, TypeError, AttributeError) as exc:
+        validate_theater_deals(load_catalog(path, label="theater-deals seed"), now=now)
+    except Exception as exc:
         return str(exc)
     return None
 
@@ -366,9 +377,10 @@ def publish(
     )
     status = "deployed" if verifier(revision, len(staged_records)) else "deployment_unconfirmed"
     result = {"status": status, "event_count": len(staged_records), "revision": revision}
-    # Report off what actually shipped, not off "validation happened not to fail".
+    # Report off what actually shipped, not off "validation happened not to fail". Any theater
+    # path counts, so an archive-only push is not misreported as unchanged.
     result["theater"] = theater_result(
-        theater_problem, changed="data/theater-deals.json" in candidate_paths
+        theater_problem, changed=any(is_theater_path(path) for path in candidate_paths)
     )
     return result
 

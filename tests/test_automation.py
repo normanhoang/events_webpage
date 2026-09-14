@@ -497,6 +497,7 @@ def publish_here(root):
         '[{"title": "bad ts", "classification": "broadway", "official_url": "https://example.org/x",'
         ' "verified_at": 1893456000, "offers": [{"source_key": "a", "label": "L", "price_label": "p",'
         ' "official_url": "https://example.org/x/a"}]}]',   # non-string timestamp
+        "[" * 20000,                              # deeply nested: RecursionError, not ValueError
     ],
 )
 def test_publish_still_ships_events_when_the_theater_seed_is_malformed(tmp_path, seed):
@@ -552,6 +553,45 @@ def test_publish_reports_theater_updated_when_the_seed_actually_ships(tmp_path):
     pushed = subprocess_names(remote)
     assert "data/events.json" in pushed
     assert "data/theater-deals.json" in pushed
+
+
+def test_publish_still_ships_events_when_the_theater_seed_was_deleted(tmp_path):
+    # A tracked-but-deleted seed stages a deletion, which would otherwise abort the whole publish.
+    remote, root = build_publishable_repo(tmp_path, theater_seed_text="[]")
+    (root / "data/theater-deals.json").unlink()
+
+    result = publish_here(root)
+
+    assert result["status"] == "deployed"
+    assert result["theater"]["status"] == "retained"
+    pushed = subprocess_names(remote)
+    assert "data/events.json" in pushed
+    assert "data/theater-deals.json" not in pushed
+
+
+def test_publish_reports_theater_updated_for_an_archive_only_change(tmp_path):
+    import json
+
+    remote, root = build_publishable_repo(
+        tmp_path, theater_seed_text=json.dumps(theater_records(verified_at="2030-05-01T12:00:00-04:00"))
+    )
+    archive_dir = root / "data/theater-archive"
+    archive_dir.mkdir()
+    (archive_dir / "2030-10.json").write_text(json.dumps([{
+        "title": "Show 0", "classification": "broadway", "official_url": "https://example.org/show-0",
+        "verified_at": "2030-05-01T12:00:00-04:00", "archive_reason": "expired",
+        "archived_at": "2030-10-01T12:00:00-04:00",
+        "offers": [{"source_key": "rush", "label": "Rush", "price_label": "$40",
+                    "official_url": "https://example.org/show-0/rush"}],
+    }]))
+
+    result = publish_here(root)
+
+    # Theater data shipped, so the flag must not say "not_changed" just because the seed itself
+    # was untouched.
+    assert result["status"] == "deployed"
+    assert result["theater"] == {"status": "updated"}
+    assert "data/theater-archive/2030-10.json" in subprocess_names(remote)
 
 
 def test_cli_prints_machine_readable_result(monkeypatch, capsys):
