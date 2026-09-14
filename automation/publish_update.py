@@ -227,6 +227,50 @@ def _reason(exc):
     return f"{type(exc).__name__}: {exc}"
 
 
+def _drop_theater_from_index(root):
+    """Unstage every theater path.
+
+    ``--no-renames`` matters: with rename detection a staged rename inside the theater tree
+    lists only the destination, leaving the source's deletion behind to trip the
+    index-equality guard with a misleading "index changed" error.
+    """
+    output = subprocess.run(
+        ["git", "diff", "--cached", "--name-only", "--no-renames", "-z"],
+        cwd=root, check=True, capture_output=True,
+    ).stdout
+    candidates = [part.decode("utf-8") for part in output.split(b"\0") if part]
+    targets = [path for path in candidates if is_theater_path(path)]
+    if targets:
+        _git(root, "reset", "-q", "--", *[f":(literal){path}" for path in targets])
+    return targets
+
+
+def committed_theater_archive_problem(root, tree, paths):
+    """Inspect the theater-archive bytes that will actually be committed, not the worktree's."""
+    for path in paths:
+        if not path.startswith("data/theater-archive/"):
+            continue
+        try:
+            validate_theater_archive_blob(_tree_blob(root, tree, path))
+        except Exception as exc:
+            return f"{path}: {_reason(exc)}"
+    return None
+
+
+def tracked_theater_paths_missing_from_worktree(root):
+    """Theater paths git knows about that are gone from the worktree.
+
+    Both sources are needed: a staged deletion (``git rm``) leaves nothing in the index, and an
+    unstaged deletion leaves nothing in HEAD's tree comparison.
+    """
+    listed = set(_git(root, "ls-files", "--", "data/theater-deals.json", "data/theater-archive",
+                      check=False).stdout.split())
+    in_head = set(_git(root, "ls-tree", "-r", "--name-only", "HEAD", "--",
+                       "data/theater-deals.json", "data/theater-archive", check=False).stdout.split())
+    return sorted(path for path in listed | in_head
+                  if is_theater_path(path) and not (root / path).exists())
+
+
 def theater_archive_problem(root):
     """A malformed theater archive retains the theater page rather than blocking events.
 
@@ -253,13 +297,11 @@ def read_theater_problem(root, *, now):
     A broad catch costs at most a retained theater page, which the result reports explicitly.
     """
     root = Path(root)
+    missing = tracked_theater_paths_missing_from_worktree(root)
+    if missing:
+        return f"A theater path is tracked but missing from the working tree: {missing[0]}"
     path = root / "data/theater-deals.json"
     if not path.exists():
-        # A staged deletion (git rm) leaves nothing in the index, so HEAD must be consulted too.
-        for probe in (["ls-files", "--error-unmatch", "--", "data/theater-deals.json"],
-                      ["cat-file", "-e", "HEAD:data/theater-deals.json"]):
-            if _git(root, *probe, check=False).returncode == 0:
-                return "The theater-deals seed is tracked but missing from the working tree."
         return None
     try:
         validate_theater_deals(load_catalog(path, label="theater-deals seed"), now=now)
@@ -316,11 +358,6 @@ def publish(
     paths = changed_paths(root)
     if theater_problem:
         paths = [path for path in paths if not is_theater_path(path)]
-        # A pre-staged theater path would otherwise trip the index-equality guard below and
-        # abort the events publish with an "index changed" message unrelated to the real cause.
-        pre_staged = [path for path in _staged_paths(root) if is_theater_path(path)]
-        if pre_staged:
-            _git(root, "reset", "-q", "--", *pre_staged)
     if not paths:
         result = {"status": "no_change", "event_count": len(records)}
         result["theater"] = theater_result(theater_problem, changed=False)
@@ -335,6 +372,11 @@ def publish(
         raise ValueError("Local main is not synchronized with origin/main; refusing to publish.")
 
     (quality_check or run_quality_checks)(root)
+    # Theater is pulled out of the index HERE — after every hard guard and past the no-change
+    # return — so a refused or no-op run never mutates the operator's index.
+    if theater_problem:
+        _drop_theater_from_index(root)
+        paths = [path for path in paths if not is_theater_path(path)]
     _git(root, "add", "--", *paths)
     staged_paths = _staged_paths(root)
     if not staged_paths:
@@ -348,6 +390,27 @@ def publish(
     candidate_paths = _tree_paths(root, local_before, candidate_tree)
     if candidate_paths != staged_paths:
         raise RuntimeError("The candidate Git tree does not match the reviewed catalog paths.")
+
+    # Validate the theater-archive bytes that will actually be committed, from the immutable
+    # tree rather than the mutable worktree. A failure drops the theater side instead of
+    # shipping unverified bytes or withholding the events publish.
+    if theater_problem is None:
+        theater_problem = committed_theater_archive_problem(root, candidate_tree, candidate_paths)
+    if theater_problem and any(is_theater_path(path) for path in candidate_paths):
+        _drop_theater_from_index(root)
+        paths = [path for path in paths if not is_theater_path(path)]
+        staged_paths = _staged_paths(root)
+        if set(staged_paths) != set(paths):
+            raise RuntimeError("The candidate Git index changed during publication; refusing to commit.")
+        if not staged_paths:
+            result = {"status": "no_change", "event_count": len(records)}
+            result["theater"] = theater_result(theater_problem, changed=False)
+            return result
+        candidate_tree = _git(root, "write-tree").stdout.strip()
+        candidate_paths = _tree_paths(root, local_before, candidate_tree)
+        if candidate_paths != staged_paths:
+            raise RuntimeError("The candidate Git tree does not match the reviewed catalog paths.")
+
     catalog_blob = _tree_blob(root, candidate_tree, "data/events.json")
     try:
         staged_records = json.loads(catalog_blob)
