@@ -158,6 +158,20 @@ def test_a_stale_search_parameter_renders_the_full_list_instead_of_erroring(clie
     assert len(response.context["page_obj"]) == 2
 
 
+def test_a_filter_matching_only_top_picks_explains_itself_instead_of_dead_ending(client, make_occurrence):
+    # The matching event is featured above, so the dated list is legitimately empty. The empty
+    # state used to be suppressed whenever any top pick existed, leaving a heading and a
+    # "0 remaining" list with no explanation at all.
+    make_occurrence(category="art", top_pick=True)
+
+    body = client.get("/", {"category": "art"}).content.decode()
+
+    assert "Nothing more to show" in body
+    assert "featured above" in body
+    assert "No upcoming events found" not in body
+    assert 'href="/">Clear filters' in body
+
+
 def test_the_filter_form_no_longer_exposes_a_search_field():
     from events.forms import EventFilters
 
