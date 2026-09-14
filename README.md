@@ -1,6 +1,6 @@
 # Norman’s NYC Events
 
-A public, read-only Django guide to upcoming New York City events selected around Norman’s interests. It highlights strong matches first, then presents the remaining events by date with interest chips and filters for category, neighborhood, date, and price.
+A public, read-only Django guide to upcoming New York City events selected around Norman’s interests. It highlights strong matches first, then presents the remaining events by date. Discovery is interest chips plus a free-only toggle — the catalog is deliberately small enough that a fixed taxonomy beats a filter panel.
 
 ## Stack
 

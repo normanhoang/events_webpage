@@ -72,32 +72,19 @@ def test_category_filter(client, make_occurrence):
     assert list(client.get("/", {"category": "art"}).context["page_obj"]) == [art]
 
 
-def test_neighborhood_filter(client, make_occurrence):
-    chelsea = make_occurrence(neighborhood="Chelsea")
-    make_occurrence(neighborhood="Astoria")
-    assert list(client.get("/", {"neighborhood": "chelsea"}).context["page_obj"]) == [chelsea]
+def test_the_page_offers_only_interest_chips_and_a_free_toggle(client, make_occurrence):
+    make_occurrence(category="art", price_min=0, price_max=0)
+    body = client.get("/").content.decode()
 
-
-def test_date_filter_uses_new_york_calendar_and_includes_spanning_occurrences(client, make_occurrence):
-    from datetime import datetime, timezone as dt_timezone
-
-    late = make_occurrence(starts_at=datetime(2030, 5, 2, 2, tzinfo=dt_timezone.utc))
-    spanning = make_occurrence(starts_at=datetime(2030, 4, 30, 12, tzinfo=dt_timezone.utc),
-                               ends_at=datetime(2030, 5, 2, 5, tzinfo=dt_timezone.utc))
-    make_occurrence(starts_at=datetime(2030, 5, 2, 5, tzinfo=dt_timezone.utc))
-    make_occurrence(starts_at=datetime(2030, 4, 30, 12, tzinfo=dt_timezone.utc),
-                    ends_at=datetime(2030, 5, 1, 4, tzinfo=dt_timezone.utc))
-    response = client.get("/", {"date": "2030-05-01"})
-    assert set(response.context["page_obj"]) == {late, spanning}
-
-
-def test_price_filter_limits_known_usd_starting_prices_inclusively(client, make_occurrence):
-    match = make_occurrence(price_min=10, price_max=30)
-    make_occurrence(price_min=9)
-    make_occurrence(price_min=21)
-    make_occurrence(price_min=None)
-    make_occurrence(price_min=10, currency="EUR")
-    assert list(client.get("/", {"min_price": "10", "max_price": "20"}).context["page_obj"]) == [match]
+    # The whole filter panel was removed by design, leaving the interest chips and the free-only
+    # checkbox. None of the retired controls may reappear unnoticed.
+    for retired in ['name="q"', 'name="date"', 'name="neighborhood"', 'name="min_price"',
+                    'name="max_price"', 'id="neighborhoods"', "Please correct the filters",
+                    'class="filter-grid"']:
+        assert retired not in body
+    assert 'class="interest-chips"' in body
+    assert 'name="free"' in body
+    assert 'for="free"' in body
 
 
 def test_free_filter_excludes_unknown_and_paid_ranges(client, make_occurrence):
@@ -108,15 +95,30 @@ def test_free_filter_excludes_unknown_and_paid_ranges(client, make_occurrence):
     assert list(client.get("/", {"free": "1"}).context["page_obj"]) == [free]
 
 
-def test_invalid_filter_values_show_errors_without_server_errors(client, make_occurrence):
-    make_occurrence()
-    for query in [{"date": "nonsense"}, {"date": "9999-12-31"}, {"max_price": "NaN"},
-                  {"min_price": "-1"}, {"max_price": "Infinity"}, {"min_price": "20", "max_price": "10"},
-                  {"category": "unknown"}, {"max_price": "999999999999999999999"}]:
+def test_retired_filter_parameters_fall_through_to_the_full_list(client, make_occurrence):
+    # Links in the wild carry search, date, neighborhood and price params. None are read any
+    # more, so each must render the full list rather than erroring, 404ing, or emptying the page.
+    make_occurrence(title="Jazz night")
+    make_occurrence(title="Pottery class")
+
+    for query in [{"q": "jazz"}, {"date": "2030-05-01"}, {"neighborhood": "Chelsea"},
+                  {"min_price": "10"}, {"max_price": "20"}, {"date": "nonsense"},
+                  {"max_price": "NaN"}, {"min_price": "-1"}, {"min_price": "20", "max_price": "10"}]:
         response = client.get("/", query)
-        assert response.status_code == 200
-        assert b"Please correct the filters" in response.content
-        assert not list(response.context["page_obj"])
+
+        assert response.status_code == 200, query
+        assert len(response.context["page_obj"]) == 2, query
+
+
+def test_an_unknown_interest_shows_nothing_without_a_server_error(client, make_occurrence):
+    # The chip row only emits real categories, so an unknown one is a stale or hand-edited link.
+    make_occurrence(category="art")
+
+    response = client.get("/", {"category": "unknown"})
+
+    assert response.status_code == 200
+    assert not list(response.context["page_obj"])
+    assert not list(response.context["top_picks"])
 
 
 def test_pagination_has_twelve_per_page_and_preserves_all_query_parameters(client, make_occurrence):
@@ -124,10 +126,10 @@ def test_pagination_has_twelve_per_page_and_preserves_all_query_parameters(clien
 
     for _ in range(14):
         make_occurrence(category="art", title="Art & walks", price_min=0, price_max=0, neighborhood="West Village")
-    query = {"category": "art", "neighborhood": "West Village", "free": "1"}
+    query = {"category": "art", "free": "1"}
     first = client.get("/", query)
     assert len(first.context["page_obj"]) == 12
-    assert '?category=art&neighborhood=West+Village&free=1&page=2' in unescape(first.content.decode())
+    assert '?category=art&free=1&page=2' in unescape(first.content.decode())
     second = client.get("/", {**query, "page": "2"})
     assert len(second.context["page_obj"]) == 2
     assert not set(first.context["page_obj"]) & set(second.context["page_obj"])
@@ -138,24 +140,12 @@ def test_pagination_has_twelve_per_page_and_preserves_all_query_parameters(clien
 
 def test_empty_state_offers_a_filter_reset(client, make_occurrence):
     # A real event exists, so the emptiness is caused by the filter rather than by an empty
-    # database; the old trigger was a search term, which is gone.
-    make_occurrence(neighborhood="Chelsea")
-    response = client.get("/", {"neighborhood": "Nowhere"})
+    # database. Interest is the only narrowing filter left, so it is the trigger.
+    make_occurrence(category="art")
+    response = client.get("/", {"category": "community"})
     assert b"No upcoming events found" in response.content
-    assert b"Try another date, interest, or neighborhood." in response.content
+    assert b"Try a different interest, or clear your filters." in response.content
     assert b'href="/">Clear filters' in response.content
-
-
-def test_a_stale_search_parameter_renders_the_full_list_instead_of_erroring(client, make_occurrence):
-    # Old ?q= links are in the wild. The parameter is simply no longer read, so it must fall
-    # through to the unfiltered list rather than erroring or 404ing.
-    make_occurrence(title="Jazz night")
-    make_occurrence(title="Pottery class")
-
-    response = client.get("/", {"q": "jazz"})
-
-    assert response.status_code == 200
-    assert len(response.context["page_obj"]) == 2
 
 
 def test_a_filter_matching_only_top_picks_explains_itself_instead_of_dead_ending(client, make_occurrence):
@@ -172,25 +162,20 @@ def test_a_filter_matching_only_top_picks_explains_itself_instead_of_dead_ending
     assert 'href="/">Clear filters' in body
 
 
-def test_the_filter_form_no_longer_exposes_a_search_field():
-    from events.forms import EventFilters
-
-    # Assert on the form rather than the markup: a substring check for name="q" would miss an
-    # input rendered with different quoting.
-    assert "q" not in EventFilters().fields
-
-
-def test_a_stale_search_parameter_is_not_carried_into_generated_links(client, make_occurrence):
-    # Ignoring the parameter is not enough on its own: {% querystring %} copies the current GET
-    # params, so a stale q would ride along in every chip and pagination link forever.
+def test_retired_filter_parameters_are_not_carried_into_generated_links(client, make_occurrence):
+    # Ignoring a retired param is not enough on its own. Chip and pagination links are built
+    # from a whitelist, so nothing retired may ride along in a generated href forever.
     from html import unescape
 
     for _ in range(14):
         make_occurrence(category="art")
 
-    body = unescape(client.get("/", {"q": "jazz", "category": "art"}).content.decode())
+    body = unescape(client.get("/", {"q": "jazz", "date": "2030-05-01", "neighborhood": "Chelsea",
+                                     "min_price": "10", "max_price": "20", "category": "art"}).content.decode())
 
-    assert "q=jazz" not in body
+    for retired in ["q=jazz", "date=2030", "neighborhood=Chelsea", "min_price=10", "max_price=20"]:
+        assert retired not in body
+    assert "category=art" in body
 
 
 def test_detail_shows_editorial_data_upcoming_times_and_official_cta(client, make_occurrence):
@@ -240,14 +225,13 @@ def test_home_has_accessible_get_filters_public_interest_chips_and_editorial_car
                                  price_label="Free", price_min=0, price_max=0, top_pick=True,
                                  fit_reason="Meet local makers.")
     body = client.get("/", {"category": "art"}).content.decode()
-    for text in ['method="get"', 'href="#main"', 'id="main"', 'name="date"',
-                 'name="category"', 'name="neighborhood"', 'name="min_price"', 'name="max_price"',
-                 'name="free"', 'value="art" selected', 'Art &amp; culture',
-                 'Food &amp; drink', 'Outdoors', 'Music', 'Community', 'Top pick', 'Meet local makers.',
-                 'Open Studio', 'Free', 'events/site.css', 'class="event-grid"', 'datetime=']:
+    for text in ['method="get"', 'href="#main"', 'id="main"', 'name="free"', 'for="free"',
+                 'aria-current="true"', 'Art &amp; culture', 'Food &amp; drink', 'Outdoors',
+                 'Music', 'Community', 'Top pick', 'Meet local makers.', 'Open Studio', 'Free',
+                 'events/site.css', 'class="event-grid"', 'datetime=']:
         assert text in body
-    # Search was removed deliberately: the catalog is small enough that interest chips plus
-    # filters cover discovery, so a search box must not creep back in unnoticed.
+    # Discovery is interest chips plus a free toggle, by design. A search box must not creep
+    # back in unnoticed.
     assert 'name="q"' not in body
     assert 'for="id_q"' not in body
     assert occurrence.event.get_absolute_url() in body

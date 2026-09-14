@@ -26,11 +26,14 @@ def test_handoff_documentation_covers_local_and_production_workflows():
         assert name in example
 
 
-def test_filter_grid_css_is_rebalanced_for_the_remaining_fields():
+def test_the_removed_filter_panel_leaves_no_dead_css():
     css = (ROOT / "events/static/events/site.css").read_text()
 
-    # The old four-track list was sized around the search field being the widest column, and the
-    # mobile selector that stretched it is dead once the field is gone. Asserting on the removed
-    # tokens keeps the layout decision from silently reverting with the markup.
-    assert "2fr 1.2fr 1.3fr 1.5fr" not in css
-    assert "field-q" not in css
+    # The panel's layout, field, action, and error rules were removed with the markup. Asserting
+    # on the retired tokens keeps dead CSS from being left behind, or quietly resurrected.
+    for retired in [".filter-grid", ".field", ".filter-actions", ".filter-help",
+                    ".filter-errors", ".checkbox", ".filters", "field-q",
+                    "2fr 1.2fr 1.3fr 1.5fr"]:
+        assert retired not in css
+    assert ".interest-chips" in css
+    assert ".free-filter" in css
