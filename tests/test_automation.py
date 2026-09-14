@@ -594,6 +594,52 @@ def test_publish_reports_theater_updated_for_an_archive_only_change(tmp_path):
     assert "data/theater-archive/2030-10.json" in subprocess_names(remote)
 
 
+def test_publish_still_ships_events_when_the_theater_seed_is_staged_for_deletion(tmp_path):
+    import subprocess
+
+    # `git rm` strips the index entry entirely, so an index-only tracked check misses it and the
+    # later `git add` fails with exit 128, aborting the events publish.
+    remote, root = build_publishable_repo(tmp_path, theater_seed_text="[]")
+    subprocess.run(["git", "rm", "-q", "data/theater-deals.json"], cwd=root, check=True)
+
+    result = publish_here(root)
+
+    assert result["status"] == "deployed"
+    assert result["theater"]["status"] == "retained"
+    assert "data/events.json" in subprocess_names(remote)
+
+
+def test_publish_still_ships_events_when_a_theater_archive_is_malformed(tmp_path):
+    remote, root = build_publishable_repo(tmp_path, theater_seed_text="[]")
+    archive = root / "data/theater-archive"
+    archive.mkdir()
+    (archive / "2030-10.json").write_text("{not json")
+
+    result = publish_here(root)
+
+    assert result["status"] == "deployed"
+    assert result["theater"]["status"] == "retained"
+    assert "2030-10.json" in result["theater"]["reason"]
+
+
+def test_publish_still_ships_events_with_a_prestaged_theater_path(tmp_path):
+    import subprocess
+
+    # Filtering a pre-staged theater path out of `paths` is not enough: it stays in the index and
+    # trips the index-equality guard with a misleading "candidate Git index changed" error.
+    remote, root = build_publishable_repo(tmp_path, theater_seed_text="[]")
+    archive = root / "data/theater-archive"
+    archive.mkdir()
+    (archive / "2030-10.json").write_text("{not json")
+    subprocess.run(["git", "add", "data/theater-archive/2030-10.json"], cwd=root, check=True)
+
+    result = publish_here(root)
+
+    assert result["status"] == "deployed"
+    assert result["theater"]["status"] == "retained"
+    assert "data/events.json" in subprocess_names(remote)
+
+
 def test_cli_prints_machine_readable_result(monkeypatch, capsys):
     import json
     from automation import publish_update

@@ -223,31 +223,49 @@ def run_candidate_import_check(root, catalog_blob, theater_blob=None):
                 )
 
 
+def _reason(exc):
+    return f"{type(exc).__name__}: {exc}"
+
+
+def theater_archive_problem(root):
+    """A malformed theater archive retains the theater page rather than blocking events.
+
+    Theater archives are inert data that the app never renders, so a bad one is a theater-side
+    problem. Events archives stay hard-fail-closed elsewhere.
+    """
+    directory = Path(root) / "data/theater-archive"
+    if not directory.is_dir():
+        return None
+    for path in sorted(directory.glob("*.json")):
+        try:
+            validate_theater_archive_blob(path.read_text(encoding="utf-8"))
+        except Exception as exc:
+            return f"{path.name}: {_reason(exc)}"
+    return None
+
+
 def read_theater_problem(root, *, now):
     """Reason the theater seed cannot ship, or None when it is absent or valid.
 
-    This guard must never be able to abort the events publish, so it catches broadly: reading
-    and validation share one block, and a deeply nested seed raises RecursionError rather than
-    ValueError. A broad catch here costs at most a retained theater page, which the result
-    reports explicitly.
+    This guard must never abort the events publish, so it catches broadly and treats a deleted
+    seed as a problem too: reading and validation share one block, a deeply nested seed raises
+    RecursionError rather than ValueError, and a staged deletion leaves no index entry to detect.
+    A broad catch costs at most a retained theater page, which the result reports explicitly.
     """
     root = Path(root)
     path = root / "data/theater-deals.json"
     if not path.exists():
-        # A seed tracked in git but deleted from the working tree is still a staged deletion,
-        # which would abort the whole publish. Treat it as a theater problem instead.
-        tracked = subprocess.run(
-            ["git", "ls-files", "--error-unmatch", "--", "data/theater-deals.json"],
-            cwd=root, capture_output=True, text=True, check=False,
-        )
-        if tracked.returncode == 0:
-            return "The theater-deals seed is tracked but missing from the working tree."
+        # A staged deletion (git rm) leaves nothing in the index, so HEAD must be consulted too.
+        for probe in (["ls-files", "--error-unmatch", "--", "data/theater-deals.json"],
+                      ["cat-file", "-e", "HEAD:data/theater-deals.json"]):
+            if _git(root, *probe, check=False).returncode == 0:
+                return "The theater-deals seed is tracked but missing from the working tree."
         return None
     try:
         validate_theater_deals(load_catalog(path, label="theater-deals seed"), now=now)
     except Exception as exc:
-        return str(exc)
-    return None
+        return _reason(exc)
+    return theater_archive_problem(root)
 
 
 def theater_result(problem, *, changed):
@@ -298,6 +316,11 @@ def publish(
     paths = changed_paths(root)
     if theater_problem:
         paths = [path for path in paths if not is_theater_path(path)]
+        # A pre-staged theater path would otherwise trip the index-equality guard below and
+        # abort the events publish with an "index changed" message unrelated to the real cause.
+        pre_staged = [path for path in _staged_paths(root) if is_theater_path(path)]
+        if pre_staged:
+            _git(root, "reset", "-q", "--", *pre_staged)
     if not paths:
         result = {"status": "no_change", "event_count": len(records)}
         result["theater"] = theater_result(theater_problem, changed=False)
@@ -348,8 +371,8 @@ def publish(
     for path in candidate_paths:
         if path.startswith("data/archive/"):
             validate_archive_blob(_tree_blob(root, candidate_tree, path))
-        elif path.startswith("data/theater-archive/"):
-            validate_theater_archive_blob(_tree_blob(root, candidate_tree, path))
+        # Theater archives are validated up front in read_theater_problem, where a bad one is a
+        # theater-side problem rather than a reason to withhold the events publish.
 
     if before_commit:
         before_commit()
