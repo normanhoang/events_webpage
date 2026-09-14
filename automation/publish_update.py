@@ -142,6 +142,7 @@ def run_quality_checks(root):
     for key in ("DATABASE_URL", "SECRET_KEY", "ALLOWED_HOSTS", "CSRF_TRUSTED_ORIGINS", "VERCEL", "VERCEL_ENV"):
         env.pop(key, None)
     commands = [
+        [str(python), "manage.py", "migrate", "--noinput"],
         [str(python), "manage.py", "import_events", "--sync"],
         [str(python), "-m", "pytest", "-p", "django", "-q"],
         [str(python), "manage.py", "check"],

@@ -168,6 +168,23 @@ def test_candidate_import_check_rejects_unknown_schema_fields():
         run_candidate_import_check(root, json.dumps(catalog))
 
 
+def test_quality_checks_migrate_local_schema_before_importing(tmp_path, monkeypatch):
+    import subprocess
+    from automation import publish_update
+
+    calls = []
+
+    def record(command, **kwargs):
+        calls.append(command)
+        return subprocess.CompletedProcess(command, 0, "", "")
+
+    monkeypatch.setattr(publish_update.subprocess, "run", record)
+    publish_update.run_quality_checks(tmp_path)
+
+    management_commands = [command[2] for command in calls if len(command) > 2 and command[1] == "manage.py"]
+    assert management_commands[:2] == ["migrate", "import_events"]
+
+
 def test_publish_returns_no_change_without_committing_or_deploying(tmp_path):
     import json
     import subprocess
