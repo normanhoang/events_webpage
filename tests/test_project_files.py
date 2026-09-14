@@ -49,8 +49,27 @@ def test_all_category_art_uses_local_lucide_svgs_and_templates_have_no_unicode_i
         svg = (image_dir / f"{category}.svg").read_text()
         assert "lucide" in svg
         assert "<svg" in svg
+        # 4:3 to match the card image box, and explicit ink rather than currentColor:
+        # these render inside an <img>, where currentColor cannot inherit from the page.
+        assert 'viewBox="0 0 800 600"' in svg
+        assert "currentColor" not in svg
 
     for template in (ROOT / "events/templates/events").glob("*.html"):
         text = template.read_text()
         for legacy_glyph in ("↗", "←", "✳"):
             assert legacy_glyph not in text, template.name
+
+
+def test_every_referenced_ui_icon_exists_on_disk():
+    import re
+
+    icon_dir = ROOT / "events/static/events/icons"
+    referenced = set()
+    for template in (ROOT / "events/templates/events").glob("*.html"):
+        referenced.update(re.findall(r'icon="([A-Za-z0-9_-]+)"', template.read_text()))
+
+    assert referenced
+    for name in sorted(referenced):
+        # Production uses CompressedManifestStaticFilesStorage, where a missing entry raises at
+        # render time — and base.html includes an icon, so one bad name would 500 every page.
+        assert (icon_dir / f"{name}.svg").is_file(), f"missing icon asset: {name}"

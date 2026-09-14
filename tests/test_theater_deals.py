@@ -254,3 +254,22 @@ def test_theater_archive_lock_refuses_a_preexisting_symbolic_link(tmp_path, monk
         )
 
     assert victim.read_text() == "do not truncate"
+
+
+def test_archive_theater_deals_refuses_malformed_records_instead_of_dropping_them(tmp_path):
+    from django.core.management.base import CommandError
+
+    # split_expired_offers keeps only records with live offers and archives only expired ones,
+    # so a record with no offers would previously disappear with no archive entry at all.
+    for bad_record in [
+        {"title": "Orphan Show", "official_url": "https://example.org/orphan"},
+        {"title": "Empty offers", "official_url": "https://example.org/empty", "offers": []},
+        "not-a-record",
+    ]:
+        path = tmp_path / "theater-deals.json"
+        path.write_text(json.dumps([bad_record]))
+        with pytest.raises(CommandError):
+            call_command(
+                "archive_theater_deals", active_path=str(path),
+                archive_dir=str(tmp_path / "archive"), now="2030-05-02T12:00:00-04:00",
+            )

@@ -293,7 +293,10 @@ def test_publish_validates_commits_pushes_and_confirms_changed_catalog(tmp_path)
         capture_output=True,
         text=True,
     ).stdout)
-    assert result == {"status": "deployed", "event_count": 12, "revision": local_revision}
+    assert result == {
+        "status": "deployed", "event_count": 12, "revision": local_revision,
+        "theater": {"status": "updated"},
+    }
     assert remote_revision == local_revision
     assert remote_catalog[0]["title"] == "Updated title"
     assert checks == [root]
@@ -378,6 +381,70 @@ def test_publish_restores_local_main_when_push_is_rejected(tmp_path):
     assert subprocess.run(
         ["git", "--git-dir", str(remote), "rev-parse", "main"], check=True, capture_output=True, text=True
     ).stdout.strip() == initial
+
+
+def theater_records(*, verified_at="2030-04-01T12:00:00-04:00", count=1):
+    return [
+        {
+            "title": f"Show {index}",
+            "classification": "broadway",
+            "official_url": f"https://example.org/show-{index}",
+            "verified_at": verified_at,
+            "offers": [
+                {
+                    "source_key": "rush",
+                    "label": "Rush",
+                    "price_label": "$40",
+                    "price_min": 40,
+                    "official_url": f"https://example.org/show-{index}/rush",
+                    "eligible_until": "2030-06-01T23:59:59-04:00",
+                }
+            ],
+        }
+        for index in range(count)
+    ]
+
+
+def test_publish_still_ships_events_when_the_theater_seed_is_stale(tmp_path):
+    import json
+    import subprocess
+    from automation.publish_update import publish
+
+    remote = tmp_path / "remote.git"
+    root = tmp_path / "work"
+    subprocess.run(["git", "init", "-q", "--bare", str(remote)], check=True)
+    subprocess.run(["git", "init", "-q", "-b", "main", str(root)], check=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=root, check=True)
+    subprocess.run(["git", "config", "user.email", "test@example.org"], cwd=root, check=True)
+    (root / "data").mkdir()
+    catalog = records()
+    (root / "data/events.json").write_text(json.dumps(catalog))
+    # Deliberately past the 7-day theater freshness gate.
+    (root / "data/theater-deals.json").write_text(json.dumps(theater_records()))
+    subprocess.run(["git", "add", "."], cwd=root, check=True)
+    subprocess.run(["git", "commit", "-qm", "initial"], cwd=root, check=True)
+    subprocess.run(["git", "remote", "add", "origin", str(remote)], cwd=root, check=True)
+    subprocess.run(["git", "push", "-qu", "origin", "main"], cwd=root, check=True)
+    catalog[0]["title"] = "Events still ship"
+    (root / "data/events.json").write_text(json.dumps(catalog))
+
+    result = publish(
+        root,
+        now=datetime(2030, 5, 2, tzinfo=ZoneInfo("America/New_York")),
+        quality_check=lambda path: None,
+        candidate_check=lambda path, blob: None,
+        deployment_check=lambda revision, count: count == 12,
+    )
+
+    # Norman chose independent publication: a stale theater seed must not freeze the events site.
+    assert result["status"] == "deployed"
+    assert result["theater"]["status"] == "retained"
+    pushed = subprocess.run(
+        ["git", "--git-dir", str(remote), "show", "--name-only", "--format=", "main"],
+        check=True, capture_output=True, text=True,
+    ).stdout.split()
+    assert "data/events.json" in pushed
+    assert "data/theater-deals.json" not in pushed
 
 
 def test_cli_prints_machine_readable_result(monkeypatch, capsys):

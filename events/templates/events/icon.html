@@ -1,1 +1,1 @@
-{% load static %}<img class="ui-icon{% if class %} {{ class }}{% endif %}" src="{% static 'events/icons/'|add:icon|add:'.svg' %}" alt="" aria-hidden="true">
+{% load static %}<span class="ui-icon{% if class %} {{ class }}{% endif %}" style="--icon:url('{% static 'events/icons/'|add:icon|add:'.svg' %}')" aria-hidden="true"></span>

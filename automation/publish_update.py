@@ -64,6 +64,14 @@ def assert_only_catalog_changes(paths):
             raise ValueError(f"Change outside the catalog allowlist: {value}")
 
 
+def is_theater_path(value):
+    """True for the theater seed and its monthly archives, which publish independently."""
+    path = PurePosixPath(value)
+    return path == PurePosixPath("data/theater-deals.json") or path.parent == PurePosixPath(
+        "data/theater-archive"
+    )
+
+
 def deployment_matches(payload, *, revision, minimum_count):
     return (
         isinstance(payload, dict)
@@ -251,11 +259,23 @@ def publish(
     theater_path = root / "data/theater-deals.json"
     theater_records = load_catalog(theater_path) if theater_path.exists() else []
     validate_catalog(records, now=now)
-    if theater_path.exists():
-        validate_theater_deals(theater_records, now=now)
+    # Theater deals publish independently of the events feed: a stale or malformed theater seed
+    # loses only its own changes, so the last verified deals stay live and the events site keeps
+    # updating. The events catalog itself stays fail-closed — a broken events seed ships nothing.
+    theater_problem = None
+    if theater_path.exists() and theater_records:
+        try:
+            validate_theater_deals(theater_records, now=now)
+        except ValueError as exc:
+            theater_problem = str(exc)
     paths = changed_paths(root)
+    if theater_problem:
+        paths = [path for path in paths if not is_theater_path(path)]
     if not paths:
-        return {"status": "no_change", "event_count": len(records)}
+        result = {"status": "no_change", "event_count": len(records)}
+        if theater_problem:
+            result["theater"] = {"status": "retained", "reason": theater_problem}
+        return result
     assert_only_catalog_changes(paths)
     if _git(root, "branch", "--show-current").stdout.strip() != "main":
         raise ValueError("Automated publishing is allowed only from the main branch.")
@@ -328,7 +348,13 @@ def publish(
         lambda commit, count: poll_deployment(commit, minimum_count=MIN_EVENTS)
     )
     status = "deployed" if verifier(revision, len(staged_records)) else "deployment_unconfirmed"
-    return {"status": status, "event_count": len(staged_records), "revision": revision}
+    result = {"status": status, "event_count": len(staged_records), "revision": revision}
+    result["theater"] = (
+        {"status": "retained", "reason": theater_problem}
+        if theater_problem
+        else {"status": "updated"}
+    )
+    return result
 
 
 def validate_catalog(records, *, now):

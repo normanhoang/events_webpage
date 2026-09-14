@@ -14,6 +14,8 @@ def validate_theater_deals(records, *, now):
         raise ValueError("Every theater deal must have a unique HTTPS official source URL.")
     seen_offers = set()
     for record in records:
+        if not isinstance(record, dict):
+            raise ValueError("Every theater deal must be a JSON object.")
         verified = datetime.fromisoformat(record.get("verified_at", ""))
         if verified.tzinfo is None or verified.utcoffset() is None:
             raise ValueError("Every theater deal verified_at must use an aware ISO timestamp.")

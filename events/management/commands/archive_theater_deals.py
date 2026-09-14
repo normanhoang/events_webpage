@@ -48,10 +48,18 @@ def merge_archive(existing, additions):
 def split_expired_offers(records, *, now):
     active, archived = [], []
     for record in records:
+        # Reject malformed entries loudly: a record with no offers would otherwise be dropped
+        # from the active seed without ever reaching the archive.
+        if not isinstance(record, dict):
+            raise ValueError("every theater-deal record must be a JSON object")
+        offers = record.get("offers")
+        if not isinstance(offers, list) or not offers:
+            raise ValueError("every theater-deal record must contain at least one offer")
         current, expired = deepcopy(record), []
-        offers = current.get("offers", [])
         live = []
         for offer in offers:
+            if not isinstance(offer, dict):
+                raise ValueError("every theater offer must be a JSON object")
             deadline = offer.get("eligible_until")
             if deadline and parse_aware(deadline) <= now:
                 expired.append(offer)
