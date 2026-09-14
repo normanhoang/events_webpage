@@ -885,15 +885,20 @@ def test_rename_sources_parses_git_quoted_names(tmp_path):
     from automation.publish_update import _rename_sources
 
     # git C-quotes a path containing a tab, so line-and-tab parsing would build a name that never
-    # matches the real one and the move would read as a deletion.
+    # matches the real one and the move would read as a deletion. The staged non-rename entry
+    # sorts BEFORE the rename, which is what catches a fixed-width parse: entries are 2 fields
+    # for an ordinary change and 3 for a rename, so a group-of-three walk loses alignment.
     root = tmp_path / "work"
     subprocess.run(["git", "init", "-q", "-b", "main", str(root)], check=True)
     subprocess.run(["git", "config", "user.name", "Test"], cwd=root, check=True)
     subprocess.run(["git", "config", "user.email", "test@example.org"], cwd=root, check=True)
     (root / "data/theater-archive").mkdir(parents=True)
     (root / "data/theater-archive/tab\tname.json").write_text("[]")
+    (root / "data/events.json").write_text("[]")
     subprocess.run(["git", "add", "-A"], cwd=root, check=True)
     subprocess.run(["git", "commit", "-qm", "init"], cwd=root, check=True)
+    (root / "data/events.json").write_text('[{"title": "changed"}]')
+    subprocess.run(["git", "add", "data/events.json"], cwd=root, check=True)
     subprocess.run(["git", "mv", "data/theater-archive/tab\tname.json",
                     "data/theater-archive/moved\tname.json"], cwd=root, check=True)
 

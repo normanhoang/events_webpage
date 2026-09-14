@@ -269,18 +269,27 @@ def committed_theater_problem(root, tree, paths, *, now):
 def _rename_sources(root):
     """Index paths that are rename SOURCES whose destination is also a theater path.
 
-    NUL-delimited parsing matters: git C-quotes a path containing a tab, newline, quote or
-    backslash, so tab-splitting the line form would build a name that never matches. Requiring
-    the destination to be a theater path keeps a genuine deletion from being excused when git
-    happens to pair it with an unrelated staged addition.
+    Parsing is NUL-delimited because git C-quotes a path containing a tab, newline, quote or
+    backslash, so tab-splitting the line form would build a name that never matches. Entry width
+    is VARIABLE: a rename carries source and destination (3 fields), everything else one path
+    (2 fields), so a fixed stride misaligns as soon as an ordinary change precedes a rename.
+
+    Requiring the destination to be a theater path keeps a rename out of the theater tree from
+    being treated as a move; a genuine deletion paired by git with an unrelated addition is still
+    excused, which is the accepted residual.
     """
     output = _git(root, "diff", "--cached", "--name-status", "-z", "--find-renames", check=False).stdout
     fields = [part for part in output.split("\0") if part]
     sources = set()
-    for index in range(0, len(fields) - 2, 3):
-        status, source, destination = fields[index], fields[index + 1], fields[index + 2]
-        if status.startswith("R") and is_theater_path(source) and is_theater_path(destination):
-            sources.add(source)
+    index = 0
+    while index < len(fields):
+        status = fields[index]
+        width = 3 if status[:1] in {"R", "C"} else 2
+        if width == 3 and index + 2 < len(fields):
+            source, destination = fields[index + 1], fields[index + 2]
+            if is_theater_path(source) and is_theater_path(destination):
+                sources.add(source)
+        index += width
     return sources
 
 
