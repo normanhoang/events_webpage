@@ -89,5 +89,6 @@ def test_vercel_build_synchronizes_schema_and_active_seed():
 
     config = tomllib.loads((ROOT / "pyproject.toml").read_text())
     assert config["tool"]["vercel"]["scripts"]["build"] == (
-        "python manage.py migrate --noinput && python manage.py import_events --sync"
+        "python manage.py migrate --noinput && python manage.py import_events --sync "
+        "&& python manage.py import_theater_deals --sync"
     )

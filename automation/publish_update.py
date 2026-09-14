@@ -12,6 +12,8 @@ from datetime import datetime, timedelta
 from pathlib import Path, PurePosixPath
 from zoneinfo import ZoneInfo
 
+from automation.theater_deals import validate_theater_deals
+
 MIN_EVENTS = 12
 TARGET_EVENTS = 20
 MAX_EVENTS = 24
@@ -51,12 +53,23 @@ def changed_paths(root):
 def assert_only_catalog_changes(paths):
     for value in paths:
         path = PurePosixPath(value)
-        allowed = path == PurePosixPath("data/events.json") or bool(
-            path.parent == PurePosixPath("data/archive")
+        allowed = path in {
+            PurePosixPath("data/events.json"),
+            PurePosixPath("data/theater-deals.json"),
+        } or bool(
+            path.parent in {PurePosixPath("data/archive"), PurePosixPath("data/theater-archive")}
             and re.fullmatch(r"\d{4}-(0[1-9]|1[0-2])\.json", path.name)
         )
         if ".." in path.parts or not allowed:
             raise ValueError(f"Change outside the catalog allowlist: {value}")
+
+
+def is_theater_path(value):
+    """True for the theater seed and its monthly archives, which publish independently."""
+    path = PurePosixPath(value)
+    return path == PurePosixPath("data/theater-deals.json") or path.parent == PurePosixPath(
+        "data/theater-archive"
+    )
 
 
 def deployment_matches(payload, *, revision, minimum_count):
@@ -69,13 +82,13 @@ def deployment_matches(payload, *, revision, minimum_count):
     )
 
 
-def load_catalog(path):
+def load_catalog(path, *, label="active event seed"):
     try:
         records = json.loads(Path(path).read_text(encoding="utf-8"))
-    except (OSError, ValueError) as exc:
-        raise ValueError(f"Cannot read the active event seed: {exc}") from exc
+    except (OSError, ValueError, RecursionError) as exc:
+        raise ValueError(f"Cannot read the {label}: {exc}") from exc
     if not isinstance(records, list):
-        raise ValueError("Active event seed must be a JSON array.")
+        raise ValueError(f"The {label} must be a JSON array.")
     return records
 
 
@@ -100,6 +113,25 @@ def validate_archive_blob(blob):
             _aware(occurrence.get("starts_at"))
             if occurrence.get("ends_at"):
                 _aware(occurrence["ends_at"])
+    return records
+
+
+def validate_theater_archive_blob(blob):
+    try:
+        records = json.loads(blob)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("Theater archive file must contain valid JSON.") from exc
+    if not isinstance(records, list):
+        raise ValueError("Theater archive file must be a JSON array.")
+    for record in records:
+        if not isinstance(record, dict) or not isinstance(record.get("offers"), list) or not record["offers"]:
+            raise ValueError("Every theater archive record must contain offers.")
+        if not isinstance(record.get("archive_reason"), str) or not record["archive_reason"]:
+            raise ValueError("Every theater archive record must include an archive reason.")
+        _aware(record.get("archived_at"))
+        for offer in record["offers"]:
+            if not isinstance(offer, dict) or not offer.get("source_key"):
+                raise ValueError("Every archived theater offer must include a source key.")
     return records
 
 
@@ -148,6 +180,7 @@ def run_quality_checks(root):
     commands = [
         [str(python), "manage.py", "migrate", "--noinput"],
         [str(python), "manage.py", "import_events", "--sync"],
+        [str(python), "manage.py", "import_theater_deals", "--sync"],
         [str(python), "-m", "pytest", "-p", "django", "-q"],
         [str(python), "manage.py", "check"],
         [str(python), "manage.py", "makemigrations", "--check", "--dry-run"],
@@ -164,7 +197,7 @@ def run_quality_checks(root):
             )
 
 
-def run_candidate_import_check(root, catalog_blob):
+def run_candidate_import_check(root, catalog_blob, theater_blob=None):
     python = root / ".venv/bin/python"
     if not python.exists():
         python = Path(sys.executable)
@@ -172,23 +205,156 @@ def run_candidate_import_check(root, catalog_blob):
     env["DEBUG"] = "1"
     for key in ("DATABASE_URL", "SECRET_KEY", "ALLOWED_HOSTS", "CSRF_TRUSTED_ORIGINS", "VERCEL", "VERCEL_ENV"):
         env.pop(key, None)
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".json") as handle:
-        handle.write(catalog_blob)
-        handle.flush()
-        completed = subprocess.run(
-            [str(python), "manage.py", "import_events", handle.name, "--sync"],
-            cwd=root,
-            env=env,
-            check=False,
-            capture_output=True,
-            text=True,
-        )
-    if completed.returncode:
-        detail = (completed.stderr or completed.stdout).strip().splitlines()
-        raise RuntimeError(
-            "Candidate catalog failed importer validation: "
-            + (detail[-1] if detail else f"exit {completed.returncode}")
-        )
+    with tempfile.TemporaryDirectory() as directory:
+        event_path = Path(directory) / "events.json"
+        event_path.write_text(catalog_blob, encoding="utf-8")
+        commands = [[str(python), "manage.py", "import_events", str(event_path), "--sync"]]
+        if theater_blob is not None:
+            theater_path = Path(directory) / "theater-deals.json"
+            theater_path.write_text(theater_blob, encoding="utf-8")
+            commands.append([str(python), "manage.py", "import_theater_deals", str(theater_path), "--sync"])
+        for command in commands:
+            completed = subprocess.run(command, cwd=root, env=env, check=False, capture_output=True, text=True)
+            if completed.returncode:
+                detail = (completed.stderr or completed.stdout).strip().splitlines()
+                raise RuntimeError(
+                    "Candidate catalog failed importer validation: "
+                    + (detail[-1] if detail else f"exit {completed.returncode}")
+                )
+
+
+def _reason(exc):
+    return f"{type(exc).__name__}: {exc}"
+
+
+def _drop_theater_from_index(root):
+    """Unstage every theater path.
+
+    ``--no-renames`` matters: with rename detection a staged rename inside the theater tree
+    lists only the destination, leaving the source's deletion behind to trip the
+    index-equality guard with a misleading "index changed" error.
+    """
+    output = subprocess.run(
+        ["git", "diff", "--cached", "--name-only", "--no-renames", "-z"],
+        cwd=root, check=True, capture_output=True,
+    ).stdout
+    candidates = [part.decode("utf-8") for part in output.split(b"\0") if part]
+    targets = [path for path in candidates if is_theater_path(path)]
+    if targets:
+        _git(root, "reset", "-q", "--", *[f":(literal){path}" for path in targets])
+    return targets
+
+
+def committed_theater_problem(root, tree, paths, *, now):
+    """Inspect the theater bytes that will actually be committed, not the worktree's.
+
+    Covers the seed as well as the archives, so a corruption landing during the quality-check
+    stage drops the theater side instead of aborting the events publish. Validating the seed
+    here means the later seed-blob check can only re-confirm the same tree.
+    """
+    for path in paths:
+        if not is_theater_path(path):
+            continue
+        try:
+            blob = _tree_blob(root, tree, path)
+            if path == "data/theater-deals.json":
+                validate_theater_deals(json.loads(blob), now=now)
+            else:
+                validate_theater_archive_blob(blob)
+        except Exception as exc:
+            return f"{path}: {_reason(exc)}"
+    return None
+
+
+def _rename_sources(root):
+    """Index paths that are rename SOURCES whose destination is also a theater path.
+
+    Parsing is NUL-delimited because git C-quotes a path containing a tab, newline, quote or
+    backslash, so tab-splitting the line form would build a name that never matches. Entry width
+    is VARIABLE: a rename carries source and destination (3 fields), everything else one path
+    (2 fields), so a fixed stride misaligns as soon as an ordinary change precedes a rename.
+
+    Requiring the destination to be a theater path keeps a rename out of the theater tree from
+    being treated as a move; a genuine deletion paired by git with an unrelated addition is still
+    excused, which is the accepted residual.
+    """
+    output = _git(root, "diff", "--cached", "--name-status", "-z", "--find-renames", check=False).stdout
+    fields = [part for part in output.split("\0") if part]
+    sources = set()
+    index = 0
+    while index < len(fields):
+        status = fields[index]
+        width = 3 if status[:1] in {"R", "C"} else 2
+        if width == 3 and index + 2 < len(fields):
+            source, destination = fields[index + 1], fields[index + 2]
+            if is_theater_path(source) and is_theater_path(destination):
+                sources.add(source)
+        index += width
+    return sources
+
+
+def tracked_theater_paths_missing_from_worktree(root):
+    """Theater paths git knows about that are gone from the worktree.
+
+    Two sources are needed: a staged-but-uncommitted theater path deleted from the worktree
+    appears only in ``ls-files``, while a staged deletion (``git rm``) of a committed path
+    leaves nothing there and appears only in HEAD. Output is NUL-delimited so a path containing
+    a space is never split into a phantom entry, and rename sources are excluded because moving
+    a file is not deleting it.
+    """
+    listed = _git(root, "ls-files", "-z", "--", "data/theater-deals.json", "data/theater-archive",
+                  check=False).stdout
+    in_head = _git(root, "ls-tree", "-r", "--name-only", "-z", "HEAD", "--",
+                   "data/theater-deals.json", "data/theater-archive", check=False).stdout
+    known = {part for part in (listed + in_head).split("\0") if part}
+    moved = _rename_sources(root)
+    return sorted(path for path in known
+                  if is_theater_path(path) and path not in moved and not (root / path).exists())
+
+
+def theater_archive_problem(root):
+    """A malformed theater archive retains the theater page rather than blocking events.
+
+    Theater archives are inert data that the app never renders, so a bad one is a theater-side
+    problem. Events archives stay hard-fail-closed elsewhere.
+    """
+    directory = Path(root) / "data/theater-archive"
+    if not directory.is_dir():
+        return None
+    for path in sorted(directory.glob("*.json")):
+        try:
+            validate_theater_archive_blob(path.read_text(encoding="utf-8"))
+        except Exception as exc:
+            return f"{path.name}: {_reason(exc)}"
+    return None
+
+
+def read_theater_problem(root, *, now):
+    """Reason the theater seed cannot ship, or None when it is absent or valid.
+
+    This guard must never abort the events publish, so it catches broadly and treats a deleted
+    seed as a problem too: reading and validation share one block, a deeply nested seed raises
+    RecursionError rather than ValueError, and a staged deletion leaves no index entry to detect.
+    A broad catch costs at most a retained theater page, which the result reports explicitly.
+    """
+    root = Path(root)
+    missing = tracked_theater_paths_missing_from_worktree(root)
+    if missing:
+        return f"A theater path is tracked but missing from the working tree: {missing[0]}"
+    path = root / "data/theater-deals.json"
+    if not path.exists():
+        return None
+    try:
+        validate_theater_deals(load_catalog(path, label="theater-deals seed"), now=now)
+    except Exception as exc:
+        return _reason(exc)
+    return theater_archive_problem(root)
+
+
+def theater_result(problem, *, changed):
+    if problem:
+        return {"status": "retained", "reason": problem}
+    return {"status": "updated" if changed else "not_changed"}
 
 
 def fetch_health(url, *, timeout=10):
@@ -225,9 +391,18 @@ def publish(
     root = Path(root)
     records = load_catalog(root / "data/events.json")
     validate_catalog(records, now=now)
+    # Theater deals publish independently of the events feed: any problem reading or validating
+    # the theater seed loses only the theater changes, so the last verified deals stay live and
+    # the events site keeps updating. The events catalog itself stays fail-closed — a broken
+    # events seed still publishes nothing.
+    theater_problem = read_theater_problem(root, now=now)
     paths = changed_paths(root)
+    if theater_problem:
+        paths = [path for path in paths if not is_theater_path(path)]
     if not paths:
-        return {"status": "no_change", "event_count": len(records)}
+        result = {"status": "no_change", "event_count": len(records)}
+        result["theater"] = theater_result(theater_problem, changed=False)
+        return result
     assert_only_catalog_changes(paths)
     if _git(root, "branch", "--show-current").stdout.strip() != "main":
         raise ValueError("Automated publishing is allowed only from the main branch.")
@@ -238,10 +413,17 @@ def publish(
         raise ValueError("Local main is not synchronized with origin/main; refusing to publish.")
 
     (quality_check or run_quality_checks)(root)
+    # Theater is pulled out of the index HERE — after every hard guard and past the no-change
+    # return — so a refused or no-op run never mutates the operator's index.
+    if theater_problem:
+        _drop_theater_from_index(root)
+        paths = [path for path in paths if not is_theater_path(path)]
     _git(root, "add", "--", *paths)
     staged_paths = _staged_paths(root)
     if not staged_paths:
-        return {"status": "no_change", "event_count": len(records)}
+        result = {"status": "no_change", "event_count": len(records)}
+        result["theater"] = theater_result(theater_problem, changed=False)
+        return result
     if set(staged_paths) != set(paths):
         raise RuntimeError("The candidate Git index changed during publication; refusing to commit.")
     assert_only_catalog_changes(staged_paths)
@@ -249,6 +431,27 @@ def publish(
     candidate_paths = _tree_paths(root, local_before, candidate_tree)
     if candidate_paths != staged_paths:
         raise RuntimeError("The candidate Git tree does not match the reviewed catalog paths.")
+
+    # Validate the theater bytes that will actually be committed, from the immutable tree rather
+    # than the mutable worktree. A failure drops the theater side instead of shipping unverified
+    # bytes or withholding the events publish.
+    if theater_problem is None:
+        theater_problem = committed_theater_problem(root, candidate_tree, candidate_paths, now=now)
+    if theater_problem and any(is_theater_path(path) for path in candidate_paths):
+        _drop_theater_from_index(root)
+        paths = [path for path in paths if not is_theater_path(path)]
+        staged_paths = _staged_paths(root)
+        if set(staged_paths) != set(paths):
+            raise RuntimeError("The candidate Git index changed during publication; refusing to commit.")
+        if not staged_paths:
+            result = {"status": "no_change", "event_count": len(records)}
+            result["theater"] = theater_result(theater_problem, changed=False)
+            return result
+        candidate_tree = _git(root, "write-tree").stdout.strip()
+        candidate_paths = _tree_paths(root, local_before, candidate_tree)
+        if candidate_paths != staged_paths:
+            raise RuntimeError("The candidate Git tree does not match the reviewed catalog paths.")
+
     catalog_blob = _tree_blob(root, candidate_tree, "data/events.json")
     try:
         staged_records = json.loads(catalog_blob)
@@ -257,10 +460,22 @@ def publish(
     if not isinstance(staged_records, list):
         raise ValueError("Active event seed must be a JSON array.")
     validate_catalog(staged_records, now=now)
-    (candidate_check or run_candidate_import_check)(root, catalog_blob)
+    # committed_theater_problem already parsed and validated this exact blob from this exact
+    # tree when theater survived the checks above, so this only re-reads it for the importer.
+    theater_blob = (
+        _tree_blob(root, candidate_tree, "data/theater-deals.json")
+        if "data/theater-deals.json" in candidate_paths
+        else None
+    )
+    if candidate_check:
+        candidate_check(root, catalog_blob)
+    else:
+        run_candidate_import_check(root, catalog_blob, theater_blob)
     for path in candidate_paths:
         if path.startswith("data/archive/"):
             validate_archive_blob(_tree_blob(root, candidate_tree, path))
+        # Theater archives are validated up front in read_theater_problem, where a bad one is a
+        # theater-side problem rather than a reason to withhold the events publish.
 
     if before_commit:
         before_commit()
@@ -287,7 +502,13 @@ def publish(
         lambda commit, count: poll_deployment(commit, minimum_count=MIN_EVENTS)
     )
     status = "deployed" if verifier(revision, len(staged_records)) else "deployment_unconfirmed"
-    return {"status": status, "event_count": len(staged_records), "revision": revision}
+    result = {"status": status, "event_count": len(staged_records), "revision": revision}
+    # Report off what actually shipped, not off "validation happened not to fail". Any theater
+    # path counts, so an archive-only push is not misreported as unchanged.
+    result["theater"] = theater_result(
+        theater_problem, changed=any(is_theater_path(path) for path in candidate_paths)
+    )
+    return result
 
 
 def validate_catalog(records, *, now):

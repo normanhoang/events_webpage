@@ -1,7 +1,7 @@
 <article class="event-card">
   {% include "events/image.html" %}
   <div class="card-copy">
-    <div class="card-meta"><span>{{ event.get_category_display }}</span>{% if event.top_pick %}<span class="pick">✳ Top pick</span>{% endif %}</div>
+    <div class="card-meta"><span>{{ event.get_category_display }}</span>{% if event.top_pick %}<span class="pick">{% include "events/icon.html" with icon="sparkles" %} Top pick</span>{% endif %}</div>
     <h3><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
     <p class="date"><time datetime="{{ occurrence.starts_at|date:'c' }}">{{ occurrence.starts_at|date:"D, M j · g:i A" }}</time></p>
     <p class="location">{{ event.venue }}{% if event.neighborhood %} · {{ event.neighborhood }}{% endif %}</p>

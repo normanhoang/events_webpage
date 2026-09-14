@@ -1,10 +1,14 @@
+from datetime import timedelta
+
 from django.conf import settings
 from django.core.paginator import Paginator
+from django.db.models import Case, IntegerField, Max, Min, Prefetch, Q, Value, When
 from django.http import Http404, JsonResponse, QueryDict
 from django.shortcuts import get_object_or_404, render
+from django.utils import timezone
 from django.views.decorators.http import require_safe
 
-from .models import Event, Occurrence
+from .models import Event, Occurrence, TheaterDeal, TheaterOffer
 
 # The page offers exactly two filters: an interest chip and the free-only toggle. Everything
 # else that used to be here (search, date, neighborhood, price range) was removed deliberately —
@@ -18,6 +22,11 @@ def health(request):
         "status": "ok",
         "revision": settings.DEPLOYMENT_REVISION,
         "upcoming_occurrences": Occurrence.objects.upcoming().count(),
+        "active_theater_deals": TheaterDeal.objects.filter(
+            is_active=True,
+            verified_at__gte=timezone.now() - timedelta(days=7),
+            offers__in=TheaterOffer.objects.active(),
+        ).distinct().count(),
     })
     response["Cache-Control"] = "no-store"
     return response
@@ -67,6 +76,44 @@ def home(request):
         "active_category": params.get("category", ""),
         "free_active": bool(params.get("free")),
         "categories": Event.Category.choices,
+    })
+
+
+@require_safe
+def theater_deals(request):
+    deal_type = request.GET.get("type", "")
+    valid_types = set(TheaterDeal.Classification.values)
+    if deal_type not in valid_types:
+        deal_type = ""
+
+    active_offers = TheaterOffer.objects.active()
+    fresh_after = timezone.now() - timedelta(days=7)
+    deals = TheaterDeal.objects.filter(
+        is_active=True, verified_at__gte=fresh_after, offers__in=active_offers
+    ).annotate(
+        best_price=Min("offers__price_min", filter=Q(offers__in=active_offers)),
+        type_order=Case(
+            When(classification=TheaterDeal.Classification.BROADWAY, then=Value(0)),
+            When(classification=TheaterDeal.Classification.OFF_BROADWAY, then=Value(1)),
+            default=Value(2), output_field=IntegerField(),
+        ),
+    ).prefetch_related(
+        Prefetch("offers", queryset=active_offers.order_by("price_min", "source_key"), to_attr="active_offers")
+    )
+    if deal_type:
+        deals = deals.filter(classification=deal_type)
+    deals = deals.order_by("type_order", "best_price", "title", "pk").distinct()
+
+    form_query = QueryDict("", mutable=True)
+    if deal_type:
+        form_query["type"] = deal_type
+    last_checked = deals.aggregate(last_checked=Max("verified_at"))["last_checked"]
+    return render(request, "events/theater_deals.html", {
+        "deals": deals,
+        "classifications": TheaterDeal.Classification.choices,
+        "active_type": deal_type,
+        "form_query": form_query,
+        "last_checked": last_checked,
     })
 
 

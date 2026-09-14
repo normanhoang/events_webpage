@@ -1,0 +1,27 @@
+{% extends "events/base.html" %}
+{% block title %}Theater deals · Norman’s NYC Events{% endblock %}
+{% block content %}
+<section class="theater-hero">
+  <p class="eyebrow">CURTAIN UP, SPEND LESS</p>
+  <h1>NYC theater deals</h1>
+  <p class="intro">Verified tickets, rushes, lotteries, and discounts across New York theater. Broadway and Off-Broadway first; good reasons to venture farther included.</p>
+  {% if last_checked %}<p class="last-checked">Last checked <time datetime="{{ last_checked|date:'c' }}">{{ last_checked|date:"M j, Y · g:i A" }} New York</time></p>{% endif %}
+</section>
+<nav class="interest-chips theater-types" aria-label="Filter theater deals by type">
+  <a href="{% url 'theater_deals' %}" {% if not active_type %}aria-current="true"{% endif %}>All theater</a>
+  {% for value, label in classifications %}<a href="{% querystring form_query type=value %}" {% if active_type == value %}aria-current="true"{% endif %}>{{ label }}</a>{% endfor %}
+</nav>
+<section class="theater-deal-list" aria-labelledby="theater-deals-heading">
+  <div class="results-heading"><div><p class="eyebrow">CURRENTLY QUALIFYING</p><h2 id="theater-deals-heading">Deals worth a look</h2></div><p>{{ deals|length }} verified show{{ deals|length|pluralize }}</p></div>
+  <div class="theater-grid">
+    {% for deal in deals %}
+    <article class="theater-card">
+      <div class="theater-card-heading"><p class="card-meta"><span>{{ deal.get_classification_display }}</span></p><h3><a href="{{ deal.official_url }}" rel="noopener noreferrer">{{ deal.title }}</a></h3>{% if deal.venue or deal.neighborhood %}<p class="location">{{ deal.venue }}{% if deal.neighborhood %} · {{ deal.neighborhood }}{% endif %}</p>{% endif %}</div>
+      <ul class="offer-list" aria-label="Current deals for {{ deal.title }}">
+        {% for offer in deal.active_offers %}<li><div><strong>{{ offer.label }}</strong><span class="offer-price">{{ offer.price_label }}</span>{% if offer.restrictions %}<p>{{ offer.restrictions }}</p>{% endif %}</div><a href="{{ offer.official_url }}" rel="noopener noreferrer">Get deal {% include "events/icon.html" with icon="arrow-up-right" %}</a></li>{% endfor %}
+      </ul>
+    </article>
+    {% empty %}<section class="empty-state">{% include "events/icon.html" with icon="sparkles" class="empty-symbol" %}<h2>No verified theater deals right now</h2><p>Check back after the next overnight update. Deals disappear as soon as they are no longer verified.</p></section>{% endfor %}
+  </div>
+</section>
+{% endblock %}

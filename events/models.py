@@ -105,3 +105,83 @@ class Occurrence(models.Model):
 
     def __str__(self):
         return f"{self.event} — {self.starts_at:%Y-%m-%d %H:%M}"
+
+
+class TheaterDeal(models.Model):
+    class Classification(models.TextChoices):
+        BROADWAY = "broadway", "Broadway"
+        OFF_BROADWAY = "off_broadway", "Off-Broadway"
+        OTHER = "other", "Other NYC theater"
+
+    title = models.CharField(max_length=240)
+    slug = models.SlugField(max_length=260, unique=True)
+    classification = models.CharField(max_length=24, choices=Classification.choices)
+    venue = models.CharField(max_length=240, blank=True)
+    neighborhood = models.CharField(max_length=120, blank=True)
+    official_url = models.URLField(max_length=1000, unique=True)
+    image_url = models.URLField(max_length=1000, blank=True)
+    verified_at = models.DateTimeField()
+    is_active = models.BooleanField(default=True, db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("classification", "title", "pk")
+
+    def clean(self):
+        super().clean()
+        for field in ("official_url", "image_url"):
+            if value := getattr(self, field):
+                URLValidator(schemes=["http", "https"])(value)
+
+    def __str__(self):
+        return self.title
+
+
+class TheaterOfferQuerySet(models.QuerySet):
+    def active(self, at=None):
+        at = at or timezone.now()
+        return self.filter(is_active=True, deal__is_active=True).filter(
+            models.Q(eligible_until__isnull=True) | models.Q(eligible_until__gt=at)
+        )
+
+
+class TheaterOffer(models.Model):
+    deal = models.ForeignKey(TheaterDeal, related_name="offers", on_delete=models.CASCADE)
+    source_key = models.CharField(max_length=240)
+    label = models.CharField(max_length=240)
+    price_label = models.CharField(max_length=160)
+    price_min = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    price_max = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    fees_included = models.BooleanField(null=True, blank=True)
+    restrictions = models.TextField(blank=True)
+    eligible_until = models.DateTimeField(null=True, blank=True, db_index=True)
+    official_url = models.URLField(max_length=1000)
+    is_active = models.BooleanField(default=True, db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    objects = TheaterOfferQuerySet.as_manager()
+
+    class Meta:
+        ordering = ("price_min", "source_key")
+        constraints = [
+            models.UniqueConstraint(fields=("deal", "source_key"), name="theater_offer_source_unique"),
+            models.CheckConstraint(
+                condition=models.Q(price_min__gte=0) | models.Q(price_min__isnull=True),
+                name="theater_offer_min_nonnegative",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(price_max__gte=models.F("price_min"))
+                | models.Q(price_min__isnull=True)
+                | models.Q(price_max__isnull=True),
+                name="theater_offer_price_order",
+            ),
+        ]
+
+    def clean(self):
+        super().clean()
+        URLValidator(schemes=["http", "https"])(self.official_url)
+
+    def __str__(self):
+        return f"{self.deal} — {self.label}"

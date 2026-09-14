@@ -22,4 +22,4 @@ python_files = ["test_*.py"]
 addopts = "-q"
 
 [tool.vercel.scripts]
-build = "python manage.py migrate --noinput && python manage.py import_events --sync"
+build = "python manage.py migrate --noinput && python manage.py import_events --sync && python manage.py import_theater_deals --sync"
