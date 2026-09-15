@@ -285,6 +285,46 @@ def test_home_hero_drops_the_retired_tagline(client, make_occurrence):
     assert "Norman’s NYC Events" in body
 
 
+def footer_of(body):
+    marker = '<footer class="site-footer'
+    assert marker in body
+    return body.split(marker)[1].split("</footer>")[0]
+
+
+def test_footer_states_when_the_events_were_last_verified(client, make_occurrence):
+    from datetime import datetime, timezone as dt_timezone
+
+    utc = dt_timezone.utc
+    make_occurrence(verified_at=datetime(2026, 7, 1, 12, 0, tzinfo=utc))
+    newest = make_occurrence(verified_at=datetime(2026, 8, 3, 21, 15, tzinfo=utc))
+
+    home = client.get("/").content.decode()
+    footer = footer_of(home)
+
+    # The footer reports the data's own freshness, rendered in New York time, so it must
+    # name the newest verification rather than whatever moment the page rendered.
+    assert "Last updated" in footer
+    assert "Aug 3, 2026 · 5:15 PM New York" in footer
+    assert "Jul 1, 2026" not in footer
+    today = timezone.localdate()
+    assert f"{today:%b} {today.day}, {today.year}" not in footer
+
+    # A datetime attribute keeps the timestamp machine-readable, in New York time like the
+    # text it sits beside.
+    assert 'datetime="2026-08-03T17:15:00-04:00"' in footer
+
+    detail = client.get(newest.event.get_absolute_url()).content.decode()
+    assert "Aug 3, 2026 · 5:15 PM New York" in footer_of(detail)
+
+
+def test_footer_timestamp_is_omitted_when_nothing_is_verified(client, make_occurrence):
+    make_occurrence()
+
+    footer = footer_of(client.get("/").content.decode())
+    assert "last-updated" not in footer
+    assert "None" not in footer
+
+
 def test_remote_images_have_local_category_backdrops_and_failure_handler(client, make_occurrence):
     from django.contrib.staticfiles import finders
     from events.models import Event

@@ -37,6 +37,15 @@ def active_filters(params):
     return {name: params[name] for name in FILTERS if params.get(name)}
 
 
+def events_last_updated():
+    """The newest verification time across the events the site draws from.
+
+    Deliberately dataset-level: an interest chip or the free toggle is a view of the same
+    catalog, so filtering must not rewrite the footer's freshness line.
+    """
+    return Occurrence.objects.upcoming().aggregate(latest=Max("event__verified_at"))["latest"]
+
+
 def filtered_occurrences(occurrences, params):
     category = params.get("category")
     if category:
@@ -76,6 +85,7 @@ def home(request):
         "active_category": params.get("category", ""),
         "free_active": bool(params.get("free")),
         "categories": Event.Category.choices,
+        "last_updated": events_last_updated(),
     })
 
 
@@ -108,6 +118,9 @@ def theater_deals(request):
     if deal_type:
         form_query["type"] = deal_type
     last_checked = deals.aggregate(last_checked=Max("verified_at"))["last_checked"]
+    # No `last_updated` for the footer here: the hero above already states when this page's
+    # deals were last checked, and printing the same timestamp twice reads as a bug. The
+    # events pages carry the footer line instead.
     return render(request, "events/theater_deals.html", {
         "deals": deals,
         "classifications": TheaterDeal.Classification.choices,
@@ -123,4 +136,6 @@ def event_detail(request, slug):
     occurrences = list(event.occurrences.upcoming())
     if not occurrences:
         raise Http404("No upcoming dates for this event.")
-    return render(request, "events/detail.html", {"event": event, "occurrences": occurrences})
+    return render(request, "events/detail.html", {
+        "event": event, "occurrences": occurrences, "last_updated": events_last_updated(),
+    })

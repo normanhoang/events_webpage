@@ -243,6 +243,10 @@ def test_theater_deals_page_groups_offers_by_show_and_prioritizes_classification
     assert "Off-Broadway" in body
     assert "Other NYC theater" in body
     assert "Last checked" in body
+    # The hero already states this page's freshness, so the shared footer note stays off it
+    # rather than printing the same timestamp twice.
+    footer = body.split('<footer class="site-footer')[1].split("</footer>")[0]
+    assert "last-updated" not in footer
     assert "Digital rush" in body
     assert 'href="?type=off_broadway"' in body
     assert 'href="?type=other"' in body

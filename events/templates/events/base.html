@@ -18,6 +18,6 @@
     <nav class="header-nav" aria-label="Primary">{% block header_nav %}<a class="header-link" href="{% url 'theater_deals' %}">{% include "events/icon.html" with icon="ticket" %} Theater deals</a>{% endblock %}</nav>
   </header>
   <main id="main" class="wrap" tabindex="-1">{% block content %}{% endblock %}</main>
-  <footer class="site-footer wrap"><p>Made for curious days in New York.</p><p>Norman’s independent edit. Confirm times, availability, and prices with the official source.</p></footer>
+  <footer class="site-footer wrap"><p>Made for curious days in New York.</p><p>Norman’s independent edit. Confirm times, availability, and prices with the official source.</p>{% if last_updated %}<p class="last-updated">Last updated <time datetime="{{ last_updated|date:'c' }}">{{ last_updated|date:"M j, Y · g:i A" }} New York</time></p>{% endif %}</footer>
 </body>
 </html>
