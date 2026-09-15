@@ -444,3 +444,20 @@ def test_discovery_slot_resolves_in_new_york_time():
 
     next_local_day = datetime(2026, 9, 15, 20, 30, tzinfo=nyc)
     assert discovery_sources_for(next_local_day) != discovery_sources_for(late_local)
+
+
+def test_theater_qualification_ceilings_stay_consistent():
+    from automation.theater_deals import (
+        MAX_QUALIFYING_PRICE,
+        MAX_QUALIFYING_RUSH_PRICE,
+        MIN_QUALIFYING_DISCOUNT_PCT,
+        MIN_QUALIFYING_PRICE_DROP,
+    )
+
+    # The briefing prints these numbers, so they live in the module rather than in two prose copies.
+    for value in (MAX_QUALIFYING_PRICE, MAX_QUALIFYING_RUSH_PRICE, MIN_QUALIFYING_DISCOUNT_PCT, MIN_QUALIFYING_PRICE_DROP):
+        assert isinstance(value, int) and value > 0
+    # A rush or lottery is meant to be the cheapest path in, so its ceiling cannot exceed the
+    # general price ceiling; a discount floor above 100% would qualify nothing.
+    assert MAX_QUALIFYING_RUSH_PRICE <= MAX_QUALIFYING_PRICE
+    assert MIN_QUALIFYING_DISCOUNT_PCT <= 100

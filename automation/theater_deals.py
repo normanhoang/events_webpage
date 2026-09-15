@@ -7,6 +7,15 @@ MAX_THEATER_DEALS = 50
 VERIFICATION_MAX_AGE_DAYS = 7
 CLASSIFICATIONS = {"broadway", "off_broadway", "other"}
 
+# Qualification ceilings, in one place so the briefing, the prompt, and the tests agree. These are
+# editorial gates the model applies to what it verifies; the validator can only check shape, because
+# an offer stores prices rather than the original price a discount percentage would need.
+MAX_QUALIFYING_PRICE = 120        # ticket price at or below
+MIN_QUALIFYING_DISCOUNT_PCT = 30  # discount of at least
+MAX_QUALIFYING_RUSH_PRICE = 100   # newly announced lottery or rush at or below
+MIN_QUALIFYING_PRICE_DROP = 10    # price drop of at least
+
+
 NYC = ZoneInfo("America/New_York")
 
 # The nightly run re-verifies and prunes, which alone can only shrink the page: an offer expires, its
