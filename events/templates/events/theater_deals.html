@@ -1,6 +1,6 @@
 {% extends "events/base.html" %}
 {% block title %}Theater deals · Norman’s NYC Events{% endblock %}
-{% block header_nav %}<a class="header-link" href="{% url 'home' %}">Find your next outing {% include "events/icon.html" with icon="arrow-up-right" %}</a>{% endblock %}
+{% block header_nav %}<a class="header-link" href="{% url 'home' %}">{% include "events/icon.html" with icon="arrow-up-right" %} Find your next outing</a>{% endblock %}
 {% block content %}
 <section class="theater-hero">
   <p class="eyebrow">CURTAIN UP, SPEND LESS</p>
