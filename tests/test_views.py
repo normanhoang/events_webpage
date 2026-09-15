@@ -252,6 +252,34 @@ def test_home_has_accessible_get_filters_public_interest_chips_and_editorial_car
     assert finders.find("events/favicon.svg")
 
 
+def test_each_page_header_cross_links_to_the_other_page_at_the_top(client, make_occurrence):
+    # One cross-link per page, pointing at the page rather than a scroll position, so the header
+    # always leads somewhere new instead of re-linking the page the reader is already on.
+    def nav_of(path):
+        body = client.get(path).content.decode()
+        assert 'class="header-nav"' in body, path
+        return body.split('class="header-nav"')[1].split("</nav>")[0]
+
+    home = nav_of("/")
+    assert home.count("header-link") == 1
+    assert "Theater deals" in home
+    assert 'href="/theater-deals/"' in home
+    assert "#discover" not in home
+
+    theater = nav_of("/theater-deals/")
+    assert theater.count("header-link") == 1
+    assert "Find your next outing" in theater
+    assert 'href="/"' in theater
+    assert "#discover" not in theater
+
+
+def test_home_hero_drops_the_retired_tagline(client, make_occurrence):
+    body = client.get("/").content.decode()
+
+    assert "A little art. A great night out." not in body
+    assert "Norman’s NYC Events" in body
+
+
 def test_remote_images_have_local_category_backdrops_and_failure_handler(client, make_occurrence):
     from django.contrib.staticfiles import finders
     from events.models import Event

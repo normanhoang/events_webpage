@@ -115,6 +115,21 @@ def test_illustration_assets_match_the_glyph_declared_by_the_builder():
         assert declared.group(1) == glyph, f"{stem}: built from {declared.group(1)}, declared {glyph}"
 
 
+def test_theater_grid_shows_three_cards_across_on_desktop_like_the_events_grid():
+    css = (ROOT / "events/static/events/site.css").read_text()
+
+    assert ".theater-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))" in css
+    # Cards must hug their content: a one-offer card stretched to match a two-offer neighbour
+    # shows a large empty void inside its border.
+    assert "align-items:start}" in css.split(".theater-grid{")[1].split("}")[0]
+    # Three across needs the same intermediate step the events grid uses, or the cards get
+    # cramped between the desktop width and the single-column breakpoint.
+    assert ("@media(min-width:701px) and (max-width:1050px){.theater-grid{"
+            "grid-template-columns:repeat(2,minmax(0,1fr))}}") in css
+    # And it must still collapse to one column on a phone.
+    assert "@media(max-width:700px){.theater-hero{padding-block:36px 16px}.theater-grid{" in css
+
+
 def test_every_referenced_ui_icon_exists_on_disk():
     import re
 

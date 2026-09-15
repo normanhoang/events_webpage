@@ -235,7 +235,9 @@ def test_theater_deals_page_groups_offers_by_show_and_prioritizes_classification
     assert response.status_code == 200
     body = response.content.decode()
     assert body.index(broadway.title) < body.index(off_broadway.title) < body.index(other.title)
-    assert "Theater deals" in body
+    # Assert the visible heading, not "Theater deals" — that string also appears in the <title>,
+    # so it passed even when the page's own nav link was removed.
+    assert "NYC theater deals" in body
     assert "All theater" in body
     assert "Broadway" in body
     assert "Off-Broadway" in body
