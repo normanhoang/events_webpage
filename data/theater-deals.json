@@ -86,5 +86,93 @@
         "official_url": "https://www.broadwaybox.com/shows/christmas-carol-players-theatre/"
       }
     ]
+  },
+  {
+    "title": "SIX: The Musical",
+    "classification": "broadway",
+    "venue": "Lena Horne Theatre",
+    "neighborhood": "Theater District",
+    "official_url": "https://playbill.com/discount/playbill-discount-for-six-the-musical",
+    "image_url": "https://assets.playbill.com/playbill-covers/Six-Playbill-2025-02-01_Web.jpg",
+    "verified_at": "2026-09-15T15:19:44-04:00",
+    "offers": [
+      {
+        "source_key": "playbill-discount-code",
+        "label": "Select-performance discount code",
+        "price_label": "$67 - includes facility fee, online service fees extra (reg. $89.75)",
+        "price_min": 67,
+        "price_max": 67,
+        "fees_included": null,
+        "restrictions": "Code SIXPB; select performances through Nov 22; limit 8; all sales final.",
+        "eligible_until": "2026-11-22T23:59:59-05:00",
+        "official_url": "https://playbill.com/discount/playbill-discount-for-six-the-musical"
+      }
+    ]
+  },
+  {
+    "title": "The Play That Goes Wrong",
+    "classification": "off_broadway",
+    "venue": "New World Stages",
+    "neighborhood": "Hell's Kitchen",
+    "official_url": "https://playbill.com/discount/playbill-discount-for-the-play-that-goes-wrong",
+    "image_url": "https://assets.playbill.com/playbill-covers/The-Play-That-Goes-Wrong-Playbill-2019-04-01_Web_2025-10-21-173634_mpyf.jpg",
+    "verified_at": "2026-09-15T15:19:44-04:00",
+    "offers": [
+      {
+        "source_key": "playbill-discount-code",
+        "label": "Select-performance discount code",
+        "price_label": "$92-$104 including fees (reg. $123-$138)",
+        "price_min": 92,
+        "price_max": 104,
+        "fees_included": true,
+        "restrictions": "Code PYPBL25; select performances through Jan 31, 2027; subject to availability.",
+        "eligible_until": "2027-01-31T23:59:59-05:00",
+        "official_url": "https://playbill.com/discount/playbill-discount-for-the-play-that-goes-wrong"
+      }
+    ]
+  },
+  {
+    "title": "Music City",
+    "classification": "off_broadway",
+    "venue": "The Theatre at St. Luke's",
+    "neighborhood": "Theater District",
+    "official_url": "https://playbill.com/discount/playbill-discount-for-music-city",
+    "image_url": "https://assets.playbill.com/playbill-covers/260121_MC_PlaybillClubListing_649x1024_JK.jpg",
+    "verified_at": "2026-09-15T15:19:44-04:00",
+    "offers": [
+      {
+        "source_key": "playbill-discount-code",
+        "label": "25% off select performances",
+        "price_label": "$59-$119 including fees - 25% off (reg. $59-$165.50)",
+        "price_min": 59,
+        "price_max": 119,
+        "fees_included": true,
+        "restrictions": "Code PC25; select performances through Sep 30; non-refundable, non-exchangeable.",
+        "eligible_until": "2026-09-30T23:59:59-04:00",
+        "official_url": "https://playbill.com/discount/playbill-discount-for-music-city"
+      }
+    ]
+  },
+  {
+    "title": "The Fantasticks",
+    "classification": "broadway",
+    "venue": "Hayes Theater",
+    "neighborhood": "Theater District",
+    "official_url": "https://playbill.com/discount/playbill-discount-for-the-fantasticks",
+    "image_url": "https://assets.playbill.com/playbill-covers/The-Fantasticks-Playbill-2026-10-22_Web.jpg",
+    "verified_at": "2026-09-15T15:19:44-04:00",
+    "offers": [
+      {
+        "source_key": "playbill-discount-code",
+        "label": "Select-performance discount code",
+        "price_label": "$59-$199 including fees (reg. $79-$229)",
+        "price_min": 59,
+        "price_max": 199,
+        "fees_included": true,
+        "restrictions": "Code FanBill2ST; previews Oct 22-Nov 1 and Wednesdays best availability; purchase by Nov 15; limit 9.",
+        "eligible_until": "2026-11-15T23:59:59-05:00",
+        "official_url": "https://playbill.com/discount/playbill-discount-for-the-fantasticks"
+      }
+    ]
   }
 ]
