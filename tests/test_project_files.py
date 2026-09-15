@@ -60,6 +60,61 @@ def test_all_category_art_uses_local_lucide_svgs_and_templates_have_no_unicode_i
             assert legacy_glyph not in text, template.name
 
 
+ILLUSTRATION_ASSETS = [
+    "art", "books", "comics", "community", "fitness", "food", "gaming", "music", "other",
+    "outdoors", "queer", "tech", "theater",
+    "theater-broadway", "theater-off-broadway", "theater-other",
+]
+
+
+def test_illustration_art_keeps_lucide_outlines_stroked_instead_of_filled_solid():
+    import re
+
+    # Better Icons marks Lucide's outline paths fill="currentColor", so dropping an ink colour
+    # straight in fills every shape solid and closes the counters that carry the icon's meaning:
+    # the palette lost its thumb hole and paint wells, and two trees welded into one silhouette.
+    # Only Lucide's tiny accent circles (r <= 1.5) may be filled.
+    image_dir = ROOT / "events/static/events/images"
+
+    for stem in ILLUSTRATION_ASSETS:
+        svg = (image_dir / f"{stem}.svg").read_text()
+        for tag in re.findall(r"<(?:path|circle|rect|ellipse)\b[^>]*>", svg):
+            if 'width="800"' in tag:
+                continue  # the paper canvas
+            if not re.search(r'fill="(?!none)', tag):
+                continue  # a stroked outline
+            # Only an accent dot may be filled. Checking every shape type matters: Lucide's cpu
+            # icon is two <rect> elements, so a path-only check passes while the chip body and its
+            # inner square stay solid — which is exactly how that icon shipped as a blob.
+            if tag.startswith("<circle"):
+                radius = re.search(r'\br="([0-9.]+)"', tag)
+                assert radius and float(radius.group(1)) <= 1.5, f"{stem}: filled circle is not an accent"
+            else:
+                raise AssertionError(f"{stem}: outline shape filled solid: {tag[:70]}")
+
+
+def test_illustration_assets_match_the_glyph_declared_by_the_builder():
+    import importlib.util
+    import re
+
+    # The builder is the single source of truth for which glyph each asset came from. Without this
+    # check a hand-edited or stale asset keeps its old artwork while the builder claims otherwise.
+    spec = importlib.util.spec_from_file_location(
+        "build_illustrations", ROOT / "scripts/build_illustrations.py"
+    )
+    assert spec and spec.loader
+    builder = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(builder)
+
+    image_dir = ROOT / "events/static/events/images"
+    assert set(builder.ASSETS) == set(ILLUSTRATION_ASSETS)
+    for stem, glyph in builder.ASSETS.items():
+        svg = (image_dir / f"{stem}.svg").read_text()
+        declared = re.match(r"\s*<!--\s*lucide:([a-z0-9-]+)\s*-->", svg)
+        assert declared, f"{stem}: missing lucide provenance comment"
+        assert declared.group(1) == glyph, f"{stem}: built from {declared.group(1)}, declared {glyph}"
+
+
 def test_every_referenced_ui_icon_exists_on_disk():
     import re
 
