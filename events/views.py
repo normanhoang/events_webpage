@@ -98,9 +98,12 @@ def theater_deals(request):
 
     active_offers = TheaterOffer.objects.active()
     fresh_after = timezone.now() - timedelta(days=7)
-    deals = TheaterDeal.objects.filter(
+    # The footer's freshness line is dataset-level, so a type bubble cannot rewrite it — the
+    # same rule the events pages follow.
+    qualifying = TheaterDeal.objects.filter(
         is_active=True, verified_at__gte=fresh_after, offers__in=active_offers
-    ).annotate(
+    )
+    deals = qualifying.annotate(
         best_price=Min("offers__price_min", filter=Q(offers__in=active_offers)),
         type_order=Case(
             When(classification=TheaterDeal.Classification.BROADWAY, then=Value(0)),
@@ -117,16 +120,13 @@ def theater_deals(request):
     form_query = QueryDict("", mutable=True)
     if deal_type:
         form_query["type"] = deal_type
-    last_checked = deals.aggregate(last_checked=Max("verified_at"))["last_checked"]
-    # No `last_updated` for the footer here: the hero above already states when this page's
-    # deals were last checked, and printing the same timestamp twice reads as a bug. The
-    # events pages carry the footer line instead.
+    last_updated = qualifying.aggregate(last_updated=Max("verified_at"))["last_updated"]
     return render(request, "events/theater_deals.html", {
         "deals": deals,
         "classifications": TheaterDeal.Classification.choices,
         "active_type": deal_type,
         "form_query": form_query,
-        "last_checked": last_checked,
+        "last_updated": last_updated,
     })
 
 

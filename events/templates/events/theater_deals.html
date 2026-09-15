@@ -6,7 +6,6 @@
   <p class="eyebrow">CURTAIN UP, SPEND LESS</p>
   <h1>NYC theater deals</h1>
   <p class="intro">Verified tickets, rushes, lotteries, and discounts across New York theater. Broadway and Off-Broadway first; good reasons to venture farther included.</p>
-  {% if last_checked %}<p class="last-checked">Last checked <time datetime="{{ last_checked|date:'c' }}">{{ last_checked|date:"M j, Y · g:i A" }} New York</time></p>{% endif %}
 </section>
 <nav class="interest-chips theater-types" aria-label="Filter theater deals by type">
   <a href="{% url 'theater_deals' %}" {% if not active_type %}aria-current="true"{% endif %}>All theater</a>

@@ -242,14 +242,37 @@ def test_theater_deals_page_groups_offers_by_show_and_prioritizes_classification
     assert "Broadway" in body
     assert "Off-Broadway" in body
     assert "Other NYC theater" in body
-    assert "Last checked" in body
-    # The hero already states this page's freshness, so the shared footer note stays off it
-    # rather than printing the same timestamp twice.
+    # The hero's own "Last checked" line is retired: this page states its freshness in the
+    # shared footer, exactly like the events page.
+    assert "Last checked" not in body
+    assert "last-checked" not in body
     footer = body.split('<footer class="site-footer')[1].split("</footer>")[0]
-    assert "last-updated" not in footer
+    assert "last-updated" in footer
     assert "Digital rush" in body
     assert 'href="?type=off_broadway"' in body
     assert 'href="?type=other"' in body
+
+
+def test_theater_footer_states_when_the_deals_were_last_verified(client):
+    from django.template.defaultfilters import date as date_filter
+
+    # Both inside the seven-day freshness window the page enforces, so both qualify. The older
+    # deal is deliberately the one a type bubble filters down to, so a page-level aggregate
+    # would report the older moment and this test would catch it.
+    older = timezone.now() - timedelta(days=5, hours=3)
+    newest = timezone.now() - timedelta(hours=9)
+    make_deal(title="Newest Show", classification="broadway", verified_at=newest)
+    make_deal(title="Older Show", classification="other", verified_at=older)
+
+    # New York time, like the events page — and a type bubble is a view of the same dataset,
+    # so it must not move the freshness line. The template renders the stored UTC value in New
+    # York time, so the expectation is built from the same conversion rather than the raw value.
+    expected = date_filter(timezone.localtime(newest), "M j, Y · g:i A") + " New York"
+    older_rendered = date_filter(timezone.localtime(older), "M j, Y · g:i A")
+    for path in ["/theater-deals/", "/theater-deals/?type=other"]:
+        footer = client.get(path).content.decode().split('<footer class="site-footer')[1].split("</footer>")[0]
+        assert expected in footer, path
+        assert older_rendered not in footer, path
 
 
 def test_theater_deals_page_type_bubbles_filter_shows_and_retired_params_do_not_propagate(client):

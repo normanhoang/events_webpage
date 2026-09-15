@@ -130,6 +130,14 @@ def test_theater_grid_shows_three_cards_across_on_desktop_like_the_events_grid()
     assert "@media(max-width:700px){.theater-hero{padding-block:36px 16px}.theater-grid{" in css
 
 
+def test_the_retired_theater_last_checked_line_leaves_no_dead_css():
+    css = (ROOT / "events/static/events/site.css").read_text()
+
+    # The page-level timestamp moved into the shared footer, so the hero's own rule is dead
+    # weight. Asserting on the retired token keeps it from being left behind or resurrected.
+    assert ".last-checked" not in css
+
+
 def test_every_referenced_ui_icon_exists_on_disk():
     import re
 
