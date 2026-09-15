@@ -6,7 +6,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-two-strangers-carry-a-cake-across-new-york",
     "image_url": "https://assets.playbill.com/playbill-covers/Two-Strangers-Carry-A-Cake-Playbill-2025-11-01_Web.jpg",
-    "verified_at": "2026-09-14T09:05:00-04:00",
+    "verified_at": "2026-09-15T00:03:35-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -18,17 +18,6 @@
         "restrictions": "Code TSPLAY; select performances; purchase by Oct 3; limit 8.",
         "eligible_until": "2026-10-03T23:59:59-04:00",
         "official_url": "https://playbill.com/discount/playbill-discount-for-two-strangers-carry-a-cake-across-new-york"
-      },
-      {
-        "source_key": "digital-lottery",
-        "label": "Digital lottery",
-        "price_label": "$48 · fees not stated",
-        "price_min": 48,
-        "price_max": 48,
-        "fees_included": null,
-        "restrictions": "Subject to lottery rules and availability.",
-        "eligible_until": null,
-        "official_url": "https://playbill.com/discount/playbill-discount-for-two-strangers-carry-a-cake-across-new-york"
       }
     ]
   },
@@ -39,7 +28,7 @@
     "neighborhood": "Hell’s Kitchen",
     "official_url": "https://playbill.com/discount/playbill-discount-for-parcel-from-america",
     "image_url": "https://assets.playbill.com/playbill-covers/PfA-649-x-1024-px.jpg",
-    "verified_at": "2026-09-14T09:05:00-04:00",
+    "verified_at": "2026-09-15T00:03:35-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -61,7 +50,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-going-bacharach-2",
     "image_url": "https://assets.playbill.com/playbill-covers/Going-Bacharach-Playbill-2026-09-09_Web.jpg",
-    "verified_at": "2026-09-14T09:05:00-04:00",
+    "verified_at": "2026-09-15T00:03:35-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -83,7 +72,7 @@
     "neighborhood": "West Village",
     "official_url": "https://www.broadwaybox.com/shows/christmas-carol-players-theatre/",
     "image_url": "https://img.broadwaybox.com/event/poster/480x720_2025_9498_1.jpg",
-    "verified_at": "2026-09-14T09:05:00-04:00",
+    "verified_at": "2026-09-15T00:03:35-04:00",
     "offers": [
       {
         "source_key": "broadwaybox-discount-code",
