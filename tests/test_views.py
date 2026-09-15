@@ -271,6 +271,9 @@ def test_each_page_header_cross_links_to_the_other_page_at_the_top(client, make_
     assert "Find your next outing" in theater
     assert 'href="/"' in theater
     assert "#discover" not in theater
+    # The arrow sits before the label, matching the events page's leading ticket icon.
+    assert "icons/arrow-up-right.svg" in theater
+    assert theater.index("ui-icon") < theater.index("Find your next outing")
 
 
 def test_home_hero_drops_the_retired_tagline(client, make_occurrence):
