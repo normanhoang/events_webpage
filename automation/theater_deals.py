@@ -21,7 +21,9 @@ DISCOVERY_SOURCES = (
     ("Playbill - discount offers index", "https://playbill.com/discounts"),
     ("TDF - nonprofit and Off-Off-Broadway offers", "https://www.tdf.org/"),
     ("TodayTix - rush and lottery listings", "https://www.todaytix.com/"),
-    ("TheaterMania - ticket deals", "https://www.theatermania.com/"),
+    # BroadwayBox rather than TheaterMania: theatermania.com answers 403 to a non-browser fetch, so a
+    # source there would waste its slot every cycle.
+    ("BroadwayBox - discount offers", "https://www.broadwaybox.com/discounts/"),
 )
 DISCOVERY_PER_NIGHT = 3
 
