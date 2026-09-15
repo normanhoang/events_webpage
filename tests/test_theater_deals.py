@@ -405,3 +405,42 @@ def test_archive_theater_deals_refuses_malformed_records_instead_of_dropping_the
                 "archive_theater_deals", active_path=str(path),
                 archive_dir=str(tmp_path / "archive"), now="2030-05-02T12:00:00-04:00",
             )
+
+
+def test_discovery_rotation_reaches_every_source_inside_one_window():
+    from datetime import datetime, timedelta
+    from zoneinfo import ZoneInfo
+
+    from automation.theater_deals import DISCOVERY_PER_NIGHT, DISCOVERY_SOURCES, discovery_sources_for
+
+    # Re-verifying and pruning can only shrink the page, so the rotation is the only source of growth.
+    # Ranked rotation, not hashing: every source must be reached inside one window, or the tail of the
+    # list starves and those sources are never swept.
+    window = -(-len(DISCOVERY_SOURCES) // DISCOVERY_PER_NIGHT)
+    nyc = ZoneInfo("America/New_York")
+    start = datetime(2026, 9, 15, 0, 5, tzinfo=nyc)
+
+    seen = set()
+    for offset in range(window):
+        tonight = discovery_sources_for(start + timedelta(days=offset))
+        assert len(tonight) == DISCOVERY_PER_NIGHT
+        assert len(set(tonight)) == DISCOVERY_PER_NIGHT, "a night must not repeat a source"
+        seen.update(tonight)
+    assert seen == set(DISCOVERY_SOURCES)
+
+
+def test_discovery_slot_resolves_in_new_york_time():
+    from datetime import datetime, timezone
+    from zoneinfo import ZoneInfo
+
+    from automation.theater_deals import discovery_sources_for
+
+    # 00:30 UTC on Sep 15 is still Sep 14 in New York. Resolving the slot from the raw date would
+    # advance a day early and skip or repeat a slot, so the local day has to decide.
+    nyc = ZoneInfo("America/New_York")
+    late_local = datetime(2026, 9, 14, 20, 30, tzinfo=nyc)
+    same_moment_utc = late_local.astimezone(timezone.utc)
+    assert discovery_sources_for(same_moment_utc) == discovery_sources_for(late_local)
+
+    next_local_day = datetime(2026, 9, 15, 20, 30, tzinfo=nyc)
+    assert discovery_sources_for(next_local_day) != discovery_sources_for(late_local)

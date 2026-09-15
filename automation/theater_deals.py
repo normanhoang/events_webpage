@@ -1,10 +1,47 @@
 """Validation helpers for the independent NYC theater-deals seed."""
 
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 MAX_THEATER_DEALS = 50
 VERIFICATION_MAX_AGE_DAYS = 7
 CLASSIFICATIONS = {"broadway", "off_broadway", "other"}
+
+NYC = ZoneInfo("America/New_York")
+
+# The nightly run re-verifies and prunes, which alone can only shrink the page: an offer expires, its
+# show loses its last qualifying offer, and the card disappears with nothing replacing it. So a few
+# sources rotate through the briefing every night. Keep the list in one place so the briefing, the
+# prompt, and any validation cannot drift apart.
+DISCOVERY_SOURCES = (
+    ("Playbill - Broadway rush, lottery, and standing-room policies",
+     "https://playbill.com/article/broadway-rush-lottery-and-standing-room-only-policies-com-116003"),
+    ("Playbill - Off-Broadway rush and inexpensive ticket policies",
+     "https://playbill.com/article/off-broadway-rush-standing-room-and-inexpensive-ticket-policies-173110"),
+    ("Playbill - discount offers index", "https://playbill.com/discounts"),
+    ("TDF - nonprofit and Off-Off-Broadway offers", "https://www.tdf.org/"),
+    ("TodayTix - rush and lottery listings", "https://www.todaytix.com/"),
+    ("TheaterMania - ticket deals", "https://www.theatermania.com/"),
+)
+DISCOVERY_PER_NIGHT = 3
+
+
+def discovery_sources_for(now):
+    """The slice of DISCOVERY_SOURCES to sweep tonight.
+
+    The run is cut off after about three minutes, so a few sources rotate per night rather than all
+    of them every night. Advance the window by DISCOVERY_PER_NIGHT each night so consecutive nights
+    partition the list: stepping by one would re-check the same sources and never reach the tail,
+    which starves the sources at the end forever. Resolve the slot in New York time — a UTC-aware
+    caller just after midnight sits on the previous local day and would repeat or skip a slot.
+    """
+    day = now.astimezone(NYC).date().toordinal()
+    start = (day * DISCOVERY_PER_NIGHT) % len(DISCOVERY_SOURCES)
+    return tuple(
+        DISCOVERY_SOURCES[(start + step) % len(DISCOVERY_SOURCES)]
+        for step in range(DISCOVERY_PER_NIGHT)
+    )
+
 
 
 def aware_iso(value, field):
