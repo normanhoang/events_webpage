@@ -121,7 +121,7 @@ def test_theater_grid_shows_three_cards_across_on_desktop_like_the_events_grid()
     assert ".theater-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))" in css
     # Cards must hug their content: a one-offer card stretched to match a two-offer neighbour
     # shows a large empty void inside its border.
-    assert "align-items:start}" in css.split(".theater-grid{")[1].split("}")[0]
+    assert css.split(".theater-grid{")[1].split("}")[0].rstrip().endswith("align-items:start")
     # Three across needs the same intermediate step the events grid uses, or the cards get
     # cramped between the desktop width and the single-column breakpoint.
     assert ("@media(min-width:701px) and (max-width:1050px){.theater-grid{"
