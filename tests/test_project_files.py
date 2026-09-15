@@ -156,3 +156,16 @@ def test_every_referenced_ui_icon_exists_on_disk():
     # skip it — and it would also put template data into a CSS url() inside a style attribute.
     for template in (ROOT / "events/templates/events").glob("*.html"):
         assert 'icon="{{' not in template.read_text(), template.name
+
+
+def test_the_ticket_glyph_keeps_its_perforation_centred():
+    svg = (ROOT / "events/static/events/icons/ticket.svg").read_text()
+
+    # Lucide's ticket draws its perforation at x=13 inside a body spanning x=2..22, so the dashes sit
+    # one unit right of centre and the glyph reads lopsided at header and CTA sizes. The dash subpath
+    # starts one unit in from the body's own start point, so `m10-4` lands on x=12 — the centre — and
+    # `m11-4` is upstream's off-centre version. Regenerating this icon from the icon set would silently
+    # restore the defect, which is what this guards.
+    assert "Zm10-4v2m0 10v2m0-8v2" in svg
+    assert "Zm11-4v2" not in svg
+    assert "<!-- lucide:ticket -->" in svg
