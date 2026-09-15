@@ -265,15 +265,17 @@ def test_each_page_header_cross_links_to_the_other_page_at_the_top(client, make_
     assert "Theater deals" in home
     assert 'href="/theater-deals/"' in home
     assert "#discover" not in home
+    # Both header icons trail their label, so the two pages read the same way.
+    assert "icons/ticket.svg" in home
+    assert home.index("Theater deals") < home.index("ui-icon")
 
     theater = nav_of("/theater-deals/")
     assert theater.count("header-link") == 1
     assert "Find your next outing" in theater
     assert 'href="/"' in theater
     assert "#discover" not in theater
-    # The arrow sits before the label, matching the events page's leading ticket icon.
     assert "icons/arrow-up-right.svg" in theater
-    assert theater.index("ui-icon") < theater.index("Find your next outing")
+    assert theater.index("Find your next outing") < theater.index("ui-icon")
 
 
 def test_home_hero_drops_the_retired_tagline(client, make_occurrence):

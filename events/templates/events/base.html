@@ -15,7 +15,7 @@
   <header class="site-header wrap">
     <a class="brand" href="{% url 'home' %}" aria-label="Norman’s NYC Events home"><span class="brand-mark" aria-hidden="true">n.</span> Norman<span class="brand-dot">’s</span></a>
     <span class="header-note">A personal guide to New York</span>
-    <nav class="header-nav" aria-label="Primary">{% block header_nav %}<a class="header-link" href="{% url 'theater_deals' %}">{% include "events/icon.html" with icon="ticket" %} Theater deals</a>{% endblock %}</nav>
+    <nav class="header-nav" aria-label="Primary">{% block header_nav %}<a class="header-link" href="{% url 'theater_deals' %}">Theater deals {% include "events/icon.html" with icon="ticket" %}</a>{% endblock %}</nav>
   </header>
   <main id="main" class="wrap" tabindex="-1">{% block content %}{% endblock %}</main>
   <footer class="site-footer wrap"><p>Made for curious days in New York.</p><p>Norman’s independent edit. Confirm times, availability, and prices with the official source.</p></footer>
