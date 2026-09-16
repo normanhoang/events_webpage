@@ -243,7 +243,8 @@ def test_publish_returns_no_change_without_committing_or_deploying(tmp_path):
 
     after = subprocess.run(["git", "rev-parse", "HEAD"], cwd=tmp_path, check=True, capture_output=True, text=True).stdout
     assert result == {
-        "status": "no_change", "event_count": 12, "theater": {"status": "not_changed"},
+        "status": "no_change", "event_count": 12, "events_delta": {"added": 0, "removed": 0},
+        "theater": {"status": "not_changed"},
     }
     assert after == before
 
@@ -297,6 +298,8 @@ def test_publish_validates_commits_pushes_and_confirms_changed_catalog(tmp_path)
     ).stdout)
     assert result == {
         "status": "deployed", "event_count": 12, "revision": local_revision,
+        # Only the title changed, so no source URL arrived or left: the count must not move.
+        "events_delta": {"added": 0, "removed": 0},
         # No theater seed in this fixture, so the honest answer is that theater did not ship.
         "theater": {"status": "not_changed"},
     }
@@ -549,7 +552,7 @@ def test_publish_reports_theater_updated_when_the_seed_actually_ships(tmp_path):
     result = publish_here(root)
 
     assert result["status"] == "deployed"
-    assert result["theater"] == {"status": "updated"}
+    assert result["theater"] == {"status": "updated", "added": 0, "removed": 0}
     pushed = subprocess_names(remote)
     assert "data/events.json" in pushed
     assert "data/theater-deals.json" in pushed
@@ -917,3 +920,76 @@ def test_cli_prints_machine_readable_result(monkeypatch, capsys):
 
     assert publish_update.main([]) == 0
     assert json.loads(capsys.readouterr().out) == {"status": "no_change", "event_count": 18}
+
+
+def test_publish_counts_the_events_a_publish_adds_and_drops(tmp_path):
+    import json
+
+    remote, root = build_publishable_repo(tmp_path, theater_seed_text="[]", add_theater=False)
+    catalog = records()
+    catalog[0]["official_url"] = "https://example.org/events/new-a"
+    catalog[1]["official_url"] = "https://example.org/events/new-b"
+    (root / "data/events.json").write_text(json.dumps(catalog))
+
+    result = publish_here(root)
+
+    # Two source URLs arrived and two left, counted even though the catalog length is unchanged.
+    assert result["status"] == "deployed"
+    assert result["events_delta"] == {"added": 2, "removed": 2}
+
+
+def test_publish_count_ignores_reordering_and_reverification(tmp_path):
+    import json
+
+    remote, root = build_publishable_repo(tmp_path, theater_seed_text="[]", add_theater=False)
+    reordered = list(reversed(records()))
+    for record in reordered:
+        record["verified_at"] = "2030-05-01T18:00:00-04:00"
+        record["title"] = record["title"] + " (reverified)"
+    (root / "data/events.json").write_text(json.dumps(reordered))
+
+    result = publish_here(root)
+
+    # A positional compare would report every record as added and removed; a reader sees no change.
+    assert result["status"] == "deployed"
+    assert result["events_delta"] == {"added": 0, "removed": 0}
+
+
+def test_publish_counts_the_theater_shows_added_and_removed(tmp_path):
+    import json
+
+    remote, root = build_publishable_repo(
+        tmp_path,
+        theater_seed_text=json.dumps(theater_records(verified_at="2030-05-01T12:00:00-04:00", count=2)),
+    )
+    seed = root / "data/theater-deals.json"
+    rows = json.loads(seed.read_text())
+    rows = [row for row in rows if row["official_url"] != "https://example.org/show-0"]
+    newcomer = theater_records(verified_at="2030-05-01T12:00:00-04:00")[0]
+    newcomer["title"] = "Newly announced show"
+    newcomer["official_url"] = "https://example.org/show-new"
+    newcomer["offers"][0]["official_url"] = "https://example.org/show-new/rush"
+    rows.append(newcomer)
+    seed.write_text(json.dumps(rows))
+
+    result = publish_here(root)
+
+    assert result["status"] == "deployed"
+    assert result["theater"] == {"status": "updated", "added": 1, "removed": 1}
+
+
+def test_publish_still_ships_when_the_counts_cannot_be_computed(tmp_path, monkeypatch):
+    from automation import publish_update
+
+    remote, root = build_publishable_repo(tmp_path, theater_seed_text="[]", add_theater=False)
+
+    def explode(*args, **kwargs):
+        raise RuntimeError("git could not read the previous catalog")
+
+    monkeypatch.setattr(publish_update, "catalog_delta", explode)
+
+    result = publish_here(root)
+
+    # A count is reporting, not a guard: it must never cost a validated publish.
+    assert result["status"] == "deployed"
+    assert "events_delta" not in result

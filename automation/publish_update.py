@@ -351,10 +351,48 @@ def read_theater_problem(root, *, now):
     return theater_archive_problem(root)
 
 
-def theater_result(problem, *, changed):
+def _delta_counts(before, after, *, key="official_url"):
+    """Added and removed record counts, identified by the unique official source URL.
+
+    Set difference, not a positional compare: re-verifying or re-ordering a record changes nothing a
+    reader sees, while a record whose source URL is new is an addition even if the title repeats.
+    """
+    def keys(records):
+        return {
+            record[key]
+            for record in records
+            if isinstance(record, dict) and isinstance(record.get(key), str) and record[key]
+        }
+
+    before_keys, after_keys = keys(before), keys(after)
+    return {"added": len(after_keys - before_keys), "removed": len(before_keys - after_keys)}
+
+
+def catalog_delta(root, *, before_tree, after_records):
+    """Best-effort added/removed counts for a catalog, or None when they cannot be trusted.
+
+    This is reporting, never a guard: a publish must not fail, or withhold a validated catalog,
+    because a nice-to-have count could not be computed. The before side is the last committed
+    tree, so the numbers describe the change a reader actually sees land.
+    """
+    try:
+        before = json.loads(_tree_blob(root, before_tree, "data/events.json"))
+        if not isinstance(before, list):
+            return None
+        return _delta_counts(before, after_records)
+    # Deliberately broad: this is reporting, so any failure (a missing blob, unreadable JSON, a git
+    # call that could not run) must degrade to "no count", never abort a validated publish.
+    except Exception:
+        return None
+
+
+def theater_result(problem, *, changed, delta=None):
     if problem:
         return {"status": "retained", "reason": problem}
-    return {"status": "updated" if changed else "not_changed"}
+    result = {"status": "updated" if changed else "not_changed"}
+    if changed and delta:
+        result.update(delta)
+    return result
 
 
 def fetch_health(url, *, timeout=10):
@@ -400,7 +438,7 @@ def publish(
     if theater_problem:
         paths = [path for path in paths if not is_theater_path(path)]
     if not paths:
-        result = {"status": "no_change", "event_count": len(records)}
+        result = {"status": "no_change", "event_count": len(records), "events_delta": {"added": 0, "removed": 0}}
         result["theater"] = theater_result(theater_problem, changed=False)
         return result
     assert_only_catalog_changes(paths)
@@ -421,7 +459,7 @@ def publish(
     _git(root, "add", "--", *paths)
     staged_paths = _staged_paths(root)
     if not staged_paths:
-        result = {"status": "no_change", "event_count": len(records)}
+        result = {"status": "no_change", "event_count": len(records), "events_delta": {"added": 0, "removed": 0}}
         result["theater"] = theater_result(theater_problem, changed=False)
         return result
     if set(staged_paths) != set(paths):
@@ -444,7 +482,7 @@ def publish(
         if set(staged_paths) != set(paths):
             raise RuntimeError("The candidate Git index changed during publication; refusing to commit.")
         if not staged_paths:
-            result = {"status": "no_change", "event_count": len(records)}
+            result = {"status": "no_change", "event_count": len(records), "events_delta": {"added": 0, "removed": 0}}
             result["theater"] = theater_result(theater_problem, changed=False)
             return result
         candidate_tree = _git(root, "write-tree").stdout.strip()
@@ -467,6 +505,23 @@ def publish(
         if "data/theater-deals.json" in candidate_paths
         else None
     )
+    # Two best-effort counts for the publish message: what a reader gains and loses against the last
+    # committed catalog. Both are reporting only and never raise, so a bad count can never withhold
+    # a validated publish — guarded here as well as inside catalog_delta, because the promise has to
+    # survive a future bug in the counting code too.
+    try:
+        events_delta = catalog_delta(root, before_tree=local_before, after_records=staged_records)
+    except Exception:
+        events_delta = None
+    theater_delta = None
+    if theater_blob is not None:
+        try:
+            before_theater = json.loads(_tree_blob(root, local_before, "data/theater-deals.json"))
+            if isinstance(before_theater, list):
+                theater_delta = _delta_counts(before_theater, json.loads(theater_blob))
+        # Broad for the same reason as catalog_delta: a count is never worth failing a publish over.
+        except Exception:
+            theater_delta = None
     if candidate_check:
         candidate_check(root, catalog_blob)
     else:
@@ -503,10 +558,14 @@ def publish(
     )
     status = "deployed" if verifier(revision, len(staged_records)) else "deployment_unconfirmed"
     result = {"status": status, "event_count": len(staged_records), "revision": revision}
+    if events_delta is not None:
+        result["events_delta"] = events_delta
     # Report off what actually shipped, not off "validation happened not to fail". Any theater
     # path counts, so an archive-only push is not misreported as unchanged.
     result["theater"] = theater_result(
-        theater_problem, changed=any(is_theater_path(path) for path in candidate_paths)
+        theater_problem,
+        changed=any(is_theater_path(path) for path in candidate_paths),
+        delta=theater_delta,
     )
     return result
 
