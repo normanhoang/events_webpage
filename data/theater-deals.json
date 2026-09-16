@@ -174,5 +174,76 @@
         "official_url": "https://playbill.com/discount/playbill-discount-for-the-fantasticks"
       }
     ]
+  },
+  {
+    "title": "Chicago",
+    "classification": "broadway",
+    "venue": "Ambassador Theatre",
+    "neighborhood": "Theater District",
+    "official_url": "https://www.broadwaybox.com/shows/chicago/",
+    "verified_at": "2026-09-16T00:02:13-04:00",
+    "offers": [
+      {
+        "source_key": "broadwaybox-general-rush",
+        "label": "General rush",
+        "price_label": "$49 day-of at the box office (before fees)",
+        "price_min": 49,
+        "price_max": 49,
+        "fees_included": null,
+        "restrictions": "First-come, first-served at the Ambassador Theatre box office; limited day-of availability; 2 tickets per person; not available Saturday evenings.",
+        "official_url": "https://www.broadwaybox.com/shows/chicago/"
+      },
+      {
+        "source_key": "broadwaybox-standing-room",
+        "label": "Standing room",
+        "price_label": "$39 (before fees)",
+        "price_min": 39,
+        "price_max": 39,
+        "fees_included": null,
+        "restrictions": "Sold only when the performance is sold out; box office opens 10 AM Monday-Saturday and noon Sunday; 2 tickets per person; standing positions at the back of the orchestra.",
+        "official_url": "https://www.broadwaybox.com/shows/chicago/"
+      }
+    ]
+  },
+  {
+    "title": "Little Shop of Horrors",
+    "classification": "off_broadway",
+    "venue": "Westside Theatre Upstairs",
+    "neighborhood": "Hell's Kitchen",
+    "official_url": "https://www.broadwaybox.com/shows/little-shop-of-horrors/",
+    "verified_at": "2026-09-16T00:02:13-04:00",
+    "offers": [
+      {
+        "source_key": "broadwaybox-digital-lottery",
+        "label": "Digital lottery",
+        "price_label": "$40 digital lottery (before fees)",
+        "price_min": 40,
+        "price_max": 40,
+        "fees_included": null,
+        "restrictions": "Entered via Telecharge; performances posted as early as 12 AM two days before, lottery closes 3 PM two days before, winners drawn 10 AM and 3 PM; limit 2 tickets per person; valid photo ID; subject to availability.",
+        "official_url": "https://www.broadwaybox.com/shows/little-shop-of-horrors/"
+      }
+    ]
+  },
+  {
+    "title": "Drunk Dracula",
+    "classification": "off_broadway",
+    "venue": "The Ruby Theatre",
+    "neighborhood": "Theater District",
+    "official_url": "https://www.broadwaybox.com/shows/drunk-dracula/",
+    "verified_at": "2026-09-16T00:02:13-04:00",
+    "offers": [
+      {
+        "source_key": "broadwaybox-discount-code",
+        "label": "Select-performance discount code",
+        "price_label": "$48-$75.20 (reg. $59-$93) before fees",
+        "price_min": 48,
+        "price_max": 75.2,
+        "fees_included": null,
+        "restrictions": "Code DRUNKBROADWAYBOX; select performances September-November 2026; 21+ with government photo ID; all sales final; promotional pricing subject to availability.",
+        "eligible_until": "2026-11-07T23:59:59-05:00",
+        "official_url": "https://www.broadwaybox.com/shows/drunk-dracula/"
+      }
+    ]
   }
 ]

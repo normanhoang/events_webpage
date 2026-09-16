@@ -20,7 +20,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A major gay community event in Manhattan with an easygoing outdoor format.",
-    "verified_at": "2026-09-15T15:19:44-04:00",
+    "verified_at": "2026-09-16T00:02:13-04:00",
     "top_pick": true,
     "occurrences": [
       {
@@ -173,7 +173,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "It directly combines video games and fiction, and it is free to join from home.",
-    "verified_at": "2026-09-15T15:19:44-04:00",
+    "verified_at": "2026-09-16T00:02:13-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -265,7 +265,7 @@
     "price_label": "See official source",
     "currency": "USD",
     "fit_reason": "A technical deep dive at the hardware-software boundary of modern AI systems.",
-    "verified_at": "2026-09-15T15:19:44-04:00",
+    "verified_at": "2026-09-16T00:02:13-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -297,7 +297,7 @@
     "price_max": 28.52,
     "currency": "USD",
     "fit_reason": "The strongest hands-on match for maker, electronics, robotics, and prototyping interests.",
-    "verified_at": "2026-09-15T15:19:44-04:00",
+    "verified_at": "2026-09-16T00:02:13-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -326,7 +326,7 @@
     "price_label": "See official source",
     "currency": "USD",
     "fit_reason": "It combines AI, NYC infrastructure, sensors, and a MakerSpace setting.",
-    "verified_at": "2026-09-15T15:19:44-04:00",
+    "verified_at": "2026-09-16T00:02:13-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -366,37 +366,6 @@
     ]
   },
   {
-    "title": "Zumba in the Park",
-    "description": "A free, high-energy full-body workout combining aerobic exercise with Latin-inspired dance moves. All fitness levels are welcome.",
-    "category": "fitness",
-    "tags": [
-      "free",
-      "outdoor fitness",
-      "Zumba",
-      "dance",
-      "beginner-friendly"
-    ],
-    "venue": "Fort Tryon Park volleyball courts by the 190th Street station elevators",
-    "neighborhood": "Hudson Heights",
-    "borough": "Manhattan",
-    "official_url": "https://www.nycgovparks.org/events/2026/09/15/zumba-in-the-park",
-    "image_url": "",
-    "price_label": "Free",
-    "price_min": 0,
-    "price_max": 0,
-    "currency": "USD",
-    "fit_reason": "A free and approachable outdoor class for easing back into a fitness routine.",
-    "verified_at": "2026-09-15T15:19:44-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "zumba-fort-tryon-2026-09-15",
-        "starts_at": "2026-09-15T18:30:00-04:00",
-        "ends_at": "2026-09-15T19:30:00-04:00"
-      }
-    ]
-  },
-  {
     "title": "Dance Fitness at West Harlem Piers",
     "description": "A free Shape Up NYC dance-fitness class in West Harlem with rotating instructors and programming suitable for all fitness levels.",
     "category": "fitness",
@@ -417,7 +386,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A nearby, social, no-cost way to restart a fitness routine without a gym commitment.",
-    "verified_at": "2026-09-15T15:19:44-04:00",
+    "verified_at": "2026-09-16T00:02:13-04:00",
     "top_pick": true,
     "occurrences": [
       {
@@ -448,7 +417,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "Free community jazz uptown, close enough to feel genuinely easy rather than aspirationally nearby.",
-    "verified_at": "2026-09-15T15:19:44-04:00",
+    "verified_at": "2026-09-16T00:02:13-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -479,7 +448,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free fall afternoon combining food programming, light activity, nature, and community entertainment.",
-    "verified_at": "2026-09-13T12:00:00-04:00",
+    "verified_at": "2026-09-16T00:02:13-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -509,7 +478,7 @@
     "price_min": 0,
     "currency": "USD",
     "fit_reason": "A big food-and-culture street festival with live music and plenty to browse.",
-    "verified_at": "2026-09-13T12:00:00-04:00",
+    "verified_at": "2026-09-16T00:02:13-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -640,7 +609,7 @@
         "ends_at": "2026-10-03T21:30:00-04:00"
       }
     ],
-    "verified_at": "2026-09-15T00:03:22-04:00"
+    "verified_at": "2026-09-16T00:02:13-04:00"
   },
   {
     "title": "Brooklyn Book Festival Festival Day",
