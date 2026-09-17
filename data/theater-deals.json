@@ -245,5 +245,71 @@
         "official_url": "https://www.broadwaybox.com/shows/drunk-dracula/"
       }
     ]
+  },
+  {
+    "title": "The Ask",
+    "classification": "off_broadway",
+    "venue": "Theater 555",
+    "neighborhood": "Theater District",
+    "official_url": "https://playbill.com/discount/playbill-discount-for-the-ask",
+    "image_url": "https://assets.playbill.com/playbill-covers/The-Ask-Key-Art-1.jpg",
+    "verified_at": "2026-09-17T00:03:29-04:00",
+    "offers": [
+      {
+        "source_key": "playbill-discount-code",
+        "label": "20% off all seats",
+        "price_label": "$39.02–$119.02 including fees (reg. $49–$149)",
+        "price_min": 39.02,
+        "price_max": 119.02,
+        "fees_included": true,
+        "restrictions": "Code ASKPB20; valid through Nov 22, 2026; select blackout dates may apply.",
+        "eligible_until": "2026-11-22T23:59:59-05:00",
+        "official_url": "https://playbill.com/discount/playbill-discount-for-the-ask"
+      }
+    ]
+  },
+  {
+    "title": "The Visitors",
+    "classification": "off_broadway",
+    "venue": "Pershing Square Signature Center",
+    "neighborhood": "Theater District",
+    "official_url": "https://playbill.com/discount/playbill-discount-for-the-visitors",
+    "image_url": "https://assets.playbill.com/playbill-covers/The-Visitors-Playbill-2026-10-21_Web.jpg",
+    "verified_at": "2026-09-17T00:03:29-04:00",
+    "offers": [
+      {
+        "source_key": "playbill-discount-code",
+        "label": "Select-performance discount code",
+        "price_label": "$45–$85 including fees (reg. $75–$105)",
+        "price_min": 45,
+        "price_max": 85,
+        "fees_included": true,
+        "restrictions": "Code VisiBill2ST; select performances through Dec 6, 2026; limit 9 tickets per order; all sales final; blackout dates may apply.",
+        "eligible_until": "2026-12-06T23:59:59-05:00",
+        "official_url": "https://playbill.com/discount/playbill-discount-for-the-visitors"
+      }
+    ]
+  },
+  {
+    "title": "Our Sinatra",
+    "classification": "off_broadway",
+    "venue": "Marjorie S. Deane Little Theater",
+    "neighborhood": "Upper West Side",
+    "official_url": "https://playbill.com/discount/playbill-discount-for-our-sinatra",
+    "image_url": "https://assets.playbill.com/playbill-covers/Our-Sinatra-Playbill-2026-09-11_Web.jpg",
+    "verified_at": "2026-09-17T00:03:29-04:00",
+    "offers": [
+      {
+        "source_key": "playbill-discount-code",
+        "label": "Save up to 30% – tickets from $49",
+        "price_label": "$49–$69 · up to 30% off · before fees (reg. $69–$99)",
+        "price_min": 49,
+        "price_max": 69,
+        "fees_included": null,
+        "restrictions": "Code PBFRANK; valid through performances on Oct 4, 2026; select tickets only.",
+        "eligible_until": "2026-10-04T23:59:59-04:00",
+        "official_url": "https://playbill.com/discount/playbill-discount-for-our-sinatra"
+      }
+    ]
   }
 ]
