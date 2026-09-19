@@ -20,7 +20,7 @@
     "price_max": 20,
     "currency": "USD",
     "fit_reason": "A major gay community event in Manhattan with an easygoing outdoor format.",
-    "verified_at": "2026-09-18T00:01:49-04:00",
+    "verified_at": "2026-09-19T00:02:26-04:00",
     "top_pick": true,
     "occurrences": [
       {
@@ -173,7 +173,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "It directly combines video games and fiction, and it is free to join from home.",
-    "verified_at": "2026-09-18T00:01:49-04:00",
+    "verified_at": "2026-09-19T00:02:26-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -265,7 +265,7 @@
     "price_label": "See official source",
     "currency": "USD",
     "fit_reason": "A technical deep dive at the hardware-software boundary of modern AI systems.",
-    "verified_at": "2026-09-17T00:02:20-04:00",
+    "verified_at": "2026-09-19T00:02:26-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -297,7 +297,7 @@
     "price_max": 28.52,
     "currency": "USD",
     "fit_reason": "The strongest hands-on match for maker, electronics, robotics, and prototyping interests.",
-    "verified_at": "2026-09-18T00:01:49-04:00",
+    "verified_at": "2026-09-19T00:02:26-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -326,7 +326,7 @@
     "price_label": "See official source",
     "currency": "USD",
     "fit_reason": "It combines AI, NYC infrastructure, sensors, and a MakerSpace setting.",
-    "verified_at": "2026-09-18T00:01:49-04:00",
+    "verified_at": "2026-09-19T00:02:26-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -386,7 +386,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A nearby, social, no-cost way to restart a fitness routine without a gym commitment.",
-    "verified_at": "2026-09-18T00:01:49-04:00",
+    "verified_at": "2026-09-19T00:02:26-04:00",
     "top_pick": true,
     "occurrences": [
       {
@@ -417,7 +417,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "Free community jazz uptown, close enough to feel genuinely easy rather than aspirationally nearby.",
-    "verified_at": "2026-09-18T00:01:49-04:00",
+    "verified_at": "2026-09-19T00:02:26-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -509,7 +509,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A casual, free daytime jazz option that does not require a full evening commitment.",
-    "verified_at": "2026-09-18T00:01:49-04:00",
+    "verified_at": "2026-09-19T00:02:26-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -540,7 +540,7 @@
     "price_max": 30,
     "currency": "USD",
     "fit_reason": "A museum social combining art, fashion, mathematics, material science, and after-hours exhibition access.",
-    "verified_at": "2026-09-18T00:01:49-04:00",
+    "verified_at": "2026-09-19T00:02:26-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -609,7 +609,7 @@
         "ends_at": "2026-10-03T21:30:00-04:00"
       }
     ],
-    "verified_at": "2026-09-18T00:01:49-04:00"
+    "verified_at": "2026-09-19T00:02:26-04:00"
   },
   {
     "title": "Brooklyn Book Festival Festival Day",
