@@ -17,6 +17,10 @@ from automation.theater_deals import validate_theater_deals
 MIN_EVENTS = 12
 TARGET_EVENTS = 20
 MAX_EVENTS = 24
+# The catalog is a personal digest, so every interest cluster needs something live in it: dropping
+# the last event of a cluster empties a section of the page without any record going malformed.
+# Coverage is therefore part of the publish contract, not a nicety of the seed data.
+REQUIRED_CATEGORIES = frozenset({"theater", "queer", "tech", "comics", "gaming", "books", "fitness"})
 # The headline section is a curation, not a slice of the feed; cap it explicitly.
 MAX_TOP_PICKS = 3
 VERIFICATION_MAX_AGE_DAYS = 7
@@ -190,11 +194,31 @@ def run_quality_checks(root):
             command, cwd=root, env=env, check=False, capture_output=True, text=True
         )
         if completed.returncode:
-            detail = (completed.stderr or completed.stdout).strip().splitlines()
             raise RuntimeError(
-                f"Quality check failed ({' '.join(command)}): "
-                + (detail[-1] if detail else f"exit {completed.returncode}")
+                f"Quality check failed ({' '.join(command)}): " + quality_detail(completed)
             )
+
+
+def quality_detail(completed):
+    """The most explanatory line from a failed quality command.
+
+    pytest's recap names the failing test but not why it failed, and the reason is what the nightly
+    status line exists to carry. pytest also prints the assertion's sub-expressions as ``E`` lines
+    after the exception one, so the exception message is preferred over the trailing values, the
+    first ``E`` line is the fallback, and the last line of output the last resort.
+    """
+    lines = [
+        line.strip()
+        for line in (completed.stderr or completed.stdout).strip().splitlines()
+        if line.strip()
+    ]
+    errors = [line[2:].strip() for line in lines if line.startswith("E ") and line[2:].strip()]
+    for detail in errors:
+        if re.match(r"[A-Za-z_.]*(Error|Exception)\b", detail):
+            return detail[:200]
+    if errors:
+        return errors[0][:200]
+    return lines[-1] if lines else f"exit {completed.returncode}"
 
 
 def run_candidate_import_check(root, catalog_blob, theater_blob=None):

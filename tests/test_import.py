@@ -97,15 +97,19 @@ def test_invalid_import_is_atomic_and_reports_actionable_errors(tmp_path):
 def test_repository_seed_contains_verified_events_and_import_is_idempotent():
     from django.conf import settings
 
-    from automation.publish_update import _aware, MAX_EVENTS, MAX_TOP_PICKS, MIN_EVENTS
+    from automation.publish_update import _aware, MAX_EVENTS, MAX_TOP_PICKS, MIN_EVENTS, REQUIRED_CATEGORIES
 
     records = json.loads((settings.BASE_DIR / "data/events.json").read_text())
     assert MIN_EVENTS <= len(records) <= MAX_EVENTS
     assert len({record["official_url"] for record in records}) == len(records)
     assert sum(bool(record.get("top_pick")) for record in records) <= MAX_TOP_PICKS
-    assert {"theater", "queer", "tech", "comics", "gaming", "books", "fitness"} <= {
+    assert REQUIRED_CATEGORIES <= {
         record["category"] for record in records
-    }
+    }, (
+        "The catalog must keep at least one live event in every interest cluster; missing: "
+        + ", ".join(sorted(REQUIRED_CATEGORIES - {record["category"] for record in records}))
+        + "."
+    )
     # Assert the shape, not a frozen date: the nightly run rewrites verified_at, and a
     # hardcoded date here fails the pre-publish test run and blocks the catalog forever.
     # Freshness is a wall-clock question and belongs to the publish gate, not this test.
