@@ -1,38 +1,7 @@
 [
   {
-    "title": "Urban Bear NYC Street Fair",
-    "description": "The 18th annual Urban Bear street fair takes over Little West 12th Street with music, vendors, community groups, and a large outdoor bear-community gathering.",
-    "category": "queer",
-    "tags": [
-      "gay events",
-      "queer community",
-      "street fair",
-      "music",
-      "Chelsea"
-    ],
-    "venue": "Little West 12th Street between Washington Street and 10th Avenue",
-    "neighborhood": "Meatpacking District",
-    "borough": "Manhattan",
-    "official_url": "https://www.theurbanbear.com/",
-    "image_url": "https://images.squarespace-cdn.com/content/v1/582e31b0e3df28442375b2f1/1756767718310-412KNOAJXKZBJBYTN4OX/20220918-ET3A8436.jpg",
-    "price_label": "$20",
-    "price_min": 20,
-    "price_max": 20,
-    "currency": "USD",
-    "fit_reason": "A major gay community event in Manhattan with an easygoing outdoor format.",
-    "verified_at": "2026-09-19T00:02:26-04:00",
-    "top_pick": true,
-    "occurrences": [
-      {
-        "source_key": "urban-bear-street-fair-2026",
-        "starts_at": "2026-09-20T13:00:00-04:00",
-        "ends_at": "2026-09-20T19:00:00-04:00"
-      }
-    ]
-  },
-  {
     "title": "Broadway Flea Market & Grand Auction",
-    "description": "Broadway Cares celebrates the event’s 40th year with more than 60 tables of theatrical collectibles, an autograph and photo area, and live and silent auctions.",
+    "description": "Broadway Cares celebrates the event\u2019s 40th year with more than 60 tables of theatrical collectibles, an autograph and photo area, and live and silent auctions.",
     "category": "theater",
     "tags": [
       "Broadway",
@@ -48,8 +17,8 @@
     "image_url": "https://broadwaycares.org/wp-content/uploads/2026/08/FM-2026-hero-1000x528.jpg",
     "price_label": "Free to browse; auction and merchandise prices vary",
     "currency": "USD",
-    "fit_reason": "A Broadway-lover’s treasure hunt near Hell’s Kitchen, with memorabilia and performers.",
-    "verified_at": "2026-09-17T00:02:20-04:00",
+    "fit_reason": "A Broadway-lover\u2019s treasure hunt near Hell\u2019s Kitchen, with memorabilia and performers.",
+    "verified_at": "2026-09-21T00:00:49-04:00",
     "top_pick": true,
     "occurrences": [
       {
@@ -80,7 +49,7 @@
     "price_max": 20,
     "currency": "USD",
     "fit_reason": "A focused anime-and-manga day with screenings and fan programming at a modest price.",
-    "verified_at": "2026-09-17T00:02:20-04:00",
+    "verified_at": "2026-09-21T00:00:49-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -111,7 +80,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free panel squarely about comics, graphic novels, and genre storytelling.",
-    "verified_at": "2026-09-15T00:03:22-04:00",
+    "verified_at": "2026-09-21T00:00:49-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -123,7 +92,7 @@
   },
   {
     "title": "Fall Into Fantasy",
-    "description": "Fantasy authors Sarah Beth Durst, Amélie Wen Zhao, and Shannon J. Spann discuss worldbuilding, magic, romance, power, and family in their recent novels.",
+    "description": "Fantasy authors Sarah Beth Durst, Am\u00e9lie Wen Zhao, and Shannon J. Spann discuss worldbuilding, magic, romance, power, and family in their recent novels.",
     "category": "books",
     "tags": [
       "fantasy",
@@ -142,7 +111,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free fiction event devoted to imaginative worlds and the craft behind them.",
-    "verified_at": "2026-09-13T12:00:00-04:00",
+    "verified_at": "2026-09-21T00:03:46-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -153,39 +122,8 @@
     ]
   },
   {
-    "title": "Call of Games presented by NYU",
-    "description": "Novelists and nonfiction writers discuss how video games and novels influence one another and expand storytelling across both media in this virtual Brooklyn Book Festival program.",
-    "category": "gaming",
-    "tags": [
-      "video games",
-      "fiction",
-      "books",
-      "storytelling",
-      "virtual"
-    ],
-    "venue": "Online via Zoom",
-    "neighborhood": "Online",
-    "borough": "Online",
-    "official_url": "https://brooklynbookfestival.org/event/call-of-games-presented-by-nyu/",
-    "image_url": "",
-    "price_label": "Free; registration required",
-    "price_min": 0,
-    "price_max": 0,
-    "currency": "USD",
-    "fit_reason": "It directly combines video games and fiction, and it is free to join from home.",
-    "verified_at": "2026-09-19T00:02:26-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "call-of-games-2026",
-        "starts_at": "2026-09-20T12:00:00-04:00",
-        "ends_at": null
-      }
-    ]
-  },
-  {
     "title": "Game-A-Palooza 2026",
-    "description": "IGDA NYC’s curated indie-game showcase opens its locally made and unreleased games to the public, with opportunities to play and meet New York developers.",
+    "description": "IGDA NYC\u2019s curated indie-game showcase opens its locally made and unreleased games to the public, with opportunities to play and meet New York developers.",
     "category": "gaming",
     "tags": [
       "video games",
@@ -216,7 +154,7 @@
   },
   {
     "title": "New York Comic Con 2026",
-    "description": "NYCC’s 20th-anniversary edition spans comics, anime, manga, science fiction, gaming, authors, cosplay, film, television, exhibitors, and creator appearances.",
+    "description": "NYCC\u2019s 20th-anniversary edition spans comics, anime, manga, science fiction, gaming, authors, cosplay, film, television, exhibitors, and creator appearances.",
     "category": "comics",
     "tags": [
       "comic books",
@@ -231,7 +169,7 @@
     "borough": "Manhattan",
     "official_url": "https://www.newyorkcomiccon.com/",
     "image_url": "https://www.newyorkcomiccon.com/content/dam/sitebuilder/rna/new-york-comic-con/2026/img/homepage/hero-celebrate-nycc-20-years.jpg/_jcr_content/renditions/original.image_file.2047.1358.file/890495914/hero-celebrate-nycc-20-years.jpg",
-    "price_label": "Adult single-day tickets $103.98–$114.86 including taxes and fees; availability varies",
+    "price_label": "Adult single-day tickets $103.98\u2013$114.86 including taxes and fees; availability varies",
     "price_min": 103.98,
     "price_max": 114.86,
     "currency": "USD",
@@ -265,45 +203,13 @@
     "price_label": "See official source",
     "currency": "USD",
     "fit_reason": "A technical deep dive at the hardware-software boundary of modern AI systems.",
-    "verified_at": "2026-09-19T00:02:26-04:00",
+    "verified_at": "2026-09-21T00:00:49-04:00",
     "top_pick": false,
     "occurrences": [
       {
         "source_key": "nyu-extreme-codesign-2026",
         "starts_at": "2026-09-25T11:00:00-04:00",
         "ends_at": "2026-09-25T12:30:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "Maker Faire Coney Island 2026",
-    "description": "A three-day interactive festival of inventions and DIY projects with exhibits, demonstrations, workshops, competitions, robotics, engineering, crafts, and 3D printing.",
-    "category": "tech",
-    "tags": [
-      "maker",
-      "DIY",
-      "electronics",
-      "robotics",
-      "engineering",
-      "3D printing"
-    ],
-    "venue": "Coney Island Amphitheater",
-    "neighborhood": "Coney Island",
-    "borough": "Brooklyn",
-    "official_url": "https://www.eventbrite.com/e/maker-faire-coney-island-2026-tickets-1999335985754",
-    "image_url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1192331931%2F3012479104352%2F1%2Foriginal.20260901-015941?crop=focalpoint&fit=crop&w=940&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.091&fp-y=0.384&s=37a9e9c74e09dd2b469b53343efd7c58",
-    "price_label": "$17.85–$28.52",
-    "price_min": 17.85,
-    "price_max": 28.52,
-    "currency": "USD",
-    "fit_reason": "The strongest hands-on match for maker, electronics, robotics, and prototyping interests.",
-    "verified_at": "2026-09-19T00:02:26-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "maker-faire-coney-island-2026",
-        "starts_at": "2026-09-19T11:00:00-04:00",
-        "ends_at": "2026-09-21T17:00:00-04:00"
       }
     ]
   },
@@ -326,8 +232,8 @@
     "price_label": "See official source",
     "currency": "USD",
     "fit_reason": "It combines AI, NYC infrastructure, sensors, and a MakerSpace setting.",
-    "verified_at": "2026-09-19T00:02:26-04:00",
-    "top_pick": false,
+    "verified_at": "2026-09-21T00:00:49-04:00",
+    "top_pick": true,
     "occurrences": [
       {
         "source_key": "nyu-climate-resilience-ai-2026",
@@ -355,7 +261,7 @@
     "price_label": "See official source",
     "currency": "USD",
     "fit_reason": "A direct connection between quantitative modeling, finance, insurance, and NYC infrastructure decisions.",
-    "verified_at": "2026-09-18T00:01:49-04:00",
+    "verified_at": "2026-09-21T00:00:49-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -366,69 +272,38 @@
     ]
   },
   {
-    "title": "Dance Fitness at West Harlem Piers",
-    "description": "A free Shape Up NYC dance-fitness class in West Harlem with rotating instructors and programming suitable for all fitness levels.",
+    "title": "Harlem Run: Monday Night Run",
+    "description": "Free, inclusive pacer-led runs and walks through Harlem, starting and ending at Marcus Garvey Park. Paces from 7 to 12 minutes per mile plus run/walk and walk groups; open to all ages and abilities, with bag drop available.",
     "category": "fitness",
     "tags": [
       "free",
-      "dance fitness",
-      "Shape Up NYC",
+      "running",
+      "weekly",
       "all levels",
       "Harlem"
     ],
-    "venue": "West Harlem Piers Park, 125th Street and Marginal Street",
-    "neighborhood": "West Harlem",
+    "venue": "Marcus Garvey Park, south side of Pelham Fritz Recreation Center, W 122nd St and Mount Morris Park West",
+    "neighborhood": "Harlem",
     "borough": "Manhattan",
-    "official_url": "https://www.nycgovparks.org/events/2026/09/19/dance-fitness1",
+    "official_url": "https://www.nycgovparks.org/events/2026/09/21/harlem-run-monday-night-run",
     "image_url": "",
     "price_label": "Free",
     "price_min": 0,
     "price_max": 0,
     "currency": "USD",
-    "fit_reason": "A nearby, social, no-cost way to restart a fitness routine without a gym commitment.",
-    "verified_at": "2026-09-19T00:02:26-04:00",
+    "fit_reason": "A free weekly group run in Harlem with pacers for every pace - a standing Monday-night habit that costs nothing.",
+    "verified_at": "2026-09-21T00:00:49-04:00",
     "top_pick": true,
     "occurrences": [
       {
-        "source_key": "dance-fitness-west-harlem-2026-09-19",
-        "starts_at": "2026-09-19T11:00:00-04:00",
-        "ends_at": "2026-09-19T12:00:00-04:00"
+        "source_key": "harlem-run-monday-night-2026-09-21",
+        "starts_at": "2026-09-21T18:45:00-04:00",
+        "ends_at": "2026-09-21T20:30:00-04:00"
       }
     ]
   },
   {
-    "title": "Jazz in the Park at Ralph Ellison",
-    "description": "Berta Indeed presents Let the Music Play, a free community concert featuring local jazz musicians and vocalists at Ralph Ellison Plaza.",
-    "category": "music",
-    "tags": [
-      "free",
-      "jazz",
-      "community concert",
-      "outdoors",
-      "Harlem"
-    ],
-    "venue": "Ralph Ellison Plaza, Riverside Drive and West 150th Street",
-    "neighborhood": "Hamilton Heights",
-    "borough": "Manhattan",
-    "official_url": "https://www.nycgovparks.org/events/2026/09/20/jazz-in-the-park-at-ralph-ellison",
-    "image_url": null,
-    "price_label": "Free",
-    "price_min": 0,
-    "price_max": 0,
-    "currency": "USD",
-    "fit_reason": "Free community jazz uptown, close enough to feel genuinely easy rather than aspirationally nearby.",
-    "verified_at": "2026-09-19T00:02:26-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "jazz-ralph-ellison-2026-09-20",
-        "starts_at": "2026-09-20T14:00:00-04:00",
-        "ends_at": "2026-09-20T17:00:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "Harvest Festival at Randall’s Island",
+    "title": "Harvest Festival at Randall\u2019s Island",
     "description": "A free outdoor fall festival with a pumpkin patch, seasonal cooking demonstrations, live performances, face painting, and hands-on nature activities.",
     "category": "outdoors",
     "tags": [
@@ -490,7 +365,7 @@
   },
   {
     "title": "Piano in Bryant Park",
-    "description": "A free outdoor piano program featuring ragtime, stride, and jazz on Bryant Park’s Upper Terrace during lunchtime.",
+    "description": "A free outdoor piano program featuring ragtime, stride, and jazz on Bryant Park\u2019s Upper Terrace during lunchtime.",
     "category": "music",
     "tags": [
       "free",
@@ -509,7 +384,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A casual, free daytime jazz option that does not require a full evening commitment.",
-    "verified_at": "2026-09-19T00:02:26-04:00",
+    "verified_at": "2026-09-21T00:00:49-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -540,7 +415,7 @@
     "price_max": 30,
     "currency": "USD",
     "fit_reason": "A museum social combining art, fashion, mathematics, material science, and after-hours exhibition access.",
-    "verified_at": "2026-09-19T00:02:26-04:00",
+    "verified_at": "2026-09-21T00:00:49-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -551,11 +426,11 @@
     ]
   },
   {
-    "title": "Día de los Muertos at NYBG",
+    "title": "D\u00eda de los Muertos at NYBG",
     "description": "A monthlong celebration of memory, life, and renewal featuring marigold displays, a community ofrenda, calaveras, a flower-covered Catrina, weekend music and crafts, and special performances.",
     "category": "art",
     "tags": [
-      "Día de los Muertos",
+      "D\u00eda de los Muertos",
       "Mexican culture",
       "marigolds",
       "community ofrenda",
@@ -570,7 +445,7 @@
     "price_label": "Included with Garden admission",
     "currency": "USD",
     "fit_reason": "A substantial cultural celebration in the Bronx with botanical displays, art, music, crafts, and community traditions.",
-    "verified_at": "2026-09-13T21:11:49-04:00",
+    "verified_at": "2026-09-21T00:03:46-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -609,7 +484,7 @@
         "ends_at": "2026-10-03T21:30:00-04:00"
       }
     ],
-    "verified_at": "2026-09-19T00:02:26-04:00"
+    "verified_at": "2026-09-21T00:00:49-04:00"
   },
   {
     "title": "Brooklyn Book Festival Festival Day",
@@ -670,5 +545,65 @@
       }
     ],
     "verified_at": "2026-09-15T00:03:22-04:00"
+  },
+  {
+    "title": "Queer in Every Career: LGBTQ+ Career Fair 2026",
+    "description": "The Center\u2019s annual career fair connects LGBTQ+ job seekers with affirming NYC employers, networking, resume feedback, coaching, and skill-building workshops.",
+    "category": "queer",
+    "tags": [
+      "queer community",
+      "career",
+      "networking",
+      "workshops",
+      "LGBTQ+"
+    ],
+    "venue": "The Lesbian, Gay, Bisexual & Transgender Community Center, 208 W 13th Street",
+    "neighborhood": "West Village",
+    "borough": "Manhattan",
+    "official_url": "https://gaycenter.org/event/queer-in-every-career-lgbtq-career-fair-2026/",
+    "image_url": "https://gaycenter.org/wp-content/uploads/2025/09/Career-Fair-2025.webp",
+    "price_label": "Registration required",
+    "currency": "USD",
+    "fit_reason": "A queer community event with practical career-change support, workshops, and networking.",
+    "verified_at": "2026-09-21T00:00:49-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "center-queer-in-every-career-2026",
+        "starts_at": "2026-10-14T10:00:00-04:00",
+        "ends_at": "2026-10-14T14:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Horror and Dark Literature Book Club: The October Country",
+    "description": "An in-person adult discussion of Ray Bradbury\u2019s The October Country, focused on horror and dark literature.",
+    "category": "books",
+    "tags": [
+      "books",
+      "horror",
+      "science fiction",
+      "Ray Bradbury",
+      "book club"
+    ],
+    "venue": "Stavros Niarchos Foundation Library, Room 204",
+    "neighborhood": "Midtown",
+    "borough": "Manhattan",
+    "official_url": "https://nypl.org/events/programs/2026/10/19/horror-and-dark-literature-book-club-october-country",
+    "image_url": "",
+    "price_label": "Free; registration required",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "A free adult book-club night for horror, dark fantasy, and classic science fiction readers.",
+    "verified_at": "2026-09-21T00:00:49-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "nypl-horror-dark-literature-october-country-2026",
+        "starts_at": "2026-10-19T18:30:00-04:00",
+        "ends_at": "2026-10-19T19:30:00-04:00"
+      }
+    ]
   }
 ]

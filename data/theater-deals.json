@@ -311,5 +311,26 @@
         "official_url": "https://playbill.com/discount/playbill-discount-for-our-sinatra"
       }
     ]
+  },
+  {
+    "title": "Disruption",
+    "classification": "off_broadway",
+    "venue": "The Romulus Linney Courtyard Theatre at The Pershing Square Signature Center",
+    "neighborhood": "Theater District",
+    "official_url": "https://www.todaytix.com/nyc/shows/47049-disruption",
+    "image_url": "https://images.ctfassets.net/6pezt69ih962/4PDsznTIPPj1F5PjCpXXdC/0b8e446915a4840d4db15115c1a2484e/DIS_Poster-480x720px.png",
+    "verified_at": "2026-09-20T00:02:00-04:00",
+    "offers": [
+      {
+        "source_key": "todaytix-theatre-sale",
+        "label": "Theatre Sale pricing",
+        "price_label": "From $89 · save 30% on select seats; fees not confirmed",
+        "price_min": 89,
+        "fees_included": null,
+        "restrictions": "TodayTix Theatre Sale pricing on select performances through Oct 4; subject to availability.",
+        "eligible_until": "2026-10-04T23:59:59-04:00",
+        "official_url": "https://www.todaytix.com/nyc/shows/47049-disruption"
+      }
+    ]
   }
 ]
