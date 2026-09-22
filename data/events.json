@@ -1,7 +1,7 @@
 [
   {
     "title": "Broadway Flea Market & Grand Auction",
-    "description": "Broadway Cares celebrates the event\u2019s 40th year with more than 60 tables of theatrical collectibles, an autograph and photo area, and live and silent auctions.",
+    "description": "Broadway Cares celebrates the event’s 40th year with more than 60 tables of theatrical collectibles, an autograph and photo area, and live and silent auctions.",
     "category": "theater",
     "tags": [
       "Broadway",
@@ -17,8 +17,8 @@
     "image_url": "https://broadwaycares.org/wp-content/uploads/2026/08/FM-2026-hero-1000x528.jpg",
     "price_label": "Free to browse; auction and merchandise prices vary",
     "currency": "USD",
-    "fit_reason": "A Broadway-lover\u2019s treasure hunt near Hell\u2019s Kitchen, with memorabilia and performers.",
-    "verified_at": "2026-09-21T00:00:49-04:00",
+    "fit_reason": "A Broadway-lover’s treasure hunt near Hell’s Kitchen, with memorabilia and performers.",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "top_pick": true,
     "occurrences": [
       {
@@ -49,7 +49,7 @@
     "price_max": 20,
     "currency": "USD",
     "fit_reason": "A focused anime-and-manga day with screenings and fan programming at a modest price.",
-    "verified_at": "2026-09-21T00:00:49-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -80,7 +80,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free panel squarely about comics, graphic novels, and genre storytelling.",
-    "verified_at": "2026-09-21T00:00:49-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -92,7 +92,7 @@
   },
   {
     "title": "Fall Into Fantasy",
-    "description": "Fantasy authors Sarah Beth Durst, Am\u00e9lie Wen Zhao, and Shannon J. Spann discuss worldbuilding, magic, romance, power, and family in their recent novels.",
+    "description": "Fantasy authors Sarah Beth Durst, Amélie Wen Zhao, and Shannon J. Spann discuss worldbuilding, magic, romance, power, and family in their recent novels.",
     "category": "books",
     "tags": [
       "fantasy",
@@ -111,7 +111,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free fiction event devoted to imaginative worlds and the craft behind them.",
-    "verified_at": "2026-09-21T00:03:46-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -123,7 +123,7 @@
   },
   {
     "title": "Game-A-Palooza 2026",
-    "description": "IGDA NYC\u2019s curated indie-game showcase opens its locally made and unreleased games to the public, with opportunities to play and meet New York developers.",
+    "description": "IGDA NYC’s curated indie-game showcase opens its locally made and unreleased games to the public, with opportunities to play and meet New York developers.",
     "category": "gaming",
     "tags": [
       "video games",
@@ -154,7 +154,7 @@
   },
   {
     "title": "New York Comic Con 2026",
-    "description": "NYCC\u2019s 20th-anniversary edition spans comics, anime, manga, science fiction, gaming, authors, cosplay, film, television, exhibitors, and creator appearances.",
+    "description": "NYCC’s 20th-anniversary edition spans comics, anime, manga, science fiction, gaming, authors, cosplay, film, television, exhibitors, and creator appearances.",
     "category": "comics",
     "tags": [
       "comic books",
@@ -169,7 +169,7 @@
     "borough": "Manhattan",
     "official_url": "https://www.newyorkcomiccon.com/",
     "image_url": "https://www.newyorkcomiccon.com/content/dam/sitebuilder/rna/new-york-comic-con/2026/img/homepage/hero-celebrate-nycc-20-years.jpg/_jcr_content/renditions/original.image_file.2047.1358.file/890495914/hero-celebrate-nycc-20-years.jpg",
-    "price_label": "Adult single-day tickets $103.98\u2013$114.86 including taxes and fees; availability varies",
+    "price_label": "Adult single-day tickets $103.98–$114.86 including taxes and fees; availability varies",
     "price_min": 103.98,
     "price_max": 114.86,
     "currency": "USD",
@@ -203,7 +203,7 @@
     "price_label": "See official source",
     "currency": "USD",
     "fit_reason": "A technical deep dive at the hardware-software boundary of modern AI systems.",
-    "verified_at": "2026-09-21T00:00:49-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -232,8 +232,8 @@
     "price_label": "See official source",
     "currency": "USD",
     "fit_reason": "It combines AI, NYC infrastructure, sensors, and a MakerSpace setting.",
-    "verified_at": "2026-09-21T00:00:49-04:00",
-    "top_pick": true,
+    "verified_at": "2026-09-22T00:01:00-04:00",
+    "top_pick": false,
     "occurrences": [
       {
         "source_key": "nyu-climate-resilience-ai-2026",
@@ -261,7 +261,7 @@
     "price_label": "See official source",
     "currency": "USD",
     "fit_reason": "A direct connection between quantitative modeling, finance, insurance, and NYC infrastructure decisions.",
-    "verified_at": "2026-09-21T00:00:49-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -285,25 +285,25 @@
     "venue": "Marcus Garvey Park, south side of Pelham Fritz Recreation Center, W 122nd St and Mount Morris Park West",
     "neighborhood": "Harlem",
     "borough": "Manhattan",
-    "official_url": "https://www.nycgovparks.org/events/2026/09/21/harlem-run-monday-night-run",
+    "official_url": "https://www.nycgovparks.org/events/2026/09/28/harlem-run-monday-night-run",
     "image_url": "",
     "price_label": "Free",
     "price_min": 0,
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free weekly group run in Harlem with pacers for every pace - a standing Monday-night habit that costs nothing.",
-    "verified_at": "2026-09-21T00:00:49-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "top_pick": true,
     "occurrences": [
       {
-        "source_key": "harlem-run-monday-night-2026-09-21",
-        "starts_at": "2026-09-21T18:45:00-04:00",
-        "ends_at": "2026-09-21T20:30:00-04:00"
+        "source_key": "harlem-run-monday-night-2026-09-28",
+        "starts_at": "2026-09-28T18:45:00-04:00",
+        "ends_at": "2026-09-28T20:30:00-04:00"
       }
     ]
   },
   {
-    "title": "Harvest Festival at Randall\u2019s Island",
+    "title": "Harvest Festival at Randall’s Island",
     "description": "A free outdoor fall festival with a pumpkin patch, seasonal cooking demonstrations, live performances, face painting, and hands-on nature activities.",
     "category": "outdoors",
     "tags": [
@@ -365,7 +365,7 @@
   },
   {
     "title": "Piano in Bryant Park",
-    "description": "A free outdoor piano program featuring ragtime, stride, and jazz on Bryant Park\u2019s Upper Terrace during lunchtime.",
+    "description": "A free outdoor piano program featuring ragtime, stride, and jazz on Bryant Park’s Upper Terrace during lunchtime.",
     "category": "music",
     "tags": [
       "free",
@@ -384,7 +384,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A casual, free daytime jazz option that does not require a full evening commitment.",
-    "verified_at": "2026-09-21T00:00:49-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -415,7 +415,7 @@
     "price_max": 30,
     "currency": "USD",
     "fit_reason": "A museum social combining art, fashion, mathematics, material science, and after-hours exhibition access.",
-    "verified_at": "2026-09-21T00:00:49-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -426,11 +426,11 @@
     ]
   },
   {
-    "title": "D\u00eda de los Muertos at NYBG",
+    "title": "Día de los Muertos at NYBG",
     "description": "A monthlong celebration of memory, life, and renewal featuring marigold displays, a community ofrenda, calaveras, a flower-covered Catrina, weekend music and crafts, and special performances.",
     "category": "art",
     "tags": [
-      "D\u00eda de los Muertos",
+      "Día de los Muertos",
       "Mexican culture",
       "marigolds",
       "community ofrenda",
@@ -476,6 +476,7 @@
     "price_max": 30,
     "currency": "USD",
     "fit_reason": "World-class dance for $30 a seat a short walk from Hell's Kitchen, with a free pre-show class for ticketholders.",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -483,8 +484,7 @@
         "starts_at": "2026-09-22T19:30:00-04:00",
         "ends_at": "2026-10-03T21:30:00-04:00"
       }
-    ],
-    "verified_at": "2026-09-21T00:00:49-04:00"
+    ]
   },
   {
     "title": "Brooklyn Book Festival Festival Day",
@@ -507,6 +507,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free all-day book festival, with the comics and genre panels he follows alongside the big literary names.",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -514,8 +515,7 @@
         "starts_at": "2026-09-27T10:00:00-04:00",
         "ends_at": "2026-09-27T18:00:00-04:00"
       }
-    ],
-    "verified_at": "2026-09-15T00:03:22-04:00"
+    ]
   },
   {
     "title": "NYC Off-Broadway Week",
@@ -536,6 +536,7 @@
     "price_label": "2-for-1 tickets (50% off); service fee applied per ticket",
     "currency": "USD",
     "fit_reason": "The cheapest reliable route into Off-Broadway all year: 2-for-1 seats, with the participating shows announced September 22.",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -543,12 +544,11 @@
         "starts_at": "2026-10-05T00:00:00-04:00",
         "ends_at": "2026-10-18T23:59:00-04:00"
       }
-    ],
-    "verified_at": "2026-09-15T00:03:22-04:00"
+    ]
   },
   {
     "title": "Queer in Every Career: LGBTQ+ Career Fair 2026",
-    "description": "The Center\u2019s annual career fair connects LGBTQ+ job seekers with affirming NYC employers, networking, resume feedback, coaching, and skill-building workshops.",
+    "description": "The Center’s annual career fair connects LGBTQ+ job seekers with affirming NYC employers, networking, resume feedback, coaching, and skill-building workshops.",
     "category": "queer",
     "tags": [
       "queer community",
@@ -566,7 +566,7 @@
     "currency": "USD",
     "fit_reason": "A queer community event with practical career-change support, workshops, and networking.",
     "verified_at": "2026-09-21T00:00:49-04:00",
-    "top_pick": false,
+    "top_pick": true,
     "occurrences": [
       {
         "source_key": "center-queer-in-every-career-2026",
@@ -577,7 +577,7 @@
   },
   {
     "title": "Horror and Dark Literature Book Club: The October Country",
-    "description": "An in-person adult discussion of Ray Bradbury\u2019s The October Country, focused on horror and dark literature.",
+    "description": "An in-person adult discussion of Ray Bradbury’s The October Country, focused on horror and dark literature.",
     "category": "books",
     "tags": [
       "books",

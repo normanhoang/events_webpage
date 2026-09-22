@@ -1,34 +1,12 @@
 [
   {
-    "title": "Two Strangers (Carry a Cake Across New York)",
-    "classification": "broadway",
-    "venue": "Longacre Theatre",
-    "neighborhood": "Theater District",
-    "official_url": "https://playbill.com/discount/playbill-discount-for-two-strangers-carry-a-cake-across-new-york",
-    "image_url": "https://assets.playbill.com/playbill-covers/Two-Strangers-Carry-A-Cake-Playbill-2025-11-01_Web.jpg",
-    "verified_at": "2026-09-15T00:03:35-04:00",
-    "offers": [
-      {
-        "source_key": "playbill-discount-code",
-        "label": "Select-performance discount code",
-        "price_label": "$49–$229 · up to 40% off · before Telecharge service fees",
-        "price_min": 49,
-        "price_max": 229,
-        "fees_included": false,
-        "restrictions": "Code TSPLAY; select performances; purchase by Oct 3; limit 8.",
-        "eligible_until": "2026-10-03T23:59:59-04:00",
-        "official_url": "https://playbill.com/discount/playbill-discount-for-two-strangers-carry-a-cake-across-new-york"
-      }
-    ]
-  },
-  {
     "title": "Parcel from America",
     "classification": "off_broadway",
     "venue": "A.R.T./New York Theatres",
     "neighborhood": "Hell’s Kitchen",
     "official_url": "https://playbill.com/discount/playbill-discount-for-parcel-from-america",
     "image_url": "https://assets.playbill.com/playbill-covers/PfA-649-x-1024-px.jpg",
-    "verified_at": "2026-09-15T00:03:35-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -37,53 +15,9 @@
         "price_min": 44,
         "price_max": 44,
         "fees_included": true,
-        "restrictions": "Code TRPFAPB; previews Oct 28, opening Nov 4; blackout dates may apply.",
+        "restrictions": "Code TRPFAPB; previews Oct 28, opening Nov 4; blackout dates may apply; not valid Nov 4.",
         "eligible_until": "2026-11-22T23:59:59-05:00",
         "official_url": "https://playbill.com/discount/playbill-discount-for-parcel-from-america"
-      }
-    ]
-  },
-  {
-    "title": "Going Bacharach",
-    "classification": "off_broadway",
-    "venue": "Theater 555",
-    "neighborhood": "Theater District",
-    "official_url": "https://playbill.com/discount/playbill-discount-for-going-bacharach-2",
-    "image_url": "https://assets.playbill.com/playbill-covers/Going-Bacharach-Playbill-2026-09-09_Web.jpg",
-    "verified_at": "2026-09-15T00:03:35-04:00",
-    "offers": [
-      {
-        "source_key": "playbill-discount-code",
-        "label": "Select-performance discount code",
-        "price_label": "$49–$69 · before fees",
-        "price_min": 49,
-        "price_max": 69,
-        "fees_included": false,
-        "restrictions": "Code GBPLAY; select performances through Oct 4.",
-        "eligible_until": "2026-10-04T23:59:59-04:00",
-        "official_url": "https://playbill.com/discount/playbill-discount-for-going-bacharach-2"
-      }
-    ]
-  },
-  {
-    "title": "A Christmas Carol the Musical",
-    "classification": "off_broadway",
-    "venue": "Players Theatre",
-    "neighborhood": "West Village",
-    "official_url": "https://www.broadwaybox.com/shows/christmas-carol-players-theatre/",
-    "image_url": "https://img.broadwaybox.com/event/poster/480x720_2025_9498_1.jpg",
-    "verified_at": "2026-09-15T00:03:35-04:00",
-    "offers": [
-      {
-        "source_key": "broadwaybox-discount-code",
-        "label": "Select-performance discount code",
-        "price_label": "$34–$54 · before fees",
-        "price_min": 34,
-        "price_max": 54,
-        "fees_included": false,
-        "restrictions": "Code BBOX; Nov 29–Dec 30; VIP gift-bag option excluded.",
-        "eligible_until": "2026-12-30T23:59:59-05:00",
-        "official_url": "https://www.broadwaybox.com/shows/christmas-carol-players-theatre/"
       }
     ]
   },
@@ -94,16 +28,16 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-six-the-musical",
     "image_url": "https://assets.playbill.com/playbill-covers/Six-Playbill-2025-02-01_Web.jpg",
-    "verified_at": "2026-09-15T15:19:44-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
         "label": "Select-performance discount code",
-        "price_label": "$67 - includes facility fee, online service fees extra (reg. $89.75)",
+        "price_label": "$67 incl. facility fee, before online service fees (reg. $89.75)",
         "price_min": 67,
         "price_max": 67,
         "fees_included": null,
-        "restrictions": "Code SIXPB; select performances through Nov 22; limit 8; all sales final.",
+        "restrictions": "Code SIXPB; select performances through Nov 22; limit 8; all sales final; must be purchased by 11/22/26 at 11:59 PM.",
         "eligible_until": "2026-11-22T23:59:59-05:00",
         "official_url": "https://playbill.com/discount/playbill-discount-for-six-the-musical"
       }
@@ -116,16 +50,16 @@
     "neighborhood": "Hell's Kitchen",
     "official_url": "https://playbill.com/discount/playbill-discount-for-the-play-that-goes-wrong",
     "image_url": "https://assets.playbill.com/playbill-covers/The-Play-That-Goes-Wrong-Playbill-2019-04-01_Web_2025-10-21-173634_mpyf.jpg",
-    "verified_at": "2026-09-15T15:19:44-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
         "label": "Select-performance discount code",
-        "price_label": "$92-$104 including fees (reg. $123-$138)",
+        "price_label": "$104 including fees online / $92 at the box office (reg. $138 / $123)",
         "price_min": 92,
         "price_max": 104,
         "fees_included": true,
-        "restrictions": "Code PYPBL25; select performances through Jan 31, 2027; subject to availability.",
+        "restrictions": "Code PYPBL25; select performances through Jan 31, 2027; subject to availability; all sales final.",
         "eligible_until": "2027-01-31T23:59:59-05:00",
         "official_url": "https://playbill.com/discount/playbill-discount-for-the-play-that-goes-wrong"
       }
@@ -138,7 +72,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-music-city",
     "image_url": "https://assets.playbill.com/playbill-covers/260121_MC_PlaybillClubListing_649x1024_JK.jpg",
-    "verified_at": "2026-09-15T15:19:44-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -160,7 +94,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-the-fantasticks",
     "image_url": "https://assets.playbill.com/playbill-covers/The-Fantasticks-Playbill-2026-10-22_Web.jpg",
-    "verified_at": "2026-09-15T15:19:44-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -181,7 +115,7 @@
     "venue": "Ambassador Theatre",
     "neighborhood": "Theater District",
     "official_url": "https://www.broadwaybox.com/shows/chicago/",
-    "verified_at": "2026-09-16T00:02:13-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "offers": [
       {
         "source_key": "broadwaybox-general-rush",
@@ -211,7 +145,7 @@
     "venue": "Westside Theatre Upstairs",
     "neighborhood": "Hell's Kitchen",
     "official_url": "https://www.broadwaybox.com/shows/little-shop-of-horrors/",
-    "verified_at": "2026-09-16T00:02:13-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "offers": [
       {
         "source_key": "broadwaybox-digital-lottery",
@@ -231,7 +165,7 @@
     "venue": "The Ruby Theatre",
     "neighborhood": "Theater District",
     "official_url": "https://www.broadwaybox.com/shows/drunk-dracula/",
-    "verified_at": "2026-09-16T00:02:13-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "offers": [
       {
         "source_key": "broadwaybox-discount-code",
@@ -253,7 +187,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-the-ask",
     "image_url": "https://assets.playbill.com/playbill-covers/The-Ask-Key-Art-1.jpg",
-    "verified_at": "2026-09-17T00:03:29-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -275,7 +209,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-the-visitors",
     "image_url": "https://assets.playbill.com/playbill-covers/The-Visitors-Playbill-2026-10-21_Web.jpg",
-    "verified_at": "2026-09-17T00:03:29-04:00",
+    "verified_at": "2026-09-22T00:01:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -287,49 +221,6 @@
         "restrictions": "Code VisiBill2ST; select performances through Dec 6, 2026; limit 9 tickets per order; all sales final; blackout dates may apply.",
         "eligible_until": "2026-12-06T23:59:59-05:00",
         "official_url": "https://playbill.com/discount/playbill-discount-for-the-visitors"
-      }
-    ]
-  },
-  {
-    "title": "Our Sinatra",
-    "classification": "off_broadway",
-    "venue": "Marjorie S. Deane Little Theater",
-    "neighborhood": "Upper West Side",
-    "official_url": "https://playbill.com/discount/playbill-discount-for-our-sinatra",
-    "image_url": "https://assets.playbill.com/playbill-covers/Our-Sinatra-Playbill-2026-09-11_Web.jpg",
-    "verified_at": "2026-09-17T00:03:29-04:00",
-    "offers": [
-      {
-        "source_key": "playbill-discount-code",
-        "label": "Save up to 30% – tickets from $49",
-        "price_label": "$49–$69 · up to 30% off · before fees (reg. $69–$99)",
-        "price_min": 49,
-        "price_max": 69,
-        "fees_included": null,
-        "restrictions": "Code PBFRANK; valid through performances on Oct 4, 2026; select tickets only.",
-        "eligible_until": "2026-10-04T23:59:59-04:00",
-        "official_url": "https://playbill.com/discount/playbill-discount-for-our-sinatra"
-      }
-    ]
-  },
-  {
-    "title": "Disruption",
-    "classification": "off_broadway",
-    "venue": "The Romulus Linney Courtyard Theatre at The Pershing Square Signature Center",
-    "neighborhood": "Theater District",
-    "official_url": "https://www.todaytix.com/nyc/shows/47049-disruption",
-    "image_url": "https://images.ctfassets.net/6pezt69ih962/4PDsznTIPPj1F5PjCpXXdC/0b8e446915a4840d4db15115c1a2484e/DIS_Poster-480x720px.png",
-    "verified_at": "2026-09-20T00:02:00-04:00",
-    "offers": [
-      {
-        "source_key": "todaytix-theatre-sale",
-        "label": "Theatre Sale pricing",
-        "price_label": "From $89 · save 30% on select seats; fees not confirmed",
-        "price_min": 89,
-        "fees_included": null,
-        "restrictions": "TodayTix Theatre Sale pricing on select performances through Oct 4; subject to availability.",
-        "eligible_until": "2026-10-04T23:59:59-04:00",
-        "official_url": "https://www.todaytix.com/nyc/shows/47049-disruption"
       }
     ]
   }
