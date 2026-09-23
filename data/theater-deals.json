@@ -6,7 +6,7 @@
     "neighborhood": "Hell’s Kitchen",
     "official_url": "https://playbill.com/discount/playbill-discount-for-parcel-from-america",
     "image_url": "https://assets.playbill.com/playbill-covers/PfA-649-x-1024-px.jpg",
-    "verified_at": "2026-09-22T00:01:00-04:00",
+    "verified_at": "2026-09-23T00:02:10-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -28,7 +28,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-six-the-musical",
     "image_url": "https://assets.playbill.com/playbill-covers/Six-Playbill-2025-02-01_Web.jpg",
-    "verified_at": "2026-09-22T00:01:00-04:00",
+    "verified_at": "2026-09-23T00:02:10-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -50,7 +50,7 @@
     "neighborhood": "Hell's Kitchen",
     "official_url": "https://playbill.com/discount/playbill-discount-for-the-play-that-goes-wrong",
     "image_url": "https://assets.playbill.com/playbill-covers/The-Play-That-Goes-Wrong-Playbill-2019-04-01_Web_2025-10-21-173634_mpyf.jpg",
-    "verified_at": "2026-09-22T00:01:00-04:00",
+    "verified_at": "2026-09-23T00:02:10-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -66,35 +66,13 @@
     ]
   },
   {
-    "title": "Music City",
-    "classification": "off_broadway",
-    "venue": "The Theatre at St. Luke's",
-    "neighborhood": "Theater District",
-    "official_url": "https://playbill.com/discount/playbill-discount-for-music-city",
-    "image_url": "https://assets.playbill.com/playbill-covers/260121_MC_PlaybillClubListing_649x1024_JK.jpg",
-    "verified_at": "2026-09-22T00:01:00-04:00",
-    "offers": [
-      {
-        "source_key": "playbill-discount-code",
-        "label": "25% off select performances",
-        "price_label": "$59-$119 including fees - 25% off (reg. $59-$165.50)",
-        "price_min": 59,
-        "price_max": 119,
-        "fees_included": true,
-        "restrictions": "Code PC25; select performances through Sep 30; non-refundable, non-exchangeable.",
-        "eligible_until": "2026-09-30T23:59:59-04:00",
-        "official_url": "https://playbill.com/discount/playbill-discount-for-music-city"
-      }
-    ]
-  },
-  {
     "title": "The Fantasticks",
     "classification": "broadway",
     "venue": "Hayes Theater",
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-the-fantasticks",
     "image_url": "https://assets.playbill.com/playbill-covers/The-Fantasticks-Playbill-2026-10-22_Web.jpg",
-    "verified_at": "2026-09-22T00:01:00-04:00",
+    "verified_at": "2026-09-23T00:02:10-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -106,6 +84,28 @@
         "restrictions": "Code FanBill2ST; previews Oct 22-Nov 1 and Wednesdays best availability; purchase by Nov 15; limit 9.",
         "eligible_until": "2026-11-15T23:59:59-05:00",
         "official_url": "https://playbill.com/discount/playbill-discount-for-the-fantasticks"
+      }
+    ]
+  },
+  {
+    "title": "Two Strangers (Carry a Cake Across New York)",
+    "classification": "broadway",
+    "venue": "Longacre Theatre",
+    "neighborhood": "Theater District",
+    "official_url": "https://playbill.com/discount/playbill-discount-for-two-strangers-carry-a-cake-across-new-york",
+    "image_url": "https://assets.playbill.com/playbill-covers/Two-Strangers-Carry-A-Cake-Playbill-2025-11-01_Web.jpg",
+    "verified_at": "2026-09-23T00:02:10-04:00",
+    "offers": [
+      {
+        "source_key": "playbill-discount-code",
+        "label": "Up to 40% off select performances",
+        "price_label": "$49-$229 incl. $2 facility fee, before Telecharge service fees (reg. $59-$229)",
+        "price_min": 49,
+        "price_max": 229,
+        "fees_included": null,
+        "restrictions": "Code TSPLAY; orchestra from $89; valid for select performances; tickets must be purchased by 10/3/26; limit 8 tickets per order; all sales final.",
+        "eligible_until": "2026-10-03T23:59:59-04:00",
+        "official_url": "https://playbill.com/discount/playbill-discount-for-two-strangers-carry-a-cake-across-new-york"
       }
     ]
   },
@@ -187,7 +187,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-the-ask",
     "image_url": "https://assets.playbill.com/playbill-covers/The-Ask-Key-Art-1.jpg",
-    "verified_at": "2026-09-22T00:01:00-04:00",
+    "verified_at": "2026-09-23T00:02:10-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -209,7 +209,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-the-visitors",
     "image_url": "https://assets.playbill.com/playbill-covers/The-Visitors-Playbill-2026-10-21_Web.jpg",
-    "verified_at": "2026-09-22T00:01:00-04:00",
+    "verified_at": "2026-09-23T00:02:10-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
