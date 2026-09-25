@@ -18,7 +18,7 @@
     "price_label": "Free to browse; auction and merchandise prices vary",
     "currency": "USD",
     "fit_reason": "A Broadway-lover’s treasure hunt near Hell’s Kitchen, with memorabilia and performers.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
+    "verified_at": "2026-09-25T00:01:14-04:00",
     "top_pick": true,
     "occurrences": [
       {
@@ -49,7 +49,7 @@
     "price_max": 20,
     "currency": "USD",
     "fit_reason": "A focused anime-and-manga day with screenings and fan programming at a modest price.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
+    "verified_at": "2026-09-25T00:01:14-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -80,7 +80,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free panel squarely about comics, graphic novels, and genre storytelling.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
+    "verified_at": "2026-09-25T00:01:14-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -111,7 +111,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free fiction event devoted to imaginative worlds and the craft behind them.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
+    "verified_at": "2026-09-25T00:01:14-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -142,7 +142,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free outdoor Festival Day conversation about food and culture, easy to fold into the same trip as the comics and fantasy panels.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
+    "verified_at": "2026-09-25T00:01:14-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -234,7 +234,7 @@
     "price_label": "See official source",
     "currency": "USD",
     "fit_reason": "A technical deep dive at the hardware-software boundary of modern AI systems.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
+    "verified_at": "2026-09-25T00:01:14-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -263,7 +263,7 @@
     "price_label": "See official source",
     "currency": "USD",
     "fit_reason": "A direct connection between quantitative modeling, finance, insurance, and NYC infrastructure decisions.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
+    "verified_at": "2026-09-25T00:01:14-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -292,8 +292,8 @@
     "price_label": "Free; RSVP required for campus access",
     "currency": "USD",
     "fit_reason": "A free, hands-on agent-building day that matches his AI-and-programming career goal, with a career-brain and personal-knowledge use case as the example projects.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
-    "top_pick": false,
+    "verified_at": "2026-09-25T00:01:14-04:00",
+    "top_pick": true,
     "occurrences": [
       {
         "source_key": "nyu-tandon-personal-agent-hackathon-2026",
@@ -364,68 +364,6 @@
     ]
   },
   {
-    "title": "Piano in Bryant Park",
-    "description": "A free outdoor piano program featuring ragtime, stride, and jazz on Bryant Park’s Upper Terrace during lunchtime.",
-    "category": "music",
-    "tags": [
-      "free",
-      "jazz",
-      "ragtime",
-      "piano",
-      "outdoors"
-    ],
-    "venue": "Upper Terrace, Bryant Park",
-    "neighborhood": "Midtown",
-    "borough": "Manhattan",
-    "official_url": "https://www.nycgovparks.org/events/2026/09/24/piano-in-bryant-park",
-    "image_url": null,
-    "price_label": "Free",
-    "price_min": 0,
-    "price_max": 0,
-    "currency": "USD",
-    "fit_reason": "A casual, free daytime jazz option that does not require a full evening commitment.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "piano-bryant-park-2026-09-24",
-        "starts_at": "2026-09-24T12:30:00-04:00",
-        "ends_at": "2026-09-24T14:30:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "Art History Happy Hour: Sculpting the Senses",
-    "description": "A lighthearted evening of short talks by experts in art, mathematics, and material science, followed by after-hours access to Iris van Herpen: Sculpting the Senses.",
-    "category": "art",
-    "tags": [
-      "art history",
-      "fashion",
-      "design",
-      "mathematics",
-      "museum social"
-    ],
-    "venue": "Brooklyn Museum, 200 Eastern Parkway",
-    "neighborhood": "Prospect Heights",
-    "borough": "Brooklyn",
-    "official_url": "https://brooklynmuseum.org/programs/art-history-happy-hour-iris-van-herpen-september-2026/09-24-2026",
-    "image_url": "",
-    "price_label": "$30; $18 for members; includes exhibition access and one specialty drink",
-    "price_min": 18,
-    "price_max": 30,
-    "currency": "USD",
-    "fit_reason": "A museum social combining art, fashion, mathematics, material science, and after-hours exhibition access.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "brooklyn-museum-art-history-happy-hour-iris-van-herpen-2026",
-        "starts_at": "2026-09-24T19:00:00-04:00",
-        "ends_at": "2026-09-24T21:00:00-04:00"
-      }
-    ]
-  },
-  {
     "title": "Día de los Muertos at NYBG",
     "description": "A monthlong celebration of memory, life, and renewal featuring marigold displays, a community ofrenda, calaveras, a flower-covered Catrina, weekend music and crafts, and special performances.",
     "category": "art",
@@ -476,12 +414,12 @@
     "price_max": 30,
     "currency": "USD",
     "fit_reason": "World-class dance for $30 a seat a short walk from Hell's Kitchen, with a free pre-show class for ticketholders.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
+    "verified_at": "2026-09-25T00:01:14-04:00",
     "top_pick": false,
     "occurrences": [
       {
         "source_key": "fall-for-dance-2026",
-        "starts_at": "2026-09-24T19:30:00-04:00",
+        "starts_at": "2026-09-25T19:30:00-04:00",
         "ends_at": "2026-10-03T21:30:00-04:00"
       }
     ]
@@ -507,7 +445,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free all-day book festival, with the comics and genre panels he follows alongside the big literary names.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
+    "verified_at": "2026-09-25T00:01:14-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -566,7 +504,7 @@
     "currency": "USD",
     "fit_reason": "A queer community event with practical career-change support, workshops, and networking.",
     "verified_at": "2026-09-21T00:00:49-04:00",
-    "top_pick": true,
+    "top_pick": false,
     "occurrences": [
       {
         "source_key": "center-queer-in-every-career-2026",
