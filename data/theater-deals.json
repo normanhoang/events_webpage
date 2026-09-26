@@ -28,7 +28,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-six-the-musical",
     "image_url": "https://assets.playbill.com/playbill-covers/Six-Playbill-2025-02-01_Web.jpg",
-    "verified_at": "2026-09-23T00:02:10-04:00",
+    "verified_at": "2026-09-26T00:01:20-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -40,6 +40,16 @@
         "restrictions": "Code SIXPB; select performances through Nov 22; limit 8; all sales final; must be purchased by 11/22/26 at 11:59 PM.",
         "eligible_until": "2026-11-22T23:59:59-05:00",
         "official_url": "https://playbill.com/discount/playbill-discount-for-six-the-musical"
+      },
+      {
+        "source_key": "broadwaybox-digital-lottery",
+        "label": "Digital lottery",
+        "price_label": "$45 digital lottery (before fees)",
+        "price_min": 45,
+        "price_max": 45,
+        "fees_included": null,
+        "restrictions": "Digital lottery listed by BroadwayBox; entered before each performance; subject to availability; all sales final.",
+        "official_url": "https://www.broadwaybox.com/shows/six/"
       }
     ]
   },

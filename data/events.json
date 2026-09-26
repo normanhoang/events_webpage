@@ -49,7 +49,7 @@
     "price_max": 20,
     "currency": "USD",
     "fit_reason": "A focused anime-and-manga day with screenings and fan programming at a modest price.",
-    "verified_at": "2026-09-25T00:01:14-04:00",
+    "verified_at": "2026-09-26T00:01:20-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -111,7 +111,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free fiction event devoted to imaginative worlds and the craft behind them.",
-    "verified_at": "2026-09-25T00:01:14-04:00",
+    "verified_at": "2026-09-26T00:01:20-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -216,64 +216,6 @@
     ]
   },
   {
-    "title": "Extreme Codesign for Efficient AI: Algorithms, Software, and Hardware",
-    "description": "Cornell Tech professor Mohamed Abdelfattah presents techniques for reducing AI inference bottlenecks across numerical representation, tensor compression, software, and accelerator hardware.",
-    "category": "tech",
-    "tags": [
-      "artificial intelligence",
-      "LLM inference",
-      "hardware",
-      "software",
-      "lecture"
-    ],
-    "venue": "NYU Tandon School of Engineering, 370 Jay Street, Room 825",
-    "neighborhood": "Downtown Brooklyn",
-    "borough": "Brooklyn",
-    "official_url": "https://engineering.nyu.edu/events/2026/09/25/extreme-codesign-efficient-ai-algorithms-software-and-hardware",
-    "image_url": "https://engineering.nyu.edu/sites/default/files/styles/content_header_default_1x/public/2026-08/Screenshot%202026-08-24%20at%204.14.30%E2%80%AFPM.png?h=9b8fd413&itok=6tf6pJ6O",
-    "price_label": "See official source",
-    "currency": "USD",
-    "fit_reason": "A technical deep dive at the hardware-software boundary of modern AI systems.",
-    "verified_at": "2026-09-25T00:01:14-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "nyu-extreme-codesign-2026",
-        "starts_at": "2026-09-25T11:00:00-04:00",
-        "ends_at": "2026-09-25T12:30:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "From Risk Maps to Resilience Investments: Making Climate AI Decision-Ready",
-    "description": "Researchers and leaders from city government, infrastructure planning, finance, and insurance examine how climate-risk models can guide resilience investment through a demo, workshop, panel, and networking.",
-    "category": "tech",
-    "tags": [
-      "artificial intelligence",
-      "climate risk",
-      "finance",
-      "insurance",
-      "infrastructure"
-    ],
-    "venue": "NYU Tandon, 370 Jay Street, Room 1201",
-    "neighborhood": "Downtown Brooklyn",
-    "borough": "Brooklyn",
-    "official_url": "https://engineering.nyu.edu/events/2026/09/25/risk-maps-resilience-investments-making-climate-ai-decision-ready",
-    "image_url": "https://engineering.nyu.edu/sites/default/files/styles/content_header_default_1x/public/2026-09/risk-maps-sm-2.jpg?h=74c6825a&itok=wxaF3Huf",
-    "price_label": "See official source",
-    "currency": "USD",
-    "fit_reason": "A direct connection between quantitative modeling, finance, insurance, and NYC infrastructure decisions.",
-    "verified_at": "2026-09-25T00:01:14-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "nyu-risk-maps-resilience-2026",
-        "starts_at": "2026-09-25T13:00:00-04:00",
-        "ends_at": "2026-09-25T16:30:00-04:00"
-      }
-    ]
-  },
-  {
     "title": "Personal Agent Hackathon",
     "description": "Cognee’s hands-on collabathon at NYU Tandon for anyone building AI agents: pick a personal use case, add your own data, build a connected memory, and ship an agent that can use it. Lightning talks at 10:45 AM, building from 11 AM, judging at 3:30 PM.",
     "category": "tech",
@@ -323,13 +265,28 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free weekly group run in Harlem with pacers for every pace - a standing Monday-night habit that costs nothing.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
+    "verified_at": "2026-09-26T00:01:20-04:00",
     "top_pick": true,
     "occurrences": [
       {
         "source_key": "harlem-run-monday-night-2026-09-28",
         "starts_at": "2026-09-28T18:45:00-04:00",
         "ends_at": "2026-09-28T20:30:00-04:00"
+      },
+      {
+        "source_key": "harlem-run-monday-night-2026-10-05",
+        "starts_at": "2026-10-05T18:45:00-04:00",
+        "ends_at": "2026-10-05T20:30:00-04:00"
+      },
+      {
+        "source_key": "harlem-run-monday-night-2026-10-12",
+        "starts_at": "2026-10-12T18:45:00-04:00",
+        "ends_at": "2026-10-12T20:30:00-04:00"
+      },
+      {
+        "source_key": "harlem-run-monday-night-2026-10-19",
+        "starts_at": "2026-10-19T18:45:00-04:00",
+        "ends_at": "2026-10-19T20:30:00-04:00"
       }
     ]
   },
@@ -395,7 +352,7 @@
   },
   {
     "title": "Fall for Dance Festival",
-    "description": "The 23rd Fall for Dance Festival brings 15 companies and 11 premieres to New York City Center across five programs, including A.I.M by Kyle Abraham, The Royal Ballet, San Francisco Ballet, Boston Ballet, and two City Center commissions.",
+    "description": "The 23rd Fall for Dance Festival brings 15 companies and 11 premieres to New York City Center across five programs, including A.I.M by Kyle Abraham, The Royal Ballet, San Francisco Ballet, Boston Ballet, and two City Center commissions. Remaining programs run September 26 through October 3.",
     "category": "art",
     "tags": [
       "dance",
@@ -414,12 +371,12 @@
     "price_max": 30,
     "currency": "USD",
     "fit_reason": "World-class dance for $30 a seat a short walk from Hell's Kitchen, with a free pre-show class for ticketholders.",
-    "verified_at": "2026-09-25T00:01:14-04:00",
+    "verified_at": "2026-09-26T00:01:20-04:00",
     "top_pick": false,
     "occurrences": [
       {
         "source_key": "fall-for-dance-2026",
-        "starts_at": "2026-09-25T19:30:00-04:00",
+        "starts_at": "2026-09-26T19:30:00-04:00",
         "ends_at": "2026-10-03T21:30:00-04:00"
       }
     ]
