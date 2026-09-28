@@ -1,129 +1,140 @@
 [
   {
-    "title": "Broadway Flea Market & Grand Auction",
-    "description": "Broadway Cares celebrates the event’s 40th year with more than 60 tables of theatrical collectibles, an autograph and photo area, and live and silent auctions. The 2026 edition has moved indoors to the Hammerstein Ballroom because of forecast rain and wind.",
-    "category": "theater",
+    "title": "Harlem Run: Monday Night Run",
+    "description": "Free, inclusive pacer-led runs and walks through Harlem, starting and ending at Marcus Garvey Park. Paces from 7 to 12 minutes per mile plus run/walk and walk groups; open to all ages and abilities, with bag drop available. Repeats every Monday through June 2027.",
+    "category": "fitness",
     "tags": [
-      "Broadway",
-      "musicals",
-      "collectibles",
-      "Times Square",
-      "fundraiser"
+      "free",
+      "running",
+      "weekly",
+      "all levels",
+      "Harlem"
     ],
-    "venue": "Hammerstein Ballroom, 311 West 34th Street",
-    "neighborhood": "Theater District",
+    "venue": "Marcus Garvey Park, south side of Pelham Fritz Recreation Center, W 122nd St and Mount Morris Park West",
+    "neighborhood": "Harlem",
     "borough": "Manhattan",
-    "official_url": "https://broadwaycares.org/pre-event/broadway-flea-market-and-grand-auction-2026/",
-    "image_url": "https://broadwaycares.org/wp-content/uploads/2026/08/FM-2026-hero-1000x528.jpg",
-    "price_label": "Free to browse; auction and merchandise prices vary",
+    "official_url": "https://www.nycgovparks.org/events/2026/09/28/harlem-run-monday-night-run",
+    "image_url": "",
+    "price_label": "Free",
+    "price_min": 0,
+    "price_max": 0,
     "currency": "USD",
-    "fit_reason": "A Broadway-lover’s treasure hunt near Hell’s Kitchen, with memorabilia and performers.",
-    "verified_at": "2026-09-27T00:00:30-04:00",
+    "fit_reason": "A free weekly group run in Harlem with pacers for every pace - a standing Monday-night habit that costs nothing.",
+    "verified_at": "2026-09-28T00:02:47-04:00",
     "top_pick": true,
     "occurrences": [
       {
-        "source_key": "broadway-flea-2026",
-        "starts_at": "2026-09-27T10:00:00-04:00",
-        "ends_at": null
-      }
-    ]
-  },
-  {
-    "title": "Give Us Our Daily Dread: Horror Comics",
-    "description": "James Tynion IV, Chris Condon, and Ezra Claytan Daniels discuss the continuing growth of horror comics and their recent graphic novels at the Brooklyn Book Festival.",
-    "category": "comics",
-    "tags": [
-      "comics",
-      "graphic novels",
-      "horror",
-      "authors",
-      "books"
-    ],
-    "venue": "Borough Hall Courtroom, 209 Joralemon Street",
-    "neighborhood": "Downtown Brooklyn",
-    "borough": "Brooklyn",
-    "official_url": "https://brooklynbookfestival.org/event/give-us-our-daily-dread-horror-comics/",
-    "image_url": "",
-    "price_label": "Free",
-    "price_min": 0,
-    "price_max": 0,
-    "currency": "USD",
-    "fit_reason": "A free panel squarely about comics, graphic novels, and genre storytelling.",
-    "verified_at": "2026-09-27T00:00:30-04:00",
-    "top_pick": false,
-    "occurrences": [
+        "source_key": "harlem-run-monday-night-2026-09-28",
+        "starts_at": "2026-09-28T18:45:00-04:00",
+        "ends_at": "2026-09-28T20:30:00-04:00"
+      },
       {
-        "source_key": "daily-dread-horror-comics-2026",
-        "starts_at": "2026-09-27T10:00:00-04:00",
-        "ends_at": null
-      }
-    ]
-  },
-  {
-    "title": "Fall Into Fantasy",
-    "description": "Fantasy authors Sarah Beth Durst, Amélie Wen Zhao, and Shannon J. Spann discuss worldbuilding, magic, romance, power, and family in their recent novels.",
-    "category": "books",
-    "tags": [
-      "fantasy",
-      "fiction",
-      "authors",
-      "worldbuilding",
-      "books"
-    ],
-    "venue": "Brooklyn Law School Student Lounge, 250 Joralemon Street",
-    "neighborhood": "Downtown Brooklyn",
-    "borough": "Brooklyn",
-    "official_url": "https://brooklynbookfestival.org/event/fall-into-fantasy/",
-    "image_url": "",
-    "price_label": "Free",
-    "price_min": 0,
-    "price_max": 0,
-    "currency": "USD",
-    "fit_reason": "A free fiction event devoted to imaginative worlds and the craft behind them.",
-    "verified_at": "2026-09-27T00:00:30-04:00",
-    "top_pick": false,
-    "occurrences": [
+        "source_key": "harlem-run-monday-night-2026-10-05",
+        "starts_at": "2026-10-05T18:45:00-04:00",
+        "ends_at": "2026-10-05T20:30:00-04:00"
+      },
       {
-        "source_key": "fall-into-fantasy-2026",
-        "starts_at": "2026-09-27T12:00:00-04:00",
-        "ends_at": null
+        "source_key": "harlem-run-monday-night-2026-10-12",
+        "starts_at": "2026-10-12T18:45:00-04:00",
+        "ends_at": "2026-10-12T20:30:00-04:00"
+      },
+      {
+        "source_key": "harlem-run-monday-night-2026-10-19",
+        "starts_at": "2026-10-19T18:45:00-04:00",
+        "ends_at": "2026-10-19T20:30:00-04:00"
       }
     ]
   },
   {
-    "title": "When We Gather: On Food, Celebration, and Ritual",
-    "description": "Brooklyn Book Festival panel with anthropologist Ashanté Reese, entertaining expert Amber Mayfield Hewett, and chef Natasha Pickowicz on gathering over shared food, moderated by Danielle Davenport of BEM.",
+    "title": "Queens Night Market",
+    "description": "New York City's flagship night market takes over the grounds outside the New York Hall of Science in Flushing Meadows Corona Park with dozens of international food vendors, live performers, and a rotating weekly lineup. Doors run from 4 PM until midnight.",
     "category": "food",
     "tags": [
-      "food",
-      "books",
-      "nonfiction",
-      "festival",
-      "free"
+      "night market",
+      "street food",
+      "cultural festival",
+      "Queens",
+      "weekend"
     ],
-    "venue": "Brooklyn Law School, Room 601, 250 Joralemon Street",
-    "neighborhood": "Downtown Brooklyn",
-    "borough": "Brooklyn",
-    "official_url": "https://brooklynbookfestival.org/event/when-we-gather-on-food-celebration-and-ritual/",
+    "venue": "New York Hall of Science, Flushing Meadows Corona Park",
+    "neighborhood": "Corona",
+    "borough": "Queens",
+    "official_url": "https://queensnightmarket.com/",
     "image_url": "",
-    "price_label": "Free",
-    "price_min": 0,
-    "price_max": 0,
     "currency": "USD",
-    "fit_reason": "A free Festival Day conversation about food and culture, easy to fold into the same trip as the comics and fantasy panels.",
-    "verified_at": "2026-09-27T00:00:30-04:00",
+    "fit_reason": "Dozens of international food stalls and performances in one Queens park on a Saturday night.",
+    "verified_at": "2026-09-28T00:02:47-04:00",
     "top_pick": false,
     "occurrences": [
       {
-        "source_key": "bbf-when-we-gather-2026",
-        "starts_at": "2026-09-27T10:00:00-04:00",
-        "ends_at": null
+        "source_key": "queens-night-market-2026-10-03",
+        "starts_at": "2026-10-03T16:00:00-04:00",
+        "ends_at": "2026-10-04T00:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Día de los Muertos at NYBG",
+    "description": "A monthlong celebration of memory, life, and renewal featuring marigold displays, a community ofrenda, calaveras, a flower-covered Catrina, weekend music and crafts, and a parade on November 1.",
+    "category": "art",
+    "tags": [
+      "Día de los Muertos",
+      "Mexican culture",
+      "marigolds",
+      "community ofrenda",
+      "music",
+      "crafts"
+    ],
+    "venue": "New York Botanical Garden, 2900 Southern Boulevard",
+    "neighborhood": "Bronx Park",
+    "borough": "Bronx",
+    "official_url": "https://www.nybg.org/event/dia-de-los-muertos/",
+    "image_url": "https://www.nybg.org/content/uploads/2026/07/iStock-619074442-edit-3.1-160x53.jpg",
+    "price_label": "Included with Garden admission",
+    "currency": "USD",
+    "fit_reason": "A substantial cultural celebration in the Bronx with botanical displays, art, music, crafts, and community traditions.",
+    "verified_at": "2026-09-28T00:02:47-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "nybg-dia-de-los-muertos-2026",
+        "starts_at": "2026-10-03T10:00:00-04:00",
+        "ends_at": "2026-11-02T18:00:00-05:00"
+      }
+    ]
+  },
+  {
+    "title": "NYC Off-Broadway Week",
+    "description": "NYC Tourism's biannual Off-Broadway promotion returns with 2-for-1 tickets, 50% off each seat, to participating Off-Broadway productions across the city; 25 shows are listed for the fall edition.",
+    "category": "theater",
+    "tags": [
+      "Off-Broadway",
+      "theater",
+      "2-for-1",
+      "discount",
+      "tickets"
+    ],
+    "venue": "Participating Off-Broadway theaters",
+    "neighborhood": "",
+    "borough": "",
+    "official_url": "https://www.nyctourism.com/off-broadway-week/",
+    "image_url": "",
+    "price_label": "2-for-1 tickets with code OBW26",
+    "currency": "USD",
+    "fit_reason": "The cheapest reliable route into Off-Broadway all year: 2-for-1 seats booked with code OBW26.",
+    "verified_at": "2026-09-28T00:02:47-04:00",
+    "top_pick": true,
+    "occurrences": [
+      {
+        "source_key": "off-broadway-week-fall-2026",
+        "starts_at": "2026-10-05T00:00:00-04:00",
+        "ends_at": "2026-10-18T23:59:00-04:00"
       }
     ]
   },
   {
     "title": "Game-A-Palooza 2026",
-    "description": "IGDA NYC’s curated indie-game showcase opens its locally made and unreleased games to the public from 1 PM, with opportunities to play and meet New York developers.",
+    "description": "IGDA NYC's curated indie-game showcase opens its locally made and unreleased games to the public from 1 PM, with opportunities to play and meet New York developers.",
     "category": "gaming",
     "tags": [
       "video games",
@@ -142,7 +153,7 @@
     "price_max": 10,
     "currency": "USD",
     "fit_reason": "Hands-on access to unreleased games and local developers for only $10.",
-    "verified_at": "2026-09-23T00:02:10-04:00",
+    "verified_at": "2026-09-28T00:02:47-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -185,201 +196,6 @@
     ]
   },
   {
-    "title": "Personal Agent Hackathon",
-    "description": "Cognee’s hands-on collabathon at NYU Tandon for anyone building AI agents: pick a personal use case, add your own data, build a connected memory, and ship an agent that can use it. Lightning talks at 10:45 AM, building from 11 AM, judging at 3:30 PM, wrap-up at 5 PM.",
-    "category": "tech",
-    "tags": [
-      "artificial intelligence",
-      "AI agents",
-      "memory",
-      "hackathon",
-      "free"
-    ],
-    "venue": "NYU Tandon, 6 MetroTech Center, Room 474",
-    "neighborhood": "Downtown Brooklyn",
-    "borough": "Brooklyn",
-    "official_url": "https://engineering.nyu.edu/events/2026/09/27/personal-agent-hackathon",
-    "image_url": "https://engineering.nyu.edu/sites/default/files/styles/content_header_default_1x/public/2026-09/hackathpn.png?h=34ca2a24&itok=gSArfSXS",
-    "price_label": "Free; RSVP required for campus access",
-    "currency": "USD",
-    "fit_reason": "A free, hands-on agent-building day that matches his AI-and-programming career goal, with a career-brain and personal-knowledge use case as the example projects.",
-    "verified_at": "2026-09-27T00:00:30-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "nyu-tandon-personal-agent-hackathon-2026",
-        "starts_at": "2026-09-27T10:00:00-04:00",
-        "ends_at": "2026-09-27T17:00:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "Harlem Run: Monday Night Run",
-    "description": "Free, inclusive pacer-led runs and walks through Harlem, starting and ending at Marcus Garvey Park. Paces from 7 to 12 minutes per mile plus run/walk and walk groups; open to all ages and abilities, with bag drop available. Repeats every Monday through June 2027.",
-    "category": "fitness",
-    "tags": [
-      "free",
-      "running",
-      "weekly",
-      "all levels",
-      "Harlem"
-    ],
-    "venue": "Marcus Garvey Park, south side of Pelham Fritz Recreation Center, W 122nd St and Mount Morris Park West",
-    "neighborhood": "Harlem",
-    "borough": "Manhattan",
-    "official_url": "https://www.nycgovparks.org/events/2026/09/28/harlem-run-monday-night-run",
-    "image_url": "",
-    "price_label": "Free",
-    "price_min": 0,
-    "price_max": 0,
-    "currency": "USD",
-    "fit_reason": "A free weekly group run in Harlem with pacers for every pace - a standing Monday-night habit that costs nothing.",
-    "verified_at": "2026-09-27T00:00:30-04:00",
-    "top_pick": true,
-    "occurrences": [
-      {
-        "source_key": "harlem-run-monday-night-2026-09-28",
-        "starts_at": "2026-09-28T18:45:00-04:00",
-        "ends_at": "2026-09-28T20:30:00-04:00"
-      },
-      {
-        "source_key": "harlem-run-monday-night-2026-10-05",
-        "starts_at": "2026-10-05T18:45:00-04:00",
-        "ends_at": "2026-10-05T20:30:00-04:00"
-      },
-      {
-        "source_key": "harlem-run-monday-night-2026-10-12",
-        "starts_at": "2026-10-12T18:45:00-04:00",
-        "ends_at": "2026-10-12T20:30:00-04:00"
-      },
-      {
-        "source_key": "harlem-run-monday-night-2026-10-19",
-        "starts_at": "2026-10-19T18:45:00-04:00",
-        "ends_at": "2026-10-19T20:30:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "The 51st Annual Atlantic Antic",
-    "description": "A mile-long neighborhood street festival with hundreds of vendors, food, crafts, shopping, live music, entertainment, and family areas along Atlantic Avenue.",
-    "category": "food",
-    "tags": [
-      "street festival",
-      "food",
-      "live music",
-      "crafts",
-      "community"
-    ],
-    "venue": "Atlantic Avenue from Hicks Street to Fourth Avenue",
-    "neighborhood": "Boerum Hill and Brooklyn Heights",
-    "borough": "Brooklyn",
-    "official_url": "https://www.iloveny.com/thebeat/post/the-51st-annual-atlantic-antic-returns-to-atlantic-avenue-on-sunday-september-27-2026/",
-    "image_url": "",
-    "price_label": "Free admission; food and merchandise vary",
-    "price_min": 0,
-    "currency": "USD",
-    "fit_reason": "A big food-and-culture street festival with live music and plenty to browse.",
-    "verified_at": "2026-09-27T00:00:30-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "atlantic-antic-2026",
-        "starts_at": "2026-09-27T12:00:00-04:00",
-        "ends_at": "2026-09-27T18:00:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "Día de los Muertos at NYBG",
-    "description": "A monthlong celebration of memory, life, and renewal featuring marigold displays, a community ofrenda, calaveras, a flower-covered Catrina, weekend music and crafts, and a parade on November 1.",
-    "category": "art",
-    "tags": [
-      "Día de los Muertos",
-      "Mexican culture",
-      "marigolds",
-      "community ofrenda",
-      "music",
-      "crafts"
-    ],
-    "venue": "New York Botanical Garden, 2900 Southern Boulevard",
-    "neighborhood": "Bronx Park",
-    "borough": "Bronx",
-    "official_url": "https://www.nybg.org/event/dia-de-los-muertos/",
-    "image_url": "https://www.nybg.org/content/uploads/2026/07/iStock-619074442-edit-3.1-160x53.jpg",
-    "price_label": "Included with Garden admission",
-    "currency": "USD",
-    "fit_reason": "A substantial cultural celebration in the Bronx with botanical displays, art, music, crafts, and community traditions.",
-    "verified_at": "2026-09-27T00:00:30-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "nybg-dia-de-los-muertos-2026",
-        "starts_at": "2026-10-03T10:00:00-04:00",
-        "ends_at": "2026-11-02T18:00:00-05:00"
-      }
-    ]
-  },
-  {
-    "title": "Brooklyn Book Festival Festival Day",
-    "description": "The festival's flagship day fills Brooklyn Borough Hall and the surrounding venues and parks with author panels and a literary marketplace, with Marlon James, Colson Whitehead, Tracy K. Smith, Douglas Stuart, Cristina Rivera Garza, and dozens more.",
-    "category": "books",
-    "tags": [
-      "books",
-      "fiction",
-      "authors",
-      "festival",
-      "Downtown Brooklyn"
-    ],
-    "venue": "Brooklyn Borough Hall and surrounding venues",
-    "neighborhood": "Downtown Brooklyn",
-    "borough": "Brooklyn",
-    "official_url": "https://brooklynbookfestival.org/event_type/festival-day/",
-    "image_url": "",
-    "price_label": "Free",
-    "price_min": 0,
-    "price_max": 0,
-    "currency": "USD",
-    "fit_reason": "A free all-day book festival, with the comics and genre panels he follows alongside the big literary names.",
-    "verified_at": "2026-09-27T00:00:30-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "brooklyn-book-festival-day-2026",
-        "starts_at": "2026-09-27T10:00:00-04:00",
-        "ends_at": "2026-09-27T18:00:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "NYC Off-Broadway Week",
-    "description": "NYC Tourism's biannual Off-Broadway promotion returns with 2-for-1 tickets, 50% off each seat, to participating Off-Broadway productions across the city; the lineup of shows goes live September 22.",
-    "category": "theater",
-    "tags": [
-      "Off-Broadway",
-      "theater",
-      "2-for-1",
-      "discount",
-      "tickets"
-    ],
-    "venue": "Participating Off-Broadway theaters",
-    "neighborhood": "",
-    "borough": "",
-    "official_url": "https://www.nyctourism.com/off-broadway-week/",
-    "image_url": "",
-    "price_label": "2-for-1 tickets (50% off); service fee applied per ticket",
-    "currency": "USD",
-    "fit_reason": "The cheapest reliable route into Off-Broadway all year: 2-for-1 seats, with the participating shows announced September 22.",
-    "verified_at": "2026-09-24T00:00:48-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "off-broadway-week-fall-2026",
-        "starts_at": "2026-10-05T00:00:00-04:00",
-        "ends_at": "2026-10-18T23:59:00-04:00"
-      }
-    ]
-  },
-  {
     "title": "Queer in Every Career: LGBTQ+ Career Fair 2026",
     "description": "The Center’s annual career fair connects LGBTQ+ job seekers with affirming NYC employers, networking, resume feedback, coaching, and skill-building workshops.",
     "category": "queer",
@@ -398,7 +214,7 @@
     "price_label": "Registration required",
     "currency": "USD",
     "fit_reason": "A queer community event with practical career-change support, workshops, and networking.",
-    "verified_at": "2026-09-21T00:00:49-04:00",
+    "verified_at": "2026-09-28T00:02:47-04:00",
     "top_pick": true,
     "occurrences": [
       {
@@ -419,7 +235,7 @@
       "Ray Bradbury",
       "book club"
     ],
-    "venue": "Stavros Niarchos Foundation Library, Room 204",
+    "venue": "Stavros Niarchos Foundation Library (SNFL), Room 204",
     "neighborhood": "Midtown",
     "borough": "Manhattan",
     "official_url": "https://nypl.org/events/programs/2026/10/19/horror-and-dark-literature-book-club-october-country",
@@ -429,13 +245,143 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free adult book-club night for horror, dark fantasy, and classic science fiction readers.",
-    "verified_at": "2026-09-21T00:00:49-04:00",
+    "verified_at": "2026-09-28T00:02:47-04:00",
     "top_pick": false,
     "occurrences": [
       {
         "source_key": "nypl-horror-dark-literature-october-country-2026",
         "starts_at": "2026-10-19T18:30:00-04:00",
         "ends_at": "2026-10-19T19:30:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Open House New York Weekend",
+    "description": "Three days of behind-the-scenes access to more than 300 destinations across the five boroughs: new buildings reshaping the skyline, infrastructure facilities keeping the city running, performance spaces, parks, and manufacturing workshops. More than 150 sites are drop-in, while some sites and tours require tickets released October 2.",
+    "category": "art",
+    "tags": [
+      "architecture",
+      "infrastructure",
+      "tours",
+      "open access",
+      "citywide"
+    ],
+    "venue": "300+ sites across the five boroughs",
+    "neighborhood": "",
+    "borough": "",
+    "official_url": "https://ohny.org/festival",
+    "image_url": "https://res.cloudinary.com/dgsgawrfo/image/upload/w_2400,h_1345,c_fill,g_auto,f_auto,dpr_auto/v1790196544/Hero-2026-Festival_rl9uxd.jpg",
+    "price_label": "Free drop-in access at 150+ sites; some sites and tours require advance tickets",
+    "currency": "USD",
+    "fit_reason": "Behind-the-scenes architecture and infrastructure access across the city, from landmark civic buildings to the systems underneath them.",
+    "verified_at": "2026-09-28T00:02:47-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "ohny-weekend-2026",
+        "starts_at": "2026-10-16T00:00:00-04:00",
+        "ends_at": "2026-10-18T23:59:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Field Conditions: Incubating Media Arts in NYC",
+    "description": "A panel bringing together NEW INC at the New Museum, Rhizome, and Onassis ONX on how New York’s art, design, and technology institutions support practitioners, where funding and institutional models are heading, and what is emerging in computational design, interaction, and immersive media.",
+    "category": "tech",
+    "tags": [
+      "creative technology",
+      "media arts",
+      "panel",
+      "design",
+      "immersive media"
+    ],
+    "venue": "Gensler Family AAP NYC Center, Tata Innovation Center, Cornell Tech, 11 East Loop Road, 4th Floor",
+    "neighborhood": "Roosevelt Island",
+    "borough": "Manhattan",
+    "official_url": "https://tech.cornell.edu/events/field-conditions-incubating-media-arts-in-nyc/",
+    "image_url": "",
+    "currency": "USD",
+    "fit_reason": "A direct look at the institutions behind New York’s creative-technology scene, covering AI storytelling and immersive media.",
+    "verified_at": "2026-09-28T00:02:47-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "cornell-tech-field-conditions-2026-09-30",
+        "starts_at": "2026-09-30T19:00:00-04:00",
+        "ends_at": "2026-09-30T20:30:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Gallery Tours: A Few of Our Favorite Things",
+    "description": "A free staff-led gallery tour through highlights of the Brooklyn Museum’s collection, offered on selected weekdays and Sundays.",
+    "category": "art",
+    "tags": [
+      "museum",
+      "tours",
+      "free",
+      "Brooklyn"
+    ],
+    "venue": "Brooklyn Museum, 200 Eastern Parkway",
+    "neighborhood": "Prospect Heights",
+    "borough": "Brooklyn",
+    "official_url": "https://www.brooklynmuseum.org/programs/tours-favorite-things-summer-fall-2026/10-01-2026",
+    "image_url": "https://cms-images.brooklynmuseum.org/6504c0e5ff47fa4f0f65998a875565c9732de7ce-2000x1334.jpg?w=3840&q=75&auto=format",
+    "price_label": "Free",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "A free guided museum tour in Prospect Heights, easy to pair with the museum’s current shows.",
+    "verified_at": "2026-09-28T00:02:47-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "brooklyn-museum-favorite-things-2026-09-30",
+        "starts_at": "2026-09-30T13:00:00-04:00",
+        "ends_at": "2026-09-30T14:00:00-04:00"
+      },
+      {
+        "source_key": "brooklyn-museum-favorite-things-2026-10-01",
+        "starts_at": "2026-10-01T13:00:00-04:00",
+        "ends_at": "2026-10-01T14:00:00-04:00"
+      },
+      {
+        "source_key": "brooklyn-museum-favorite-things-2026-10-02",
+        "starts_at": "2026-10-02T13:00:00-04:00",
+        "ends_at": "2026-10-02T14:00:00-04:00"
+      },
+      {
+        "source_key": "brooklyn-museum-favorite-things-2026-10-04",
+        "starts_at": "2026-10-04T13:00:00-04:00",
+        "ends_at": "2026-10-04T14:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Piano in Bryant Park",
+    "description": "Open-air piano performances on the Upper Terrace in Bryant Park, free to stop by over the lunch hour.",
+    "category": "music",
+    "tags": [
+      "piano",
+      "live music",
+      "Midtown",
+      "lunchtime",
+      "free"
+    ],
+    "venue": "Upper Terrace, Bryant Park",
+    "neighborhood": "Midtown",
+    "borough": "Manhattan",
+    "official_url": "https://www.nycgovparks.org/events/2026/09/28/piano-in-bryant-park",
+    "image_url": "",
+    "currency": "USD",
+    "fit_reason": "A lunchtime piano set in Midtown, a no-cost way to catch live music on the way through the city.",
+    "verified_at": "2026-09-28T00:02:47-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "bryant-park-piano-2026-09-28",
+        "starts_at": "2026-09-28T12:30:00-04:00",
+        "ends_at": "2026-09-28T14:30:00-04:00"
       }
     ]
   }
