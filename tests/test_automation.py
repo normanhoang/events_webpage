@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 import pytest
@@ -115,11 +115,15 @@ def test_validate_catalog_rejects_past_out_of_horizon_and_naive_occurrences():
 
 
 def test_validate_catalog_requires_recent_nonfuture_verification():
-    from automation.publish_update import validate_catalog
+    from automation.publish_update import VERIFICATION_MAX_AGE_DAYS, validate_catalog
 
     now = datetime(2030, 5, 9, 12, tzinfo=ZoneInfo("America/New_York"))
     catalog = records()
-    catalog[0]["verified_at"] = "2030-05-01T11:59:59-04:00"
+    # Derive the stale stamp from the gate: the hardcoded offset this test used went vacuous the
+    # moment the gate widened for the weekly cadence, and passed while asserting nothing.
+    catalog[0]["verified_at"] = (
+        now - timedelta(days=VERIFICATION_MAX_AGE_DAYS + 1)
+    ).isoformat()
     with pytest.raises(ValueError, match="verified_at"):
         validate_catalog(catalog, now=now)
 

@@ -23,7 +23,14 @@ MAX_EVENTS = 24
 REQUIRED_CATEGORIES = frozenset({"theater", "queer", "tech", "comics", "gaming", "books", "fitness"})
 # The headline section is a curation, not a slice of the feed; cap it explicitly.
 MAX_TOP_PICKS = 3
-VERIFICATION_MAX_AGE_DAYS = 7
+# The card runs WEEKLY (Sunday 00:00 New York), so one interval between runs is seven days. The gate
+# has to clear TWO intervals: a record verified on one Sunday is fourteen days old at the second
+# Sunday after it, and the boundary rule (gate-1) is what pulls it back in before it can fall out.
+# At a single interval the boundary marks the ENTIRE catalog due on every run, turning each weekly
+# run into a whole-catalog sweep against the scheduler's three-minute interrupt (measured: the
+# nightly card spent 122-200s on a seven-event worklist already).
+RUN_INTERVAL_DAYS = 7
+VERIFICATION_MAX_AGE_DAYS = 2 * RUN_INTERVAL_DAYS
 NYC = ZoneInfo("America/New_York")
 DEFAULT_HEALTH_URL = "https://events-webpage-gamma.vercel.app/health/"
 POLL_SECONDS = 90

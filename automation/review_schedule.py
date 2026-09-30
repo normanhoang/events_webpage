@@ -1,22 +1,23 @@
-"""Deterministic review rotation for the nightly research run.
+"""Deterministic review rotation for the weekly research run.
 
 Consumed by the scheduled briefing script ``~/.hermes/scripts/nightly-events-prepare.py``, which
-turns these functions into the night's ranked worklist. Nothing in this repository calls them at
+turns these functions into this run's ranked worklist. Nothing in this repository calls them at
 runtime, so do not read an empty in-repo grep as "dead code" — the consumer is the cron script.
 
 Every event must keep a ``verified_at`` inside the validator's freshness gate, but reviewing the
-whole catalog on one night does not fit the research run's 3-minute budget. Each retained event
-gets a rotation phase and is reviewed once per rotation, so the load spreads across nights
-instead of clumping when the catalog ages out together.
+whole catalog inside one run does not fit the research run's 3-minute budget. Each retained event
+gets a rotation phase and is reviewed once per rotation, so the load spreads across runs instead
+of clumping when the catalog ages out together.
 
-Measure the rotation ALONE: on a 24-event catalog with a 7-day gate, a 5-day rotation gives 4-5
-reviews a night in steady state, against 24 in one night with no rotation. That flatness is a
-steady-state property, not a general one, and it is not the nightly budget — the imminent rule
-sits on top of it, so the real worklist is rotation plus every event whose occurrence falls
-inside the imminent window. Replaying the shipped catalog, that total runs 7 tonight and peaks
-at 16, which is why `split_worklist` bounds it. A staggered catalog converges within about one
-rotation, and a multi-night outage genuinely clumps on the recovery night because by then the
-work really is due; no schedule can invent the missed nights.
+The run cadence is **weekly**, which is what sizes both constants below. Measure the rotation
+ALONE: on a 24-event catalog with a 14-day gate and a two-phase rotation, one weekly run carries
+roughly half the catalog and the other half the next, against 24 in one run with no rotation, and
+the published catalog never holds a record older than about one interval. That flatness is a
+steady-state property, not a general one, and it is not the run's budget — the imminent rule sits
+on top of it, so the real worklist is rotation plus every event whose occurrence falls inside the
+imminent window. A staggered catalog converges within about one rotation, and a missed run
+genuinely clumps on the recovery run because by then the work really is due; no schedule can
+invent the runs that were skipped.
 
 Every label except "carry" is a refresh instruction. An event that is both overdue and near-term
 reports "nightly", so a caller acting on "due" alone would skip it — read both lists.
@@ -24,17 +25,18 @@ reports "nightly", so a caller acting on "due" alone would skip it — read both
 
 from datetime import timedelta
 
-from automation.publish_update import NYC, VERIFICATION_MAX_AGE_DAYS
+from automation.publish_update import NYC, RUN_INTERVAL_DAYS, VERIFICATION_MAX_AGE_DAYS
 
-# Each retained event is reviewed once per rotation. Keep the period shorter than the gate so a
-# phase-scheduled review always lands before the freshness deadline.
-# Measured: the load doubles at ROTATION_DAYS == VERIFICATION_MAX_AGE_DAYS (7), because the
-# boundary rule then starts pulling events in a day early *in addition to* the phase bucket.
-# Periods of 6 and below do not stack the two waves; 6 is the flat end of the safe range and 5
-# is used here to keep a full day of slack against the gate.
-ROTATION_DAYS = 5
+# Each retained event is reviewed once per rotation. Size the period to the skip budget the gate
+# allows, NOT to the gate itself: a record verified on one run can skip exactly one run before the
+# boundary rule has to pull it in (gate = 2 x interval), so two phases spread the catalog across
+# alternate runs at half the catalog each. Measured: a longer period clumps, because the boundary
+# then pulls a whole untouched cohort onto a single run on top of its phase bucket — and the
+# weekly run has no second chance that week if it runs out of budget.
+ROTATION_DAYS = 2
 
-# An occurrence this close is reverified every night regardless of rotation.
+# An occurrence this close is reverified on this run regardless of rotation. With a weekly cadence
+# every coming-week event is caught once by the run before the week it happens in.
 IMMINENT_DAYS = 7
 
 # How many verifications a single research run can complete inside the scheduler's 3-minute

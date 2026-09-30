@@ -8,6 +8,8 @@ from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.views.decorators.http import require_safe
 
+from automation.publish_update import VERIFICATION_MAX_AGE_DAYS
+
 from .models import Event, Occurrence, TheaterDeal, TheaterOffer
 
 # The page offers exactly two filters: an interest chip and the free-only toggle. Everything
@@ -24,7 +26,7 @@ def health(request):
         "upcoming_occurrences": Occurrence.objects.upcoming().count(),
         "active_theater_deals": TheaterDeal.objects.filter(
             is_active=True,
-            verified_at__gte=timezone.now() - timedelta(days=7),
+            verified_at__gte=timezone.now() - timedelta(days=VERIFICATION_MAX_AGE_DAYS),
             offers__in=TheaterOffer.objects.active(),
         ).distinct().count(),
     })
@@ -97,7 +99,10 @@ def theater_deals(request):
         deal_type = ""
 
     active_offers = TheaterOffer.objects.active()
-    fresh_after = timezone.now() - timedelta(days=7)
+    # The page's window is the publisher's gate, not a second opinion about it: a narrower filter
+    # hides records the publisher was allowed to ship, which with a weekly cadence means half the
+    # catalog vanishes for the week it sits between runs.
+    fresh_after = timezone.now() - timedelta(days=VERIFICATION_MAX_AGE_DAYS)
     # The footer's freshness line is dataset-level, so a type bubble cannot rewrite it — the
     # same rule the events pages follow.
     qualifying = TheaterDeal.objects.filter(

@@ -5,7 +5,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from automation.publish_update import MAX_EVENTS, VERIFICATION_MAX_AGE_DAYS
+from automation.publish_update import MAX_EVENTS, RUN_INTERVAL_DAYS, VERIFICATION_MAX_AGE_DAYS
 from automation.review_schedule import (
     IMMINENT_BUDGET,
     ROTATION_DAYS,
@@ -13,25 +13,31 @@ from automation.review_schedule import (
     review_status,
     split_worklist,
 )
+from automation.theater_deals import VERIFICATION_MAX_AGE_DAYS as THEATER_GATE
 
 NOW = datetime(2030, 5, 2, 12, tzinfo=ZoneInfo("America/New_York"))
 KEYS = [f"event-{index}" for index in range(MAX_EVENTS)]
 PHASES = assign_review_phases(KEYS)
-STARTS = NOW + timedelta(days=90)
+# Far enough out that the imminent rule stays out of scope: every offset here is RUN_INTERVAL_DAYS
+# of calendar time, so a ninety-day horizon is reached in thirteen runs, after which every event
+# reads as "nightly" and each run becomes a whole-catalog sweep that has nothing to do with the
+# rotation under test.
+STARTS = NOW + timedelta(days=900)
 CEILING = math.ceil(MAX_EVENTS / ROTATION_DAYS)
 
-# Nights are ABSOLUTE offsets from NOW. Skipping an offset is a missed night, so a simulation
-# must advance one night at a time — jumping a day silently changes what is being measured.
-CONVERGED_THROUGH = 39
+# Runs are ABSOLUTE offsets from NOW, one RUN_INTERVAL_DAYS apart: the card runs weekly, so a
+# harness that advanced one day at a time would measure a schedule the pipeline no longer has.
+# Skipping an offset is a missed RUN, which changes what is being measured.
+CONVERGED_THROUGH = 8
 
 
-def night(verified, offset, starts=STARTS):
-    """Run one night at NOW+offset, refreshing every label the consumer treats as work.
+def run(verified, offset, starts=STARTS):
+    """Run one scheduled cycle at NOW + offset*RUN_INTERVAL_DAYS, refreshing the work labels.
 
     The real consumer refreshes both "nightly" and "due"; a harness that refreshed only "due"
     would model a caller that skips imminent events, so it would measure the wrong thing.
     """
-    day = NOW + timedelta(days=offset)
+    day = NOW + timedelta(days=offset * RUN_INTERVAL_DAYS)
     due = [
         key
         for key, stamp in verified.items()
@@ -46,14 +52,14 @@ def converge():
     """Drive a synchronized catalog until the rotation reaches its steady ladder."""
     verified = {key: NOW for key in KEYS}
     for offset in range(1, CONVERGED_THROUGH + 1):
-        night(verified, offset)
+        run(verified, offset)
     return verified
 
 
 def after_outage(missed):
-    """State after skipping `missed` consecutive nights from the steady ladder."""
+    """State after skipping `missed` consecutive runs from the steady ladder."""
     verified = converge()
-    return night(verified, CONVERGED_THROUGH + missed + 1)
+    return run(verified, CONVERGED_THROUGH + missed + 1)
 
 
 def entries(count, *, days_until=0, status="nightly", age_days=0, offset=0):
@@ -68,7 +74,7 @@ def entries(count, *, days_until=0, status="nightly", age_days=0, offset=0):
     ]
 
 
-def test_imminent_events_are_reviewed_every_night():
+def test_imminent_events_are_reviewed_every_run():
     starts = NOW + timedelta(days=3)
 
     for key in KEYS:
@@ -84,18 +90,42 @@ def test_phases_are_evenly_spread_and_order_independent():
     assert max(Counter(phases.values()).values()) <= CEILING
 
 
-def test_rotation_period_must_be_shorter_than_the_freshness_gate():
-    # Measured: the load doubles once the period equals the gate, because the boundary rule then
-    # pulls events in early on top of the phase bucket. Keep the period strictly shorter.
-    assert ROTATION_DAYS < VERIFICATION_MAX_AGE_DAYS
+def test_the_gate_clears_two_weekly_run_intervals():
+    # The cadence, not taste, sizes the gate: a record verified on one run is two intervals old at
+    # the second run after it, and the boundary rule is what pulls it back in before it can fall
+    # out. A gate of ONE interval marks every record in the catalog due on every run, so each
+    # weekly run becomes a whole-catalog sweep that cannot finish inside the interrupt.
+    assert VERIFICATION_MAX_AGE_DAYS == 2 * RUN_INTERVAL_DAYS
+    # The rotation must fit the skip budget the gate allows, or the boundary rule clumps a whole
+    # untouched cohort onto one run on top of its phase bucket.
+    assert ROTATION_DAYS <= VERIFICATION_MAX_AGE_DAYS // RUN_INTERVAL_DAYS
+
+
+def test_the_two_validators_share_one_freshness_gate():
+    # Two validators that disagree about one field let one accept what the other rejects. The
+    # theater seed keeps its own copy of the gate, so pin the copies together instead of trusting
+    # two literals to stay in step.
+    assert THEATER_GATE == VERIFICATION_MAX_AGE_DAYS
 
 
 def test_steady_state_load_is_flat():
     verified = converge()
-    loads = [night(verified, CONVERGED_THROUGH + step)[0] for step in range(1, 13)]
+    loads = [run(verified, CONVERGED_THROUGH + step)[0] for step in range(1, 9)]
 
-    # Flatness is a steady-state property, measured on consecutive nights.
+    # Flatness is a steady-state property, measured on consecutive runs: one weekly run carries a
+    # phase's share of the catalog and the next carries the other. The whole catalog on one run is
+    # the failure this rotation exists to prevent.
     assert max(loads) <= CEILING
+    assert max(loads) < MAX_EVENTS
+
+
+def test_the_published_catalog_never_holds_a_record_older_than_one_interval():
+    verified = converge()
+    ages = [run(verified, CONVERGED_THROUGH + step)[1] for step in range(1, 9)]
+
+    # Half the catalog is refreshed each run and the other half is one interval old, so the gate is
+    # never the binding constraint in steady state — it only has to clear a missed run.
+    assert max(ages) <= RUN_INTERVAL_DAYS
 
 
 def test_a_staggered_catalog_converges_within_one_rotation():
@@ -104,9 +134,9 @@ def test_a_staggered_catalog_converges_within_one_rotation():
         key: NOW - timedelta(days=index % VERIFICATION_MAX_AGE_DAYS)
         for index, key in enumerate(KEYS)
     }
-    loads = [night(verified, offset)[0] for offset in range(1, ROTATION_DAYS * 2 + 1)]
+    loads = [run(verified, offset)[0] for offset in range(1, ROTATION_DAYS * 2 + 1)]
 
-    # The back half of the window is the converged state; the front half is the transient.
+    # The tail of the window is the converged state; the front is the transient.
     assert max(loads[ROTATION_DAYS:]) <= CEILING
 
 
@@ -125,19 +155,21 @@ def test_refreshing_every_due_event_keeps_the_catalog_inside_the_gate():
 
 
 def test_an_outage_clumps_on_the_recovery_night():
-    # Honest characterisation, not a target. After ANY missed night the work is genuinely due, so
-    # the recovery night is heavier than the steady ceiling; at four missed nights the whole
-    # catalog is due at once. No schedule can invent the nights that were skipped.
+    # Honest characterisation, not a target. After ANY missed run the work is genuinely due, so
+    # the recovery run is heavier than the steady ceiling; at four missed runs the whole catalog
+    # is due at once. No schedule can invent the runs that were skipped.
     for missed in (1, 2, 3, 4):
         load, _ = after_outage(missed)
 
         assert load > CEILING
 
 
-def test_the_recovery_clump_grows_with_the_length_of_the_outage():
-    loads = [after_outage(missed)[0] for missed in (1, 2, 3)]
-
-    assert loads == sorted(loads) and loads[0] < loads[-1]
+def test_the_recovery_clump_saturates_after_one_missed_run():
+    # A weekly cadence has no ladder of outages to climb: one missed run already leaves every
+    # record two intervals old, so the whole catalog comes due in the same run and stays there
+    # however long the gap. The clump is bounded by the catalog, not by the number of missed runs.
+    for missed in (1, 2, 3, 4):
+        assert after_outage(missed)[0] == MAX_EVENTS
 
 
 def test_naive_timestamps_are_rejected_rather_than_classified():

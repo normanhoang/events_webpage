@@ -4,7 +4,10 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 MAX_THEATER_DEALS = 50
-VERIFICATION_MAX_AGE_DAYS = 7
+# Keep this identical to automation.publish_update.VERIFICATION_MAX_AGE_DAYS; two gates that
+# disagree about one field let one accept what the other rejects. tests/test_theater_deals.py
+# asserts the equality so the copies cannot drift. Both are two weekly run intervals (14 days).
+VERIFICATION_MAX_AGE_DAYS = 14
 CLASSIFICATIONS = {"broadway", "off_broadway", "other"}
 
 # Qualification ceilings, in one place so the briefing, the prompt, and the tests agree. These are

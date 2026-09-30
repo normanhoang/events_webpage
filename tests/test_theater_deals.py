@@ -304,17 +304,33 @@ def test_theater_deals_page_hides_shows_without_live_offers(client):
 
 
 def test_theater_deals_page_hides_unverified_open_ended_offers(client):
+    from automation.publish_update import VERIFICATION_MAX_AGE_DAYS
+
+    # Ages are relative to the shared gate: a hardcoded 8-day fixture stopped meaning "unverified"
+    # the moment the gate widened for the weekly run cadence, and then passed while asserting
+    # nothing about the boundary it was written to guard.
     stale = make_deal(
         title="Stale verification", classification="broadway",
-        verified_at=timezone.now() - timedelta(days=8),
+        verified_at=timezone.now() - timedelta(days=VERIFICATION_MAX_AGE_DAYS + 1),
     )
     assert stale.offers.get().eligible_until is not None
     stale.offers.update(eligible_until=None)
 
+    # The mirror case: a deal the publisher was allowed to ship must stay visible, or half the
+    # catalog disappears for the week it waits between weekly runs.
+    inside = make_deal(
+        title="Inside the gate", classification="off_broadway",
+        verified_at=timezone.now() - timedelta(days=VERIFICATION_MAX_AGE_DAYS - 1),
+    )
+    assert inside.offers.get().eligible_until is not None
+    inside.offers.update(eligible_until=None)
+
     response = client.get("/theater-deals/")
+    body = response.content.decode()
 
     assert response.status_code == 200
-    assert "Stale verification" not in response.content.decode()
+    assert "Stale verification" not in body
+    assert "Inside the gate" in body
 
 
 def test_archive_theater_deals_removes_expired_offers_and_preserves_monthly_history(tmp_path):
