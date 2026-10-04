@@ -98,28 +98,6 @@
     ]
   },
   {
-    "title": "Two Strangers (Carry a Cake Across New York)",
-    "classification": "broadway",
-    "venue": "Longacre Theatre",
-    "neighborhood": "Theater District",
-    "official_url": "https://playbill.com/discount/playbill-discount-for-two-strangers-carry-a-cake-across-new-york",
-    "image_url": "https://assets.playbill.com/playbill-covers/Two-Strangers-Carry-A-Cake-Playbill-2025-11-01_Web.jpg",
-    "verified_at": "2026-09-23T00:02:10-04:00",
-    "offers": [
-      {
-        "source_key": "playbill-discount-code",
-        "label": "Up to 40% off select performances",
-        "price_label": "$49-$229 incl. $2 facility fee, before Telecharge service fees (reg. $59-$229)",
-        "price_min": 49,
-        "price_max": 229,
-        "fees_included": null,
-        "restrictions": "Code TSPLAY; orchestra from $89; valid for select performances; tickets must be purchased by 10/3/26; limit 8 tickets per order; all sales final.",
-        "eligible_until": "2026-10-03T23:59:59-04:00",
-        "official_url": "https://playbill.com/discount/playbill-discount-for-two-strangers-carry-a-cake-across-new-york"
-      }
-    ]
-  },
-  {
     "title": "Chicago",
     "classification": "broadway",
     "venue": "Ambassador Theatre",
