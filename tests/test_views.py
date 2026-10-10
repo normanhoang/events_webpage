@@ -344,3 +344,58 @@ def test_remote_images_have_local_category_backdrops_and_failure_handler(client,
     occurrence.event.image_url = ""
     occurrence.event.save()
     assert 'data-remote-image' not in client.get(occurrence.event.get_absolute_url()).content.decode()
+
+
+def _ny_at(days, hour, minute):
+    """A New York wall-clock moment `days` from now, so these fixtures never go stale."""
+    from zoneinfo import ZoneInfo
+
+    now = timezone.localtime()
+    return (now + timedelta(days=days)).replace(
+        hour=hour, minute=minute, second=0, microsecond=0, tzinfo=ZoneInfo("America/New_York")
+    )
+
+
+def _label(value, fmt):
+    # The page renders through the template filter, which localizes to New York. A bare Python
+    # date_filter call would render the UTC wall clock and fail against correct markup.
+    from django.template.defaultfilters import date as date_filter
+
+    return date_filter(timezone.localtime(value), fmt)
+
+
+def test_a_single_day_card_shows_both_the_start_and_end_times(client, make_occurrence):
+    # The chosen format: clock times when the event is over in a day, dates when it runs across
+    # days. Asserting the END time is what fails if the card reverts to dates only, or to a
+    # start on its own.
+    start, end = _ny_at(2, 18, 45), _ny_at(2, 20, 30)
+    make_occurrence(title="Same day", starts_at=start, ends_at=end)
+
+    body = client.get("/").content.decode()
+
+    assert _label(start, "D, M j · g:i") in body          # "Mon, Oct 12 · 6:45"
+    assert _label(end, "g:i A") in body                    # "8:30 PM"
+    assert f'<time datetime="{start.isoformat()}"' in body
+    assert f'<time datetime="{end.isoformat()}"' in body
+
+
+def test_a_card_for_a_run_spanning_days_shows_dates_without_clocks(client, make_occurrence):
+    start, end = _ny_at(3, 10, 0), _ny_at(20, 18, 0)
+    make_occurrence(title="Festival", starts_at=start, ends_at=end)
+
+    body = client.get("/").content.decode()
+
+    assert (f'<time datetime="{start.isoformat()}">{_label(start, "D, M j")}</time>'
+            f' – <time datetime="{end.isoformat()}">{_label(end, "D, M j")}</time>') in body
+    assert _label(start, "g:i A") not in body
+    assert _label(end, "g:i A") not in body
+
+
+def test_a_card_without_an_end_time_still_reads_as_a_single_moment(client, make_occurrence):
+    # One catalog record has no ends_at, so the start-only reading has to survive.
+    start = _ny_at(4, 19, 0)
+    make_occurrence(title="No end time", starts_at=start)
+
+    body = client.get("/").content.decode()
+
+    assert f'<time datetime="{start.isoformat()}">{_label(start, "D, M j · g:i A")}</time>' in body

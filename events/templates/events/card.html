@@ -3,7 +3,7 @@
   <div class="card-copy">
     <div class="card-meta"><span>{{ event.get_category_display }}</span>{% if event.top_pick %}<span class="pick">{% include "events/icon.html" with icon="sparkles" %} Top pick</span>{% endif %}</div>
     <h3><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
-    <p class="date"><time datetime="{{ occurrence.starts_at|date:'c' }}">{{ occurrence.starts_at|date:"D, M j · g:i A" }}</time></p>
+    <p class="date">{% if occurrence.ends_at and occurrence.starts_at|date:"Ymd" == occurrence.ends_at|date:"Ymd" %}<time datetime="{{ occurrence.starts_at|date:'c' }}">{{ occurrence.starts_at|date:"D, M j · g:i" }}</time> – <time datetime="{{ occurrence.ends_at|date:'c' }}">{{ occurrence.ends_at|date:"g:i A" }}</time>{% elif occurrence.ends_at %}<time datetime="{{ occurrence.starts_at|date:'c' }}">{{ occurrence.starts_at|date:"D, M j" }}</time> – <time datetime="{{ occurrence.ends_at|date:'c' }}">{{ occurrence.ends_at|date:"D, M j" }}</time>{% else %}<time datetime="{{ occurrence.starts_at|date:'c' }}">{{ occurrence.starts_at|date:"D, M j · g:i A" }}</time>{% endif %}</p>
     <p class="location">{{ event.venue }}{% if event.neighborhood %} · {{ event.neighborhood }}{% endif %}</p>
     <p class="price">{{ event.price_label|default:"See official source for price" }}</p>
     {% if event.fit_reason %}<p class="fit-reason">{{ event.fit_reason }}</p>{% endif %}
