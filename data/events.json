@@ -20,14 +20,9 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free weekly group run in Harlem with pacers for every pace - a standing Monday-night habit that costs nothing.",
-    "verified_at": "2026-10-04T00:02:42-04:00",
+    "verified_at": "2026-10-10T16:24:46-04:00",
     "top_pick": true,
     "occurrences": [
-      {
-        "source_key": "harlem-run-monday-night-2026-10-05",
-        "starts_at": "2026-10-05T18:45:00-04:00",
-        "ends_at": "2026-10-05T20:30:00-04:00"
-      },
       {
         "source_key": "harlem-run-monday-night-2026-10-12",
         "starts_at": "2026-10-12T18:45:00-04:00",
@@ -58,7 +53,7 @@
     "image_url": "",
     "currency": "USD",
     "fit_reason": "Dozens of international food stalls and performances in one Queens park on a Saturday night.",
-    "verified_at": "2026-10-04T00:02:42-04:00",
+    "verified_at": "2026-10-10T16:24:46-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -173,37 +168,6 @@
     ]
   },
   {
-    "title": "Game-A-Palooza 2026",
-    "description": "IGDA NYC's curated indie-game showcase opens its locally made and unreleased games to the public from 1 PM, with opportunities to play and meet New York developers.",
-    "category": "gaming",
-    "tags": [
-      "video games",
-      "indie games",
-      "game development",
-      "playable demos",
-      "PS5"
-    ],
-    "venue": "339 Adams Street",
-    "neighborhood": "Downtown Brooklyn",
-    "borough": "Brooklyn",
-    "official_url": "https://gameapalooza.love/",
-    "image_url": "https://res.cloudinary.com/hxn9dbuhd/image/upload/f_auto,c_limit,w_1200,q_auto/v1786241353/organizations/2/8/9/e/289eccd3-f44b-4a5c-b02e-32666b0df56e/d698c9f0-9fd7-4910-9ecd-7c8405c544cc.png",
-    "price_label": "$10 per public session",
-    "price_min": 10,
-    "price_max": 10,
-    "currency": "USD",
-    "fit_reason": "Hands-on access to unreleased games and local developers for only $10.",
-    "verified_at": "2026-10-04T00:02:42-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "game-a-palooza-2026",
-        "starts_at": "2026-10-07T13:00:00-04:00",
-        "ends_at": "2026-10-07T19:00:00-04:00"
-      }
-    ]
-  },
-  {
     "title": "New York Comic Con 2026",
     "description": "NYCC’s 20th-anniversary edition spans comics, anime, manga, science fiction, gaming, authors, cosplay, film, television, exhibitors, and creator appearances.",
     "category": "comics",
@@ -236,6 +200,36 @@
     ]
   },
   {
+    "title": "New York Games Week 2026",
+    "description": "The inaugural New York Games Week is a citywide celebration of games spanning a full week of showcases, panels, tournaments, education, and parties across the five boroughs, covering digital and tabletop games from indie to AAA. Free and ticketed events run October 4-11.",
+    "category": "gaming",
+    "tags": [
+      "video games",
+      "game development",
+      "esports",
+      "tabletop",
+      "citywide",
+      "festival"
+    ],
+    "venue": "Venues across New York City",
+    "neighborhood": "",
+    "borough": "",
+    "official_url": "https://nygamesweek.com/",
+    "image_url": "",
+    "price_label": "Free and ticketed events",
+    "currency": "USD",
+    "fit_reason": "A citywide games festival with developer showcases, tournaments, and industry events across the boroughs.",
+    "verified_at": "2026-10-10T16:24:46-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "new-york-games-week-2026",
+        "starts_at": "2026-10-04T00:00:00-04:00",
+        "ends_at": "2026-10-11T23:59:00-04:00"
+      }
+    ]
+  },
+  {
     "title": "Queer in Every Career: LGBTQ+ Career Fair 2026",
     "description": "The Center’s annual career fair connects LGBTQ+ job seekers with affirming NYC employers, networking, resume feedback, coaching, and skill-building workshops.",
     "category": "queer",
@@ -254,7 +248,7 @@
     "price_label": "Registration required",
     "currency": "USD",
     "fit_reason": "A queer community event with practical career-change support, workshops, and networking.",
-    "verified_at": "2026-10-04T00:02:42-04:00",
+    "verified_at": "2026-10-10T16:24:46-04:00",
     "top_pick": true,
     "occurrences": [
       {
@@ -285,7 +279,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free adult book-club night for horror, dark fantasy, and classic science fiction readers.",
-    "verified_at": "2026-09-28T00:02:47-04:00",
+    "verified_at": "2026-10-10T16:24:46-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -314,7 +308,7 @@
     "price_label": "Free drop-in access at 150+ sites; some sites and tours require advance tickets",
     "currency": "USD",
     "fit_reason": "Behind-the-scenes architecture and infrastructure access across the city, from landmark civic buildings to the systems underneath them.",
-    "verified_at": "2026-09-28T00:02:47-04:00",
+    "verified_at": "2026-10-10T16:24:46-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -346,19 +340,9 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free recurring outdoor fitness class in Manhattan with stairs, walking, and stretching for all levels.",
-    "verified_at": "2026-10-04T00:02:42-04:00",
+    "verified_at": "2026-10-10T16:24:46-04:00",
     "top_pick": false,
     "occurrences": [
-      {
-        "source_key": "fort-tryon-forest-fitness-2026-10-06",
-        "starts_at": "2026-10-06T07:30:00-04:00",
-        "ends_at": "2026-10-06T08:30:00-04:00"
-      },
-      {
-        "source_key": "fort-tryon-forest-fitness-2026-10-08",
-        "starts_at": "2026-10-08T07:30:00-04:00",
-        "ends_at": "2026-10-08T08:30:00-04:00"
-      },
       {
         "source_key": "fort-tryon-forest-fitness-2026-10-13",
         "starts_at": "2026-10-13T07:30:00-04:00",
@@ -378,34 +362,6 @@
         "source_key": "fort-tryon-forest-fitness-2026-10-22",
         "starts_at": "2026-10-22T07:30:00-04:00",
         "ends_at": "2026-10-22T08:30:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "Gallery Tours: A Few of Our Favorite Things",
-    "description": "A free-with-admission staff-led gallery tour through highlights of the Brooklyn Museum’s collection, offered on selected weekdays and Sundays. Meet in the Rubin Lobby.",
-    "category": "art",
-    "tags": [
-      "museum",
-      "tours",
-      "free",
-      "Brooklyn"
-    ],
-    "venue": "Brooklyn Museum, 200 Eastern Parkway",
-    "neighborhood": "Prospect Heights",
-    "borough": "Brooklyn",
-    "official_url": "https://www.brooklynmuseum.org/programs/tours-favorite-things-summer-fall-2026",
-    "image_url": "https://cms-images.brooklynmuseum.org/6504c0e5ff47fa4f0f65998a875565c9732de7ce-2000x1334.jpg?w=3840&q=75&auto=format",
-    "price_label": "Free with Museum admission",
-    "currency": "USD",
-    "fit_reason": "A free guided museum tour in Prospect Heights, easy to pair with the museum’s current shows.",
-    "verified_at": "2026-10-04T00:02:42-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "brooklyn-museum-favorite-things-2026-10-04",
-        "starts_at": "2026-10-04T13:00:00-04:00",
-        "ends_at": "2026-10-04T14:00:00-04:00"
       }
     ]
   },
@@ -432,14 +388,9 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "Free weekly community jazz in a riverside plaza just north of Harlem.",
-    "verified_at": "2026-10-04T00:02:42-04:00",
+    "verified_at": "2026-10-10T16:24:46-04:00",
     "top_pick": false,
     "occurrences": [
-      {
-        "source_key": "jazz-in-the-park-ralph-ellison-2026-10-04",
-        "starts_at": "2026-10-04T14:00:00-04:00",
-        "ends_at": "2026-10-04T17:00:00-04:00"
-      },
       {
         "source_key": "jazz-in-the-park-ralph-ellison-2026-10-11",
         "starts_at": "2026-10-11T14:00:00-04:00",
@@ -477,7 +428,7 @@
     "price_label": "Free to watch and march; paid tickets for special access",
     "currency": "USD",
     "fit_reason": "A free, iconic downtown night parade - a strong match for his queer nightlife and cultural-festival interests.",
-    "verified_at": "2026-10-04T00:02:42-04:00",
+    "verified_at": "2026-10-10T16:24:46-04:00",
     "top_pick": false,
     "occurrences": [
       {
