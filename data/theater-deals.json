@@ -93,7 +93,7 @@
     "venue": "Ambassador Theatre",
     "neighborhood": "Theater District",
     "official_url": "https://www.broadwaybox.com/shows/chicago/",
-    "verified_at": "2026-09-28T00:02:47-04:00",
+    "verified_at": "2026-10-12T00:05:14-04:00",
     "offers": [
       {
         "source_key": "broadwaybox-general-rush",
@@ -123,7 +123,7 @@
     "venue": "Westside Theatre Upstairs",
     "neighborhood": "Hell's Kitchen",
     "official_url": "https://www.broadwaybox.com/shows/little-shop-of-horrors/",
-    "verified_at": "2026-09-29T00:01:20-04:00",
+    "verified_at": "2026-10-12T00:05:14-04:00",
     "offers": [
       {
         "source_key": "broadwaybox-digital-lottery",
@@ -143,7 +143,7 @@
     "venue": "The Ruby Theatre",
     "neighborhood": "Theater District",
     "official_url": "https://www.broadwaybox.com/shows/drunk-dracula/",
-    "verified_at": "2026-09-29T00:01:20-04:00",
+    "verified_at": "2026-10-12T00:05:14-04:00",
     "offers": [
       {
         "source_key": "broadwaybox-discount-code",

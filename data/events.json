@@ -20,7 +20,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free weekly group run in Harlem with pacers for every pace - a standing Monday-night habit that costs nothing.",
-    "verified_at": "2026-10-10T16:24:46-04:00",
+    "verified_at": "2026-10-12T00:05:14-04:00",
     "top_pick": true,
     "occurrences": [
       {
@@ -53,14 +53,9 @@
     "image_url": "",
     "currency": "USD",
     "fit_reason": "Dozens of international food stalls and performances in one Queens park on a Saturday night.",
-    "verified_at": "2026-10-10T16:24:46-04:00",
+    "verified_at": "2026-10-12T00:05:14-04:00",
     "top_pick": false,
     "occurrences": [
-      {
-        "source_key": "queens-night-market-2026-10-10",
-        "starts_at": "2026-10-10T16:00:00-04:00",
-        "ends_at": "2026-10-11T00:00:00-04:00"
-      },
       {
         "source_key": "queens-night-market-2026-10-17",
         "starts_at": "2026-10-17T16:00:00-04:00",
@@ -138,98 +133,6 @@
     ]
   },
   {
-    "title": "AI Week New York 2026",
-    "description": "A week-long, citywide AI festival organized by Pulse NYC, with 100+ community-led talks, demos, workshops, panels, and networking events across the five boroughs covering generative AI, startups, AI infrastructure, social impact, and the future of work. Runs October 5-11.",
-    "category": "tech",
-    "tags": [
-      "AI",
-      "artificial intelligence",
-      "tech festival",
-      "startups",
-      "networking",
-      "citywide"
-    ],
-    "venue": "Venues across New York City",
-    "neighborhood": "",
-    "borough": "",
-    "official_url": "https://pulse.nyc/ai-week/",
-    "image_url": "https://pulse-nyc.s3.amazonaws.com/uploads/7d0a292a-23ed-46cb-80e6-7224ef0df9d1.jpg",
-    "price_label": "Free community events; some sessions ticketed",
-    "currency": "USD",
-    "fit_reason": "A citywide AI week with hundreds of free talks, demos, and workshops - a direct fit for his AI and technology focus.",
-    "verified_at": "2026-10-04T00:02:42-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "ai-week-ny-2026-fall",
-        "starts_at": "2026-10-05T00:00:00-04:00",
-        "ends_at": "2026-10-11T23:59:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "New York Comic Con 2026",
-    "description": "NYCC’s 20th-anniversary edition spans comics, anime, manga, science fiction, gaming, authors, cosplay, film, television, exhibitors, and creator appearances.",
-    "category": "comics",
-    "tags": [
-      "comic books",
-      "anime",
-      "manga",
-      "science fiction",
-      "gaming",
-      "cosplay"
-    ],
-    "venue": "Jacob K. Javits Convention Center, 429 11th Avenue",
-    "neighborhood": "Hell's Kitchen",
-    "borough": "Manhattan",
-    "official_url": "https://www.newyorkcomiccon.com/",
-    "image_url": "https://www.newyorkcomiccon.com/content/dam/sitebuilder/rna/new-york-comic-con/2026/img/homepage/hero-celebrate-nycc-20-years.jpg/_jcr_content/renditions/original.image_file.2047.1358.file/890495914/hero-celebrate-nycc-20-years.jpg",
-    "price_label": "Adult single-day tickets $54.98–$109.42 including taxes and fees; Friday, Saturday, 4-day, and VIP sold out",
-    "price_min": 54.98,
-    "price_max": 109.42,
-    "currency": "USD",
-    "fit_reason": "A nearby convention bringing comics, manga, anime, science fiction, and gaming together.",
-    "verified_at": "2026-10-04T00:02:42-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "nycc-2026",
-        "starts_at": "2026-10-08T10:00:00-04:00",
-        "ends_at": "2026-10-11T17:00:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "New York Games Week 2026",
-    "description": "The inaugural New York Games Week is a citywide celebration of games spanning a full week of showcases, panels, tournaments, education, and parties across the five boroughs, covering digital and tabletop games from indie to AAA. Free and ticketed events run October 4-11.",
-    "category": "gaming",
-    "tags": [
-      "video games",
-      "game development",
-      "esports",
-      "tabletop",
-      "citywide",
-      "festival"
-    ],
-    "venue": "Venues across New York City",
-    "neighborhood": "",
-    "borough": "",
-    "official_url": "https://nygamesweek.com/",
-    "image_url": "",
-    "price_label": "Free and ticketed events",
-    "currency": "USD",
-    "fit_reason": "A citywide games festival with developer showcases, tournaments, and industry events across the boroughs.",
-    "verified_at": "2026-10-10T16:24:46-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "new-york-games-week-2026",
-        "starts_at": "2026-10-04T00:00:00-04:00",
-        "ends_at": "2026-10-11T23:59:00-04:00"
-      }
-    ]
-  },
-  {
     "title": "Queer in Every Career: LGBTQ+ Career Fair 2026",
     "description": "The Center’s annual career fair connects LGBTQ+ job seekers with affirming NYC employers, networking, resume feedback, coaching, and skill-building workshops.",
     "category": "queer",
@@ -248,7 +151,7 @@
     "price_label": "Registration required",
     "currency": "USD",
     "fit_reason": "A queer community event with practical career-change support, workshops, and networking.",
-    "verified_at": "2026-10-10T16:24:46-04:00",
+    "verified_at": "2026-10-12T00:05:14-04:00",
     "top_pick": true,
     "occurrences": [
       {
@@ -308,7 +211,7 @@
     "price_label": "Free drop-in access at 150+ sites; some sites and tours require advance tickets",
     "currency": "USD",
     "fit_reason": "Behind-the-scenes architecture and infrastructure access across the city, from landmark civic buildings to the systems underneath them.",
-    "verified_at": "2026-10-10T16:24:46-04:00",
+    "verified_at": "2026-10-12T00:05:14-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -340,7 +243,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free recurring outdoor fitness class in Manhattan with stairs, walking, and stretching for all levels.",
-    "verified_at": "2026-10-10T16:24:46-04:00",
+    "verified_at": "2026-10-12T00:05:14-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -362,49 +265,6 @@
         "source_key": "fort-tryon-forest-fitness-2026-10-22",
         "starts_at": "2026-10-22T07:30:00-04:00",
         "ends_at": "2026-10-22T08:30:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "Jazz in the Park at Ralph Ellison",
-    "description": "Free outdoor community jazz concerts on Sundays in Riverside Park’s Ralph Ellison Plaza, presented by Summer on the Hudson with the Riverside Park Conservancy and featuring an array of local musicians and vocalists. Runs 2–5 PM through October 25.",
-    "category": "music",
-    "tags": [
-      "free",
-      "jazz",
-      "music",
-      "outdoors",
-      "weekly",
-      "Harlem",
-      "community"
-    ],
-    "venue": "Ralph Ellison Plaza, Riverside Drive & W 150th Street",
-    "neighborhood": "Hamilton Heights",
-    "borough": "Manhattan",
-    "official_url": "https://www.nycgovparks.org/events/2026/10/11/jazz-in-the-park-at-ralph-ellison",
-    "image_url": "",
-    "price_label": "Free",
-    "price_min": 0,
-    "price_max": 0,
-    "currency": "USD",
-    "fit_reason": "Free weekly community jazz in a riverside plaza just north of Harlem.",
-    "verified_at": "2026-10-10T16:24:46-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "jazz-in-the-park-ralph-ellison-2026-10-11",
-        "starts_at": "2026-10-11T14:00:00-04:00",
-        "ends_at": "2026-10-11T17:00:00-04:00"
-      },
-      {
-        "source_key": "jazz-in-the-park-ralph-ellison-2026-10-18",
-        "starts_at": "2026-10-18T14:00:00-04:00",
-        "ends_at": "2026-10-18T17:00:00-04:00"
-      },
-      {
-        "source_key": "jazz-in-the-park-ralph-ellison-2026-10-25",
-        "starts_at": "2026-10-25T14:00:00-04:00",
-        "ends_at": "2026-10-25T17:00:00-04:00"
       }
     ]
   },
@@ -434,6 +294,166 @@
       {
         "source_key": "village-halloween-parade-2026",
         "starts_at": "2026-10-31T19:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Arcade Science: Day of Play at MoMI",
+    "description": "A free afternoon at the Museum of the Moving Image celebrating the mathematics and robotics behind indie video games. Soft-robotics innovator Kari Love on fabric and plush controllers, game designer Andy Wallace on where math and game design intersect (with a chance to play his new game Rocket Dog), creator talks with the makers of the astronomy-themed arcade games HOVERBURGER and MASSIVE, hands-on circuit crafting with real arcade components led by Arcade Commons, soft-robotics demos from NYU ITP students and alumni, draw-your-own-video-game, and a closing reception.",
+    "category": "gaming",
+    "tags": [
+      "free",
+      "video games",
+      "game design",
+      "math",
+      "maker",
+      "electronics",
+      "Queens",
+      "museum"
+    ],
+    "venue": "Museum of the Moving Image, William Fox Amphitheater, 36-01 35th Avenue",
+    "neighborhood": "Astoria",
+    "borough": "Queens",
+    "official_url": "https://movingimage.org/event/arcade-science-day-of-play/",
+    "image_url": "",
+    "price_label": "Free; RSVP recommended",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "Free indie-games day built around the math, maker and electronics side of game design - gaming and making in one Queens afternoon.",
+    "verified_at": "2026-10-12T00:05:14-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "momi-arcade-science-day-of-play-2026-10-17",
+        "starts_at": "2026-10-17T11:30:00-04:00",
+        "ends_at": "2026-10-17T17:30:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "53rd St Library Manga Book Club: The Summer Hikaru Died",
+    "description": "An in-person adult manga book club at the 53rd Street Library discussing volume one of The Summer Hikaru Died, with the volume readable free through NYPL's Comics Plus database using a library card.",
+    "category": "comics",
+    "tags": [
+      "manga",
+      "comics",
+      "book club",
+      "free",
+      "library",
+      "Midtown"
+    ],
+    "venue": "53rd Street Library, Community Room",
+    "neighborhood": "Midtown",
+    "borough": "Manhattan",
+    "official_url": "https://www.nypl.org/events/programs/2026/10/28/53rd-st-library-manga-book-club-summer-hikaru-died",
+    "image_url": "",
+    "price_label": "Free; online registration",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "Free manga discussion at a Midtown library branch, with the volume readable through the library's comics database.",
+    "verified_at": "2026-10-12T00:05:14-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "nypl-53rd-st-manga-book-club-2026-10-28",
+        "starts_at": "2026-10-28T17:00:00-04:00",
+        "ends_at": "2026-10-28T18:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Tech Connect: Open Lab at Woodstock Library",
+    "description": "A free drop-in computer lab hour for adults at the Woodstock Library: practice typing and mouse skills or get help with any computer task or project, with library laptops available and tech items to borrow afterward. No registration needed.",
+    "category": "tech",
+    "tags": [
+      "free",
+      "computer skills",
+      "tech help",
+      "library",
+      "drop-in"
+    ],
+    "venue": "Woodstock Library",
+    "neighborhood": "",
+    "borough": "",
+    "official_url": "https://www.nypl.org/events/programs/2026/10/29/tech-connect-open-lab",
+    "image_url": "",
+    "price_label": "Free; first come, first served",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "Free, no-registration computer lab time at a public library branch, part of NYPL's TechConnect program.",
+    "verified_at": "2026-10-12T00:05:14-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "nypl-tech-connect-open-lab-2026-10-29",
+        "starts_at": "2026-10-29T11:00:00-04:00",
+        "ends_at": "2026-10-29T12:00:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "MoMI Halloween Party",
+    "description": "The Museum of the Moving Image's annual free Halloween bash, part of its Open Worlds program: DJ, Magic Lantern performances, raffle prizes, refreshments for purchase, and members' early entry with Dark Tours through the museum galleries.",
+    "category": "community",
+    "tags": [
+      "free",
+      "halloween",
+      "nightlife",
+      "DJ",
+      "museum social",
+      "Queens"
+    ],
+    "venue": "Museum of the Moving Image",
+    "neighborhood": "Astoria",
+    "borough": "Queens",
+    "official_url": "https://movingimage.org/event/momi-halloween-party-2026/",
+    "image_url": "",
+    "price_label": "Free; RSVP required",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "A free costume-night museum party with a DJ, performances and late gallery access - Halloween nightlife without a cover.",
+    "verified_at": "2026-10-12T00:05:14-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "momi-halloween-party-2026-10-24",
+        "starts_at": "2026-10-24T19:30:00-04:00"
+      }
+    ]
+  },
+  {
+    "title": "Fall Yoga with The Yoga Room at MoMI",
+    "description": "A free one-hour yoga class in the Museum of the Moving Image's Digital Learning Suite, led by local studio The Yoga Room. Museum doors open at 11 a.m. for check-in and the class starts at 11:15; one RSVP per person, bring your own mat, space is first come, first served.",
+    "category": "fitness",
+    "tags": [
+      "free",
+      "yoga",
+      "fitness",
+      "weekend",
+      "museum",
+      "Queens"
+    ],
+    "venue": "Museum of the Moving Image, Digital Learning Suite",
+    "neighborhood": "Astoria",
+    "borough": "Queens",
+    "official_url": "https://movingimage.org/event/fall-yoga-with-the-yoga-room/2026-10-18/",
+    "image_url": "",
+    "price_label": "Free; RSVP required",
+    "price_min": 0,
+    "price_max": 0,
+    "currency": "USD",
+    "fit_reason": "A free weekend yoga hour, indoor and weather-proof, with the option to stay for the museum galleries.",
+    "verified_at": "2026-10-12T00:05:14-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "momi-fall-yoga-2026-10-18",
+        "starts_at": "2026-10-18T11:15:00-04:00",
+        "ends_at": "2026-10-18T12:15:00-04:00"
       }
     ]
   }
