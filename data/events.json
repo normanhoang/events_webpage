@@ -20,18 +20,28 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free weekly group run in Harlem with pacers for every pace - a standing Monday-night habit that costs nothing.",
-    "verified_at": "2026-10-12T00:05:14-04:00",
+    "verified_at": "2026-10-14T00:03:15-04:00",
     "top_pick": true,
     "occurrences": [
-      {
-        "source_key": "harlem-run-monday-night-2026-10-12",
-        "starts_at": "2026-10-12T18:45:00-04:00",
-        "ends_at": "2026-10-12T20:30:00-04:00"
-      },
       {
         "source_key": "harlem-run-monday-night-2026-10-19",
         "starts_at": "2026-10-19T18:45:00-04:00",
         "ends_at": "2026-10-19T20:30:00-04:00"
+      },
+      {
+        "source_key": "harlem-run-monday-night-2026-10-26",
+        "starts_at": "2026-10-26T18:45:00-04:00",
+        "ends_at": "2026-10-26T20:30:00-04:00"
+      },
+      {
+        "source_key": "harlem-run-monday-night-2026-11-02",
+        "starts_at": "2026-11-02T18:45:00-05:00",
+        "ends_at": "2026-11-02T20:30:00-05:00"
+      },
+      {
+        "source_key": "harlem-run-monday-night-2026-11-09",
+        "starts_at": "2026-11-09T18:45:00-05:00",
+        "ends_at": "2026-11-09T20:30:00-05:00"
       }
     ]
   },
@@ -53,7 +63,7 @@
     "image_url": "",
     "currency": "USD",
     "fit_reason": "Dozens of international food stalls and performances in one Queens park on a Saturday night.",
-    "verified_at": "2026-10-12T00:05:14-04:00",
+    "verified_at": "2026-10-14T00:03:15-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -70,36 +80,6 @@
         "source_key": "queens-night-market-2026-10-31",
         "starts_at": "2026-10-31T16:00:00-04:00",
         "ends_at": "2026-11-01T00:00:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "Día de los Muertos at NYBG",
-    "description": "A monthlong celebration of memory, life, and renewal featuring marigold displays, a community ofrenda, calaveras, a flower-covered Catrina, weekend music and crafts, and a parade on November 1.",
-    "category": "art",
-    "tags": [
-      "Día de los Muertos",
-      "Mexican culture",
-      "marigolds",
-      "community ofrenda",
-      "music",
-      "crafts"
-    ],
-    "venue": "New York Botanical Garden, 2900 Southern Boulevard",
-    "neighborhood": "Bronx Park",
-    "borough": "Bronx",
-    "official_url": "https://www.nybg.org/event/dia-de-los-muertos/",
-    "image_url": "https://www.nybg.org/content/uploads/2026/07/iStock-619074442-edit-3.1-160x53.jpg",
-    "price_label": "Included with Garden admission",
-    "currency": "USD",
-    "fit_reason": "A substantial cultural celebration in the Bronx with botanical displays, art, music, crafts, and community traditions.",
-    "verified_at": "2026-10-04T00:02:42-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "nybg-dia-de-los-muertos-2026",
-        "starts_at": "2026-10-03T10:00:00-04:00",
-        "ends_at": "2026-11-02T18:00:00-05:00"
       }
     ]
   },
@@ -122,12 +102,12 @@
     "price_label": "2-for-1 tickets with code OBW26",
     "currency": "USD",
     "fit_reason": "The cheapest reliable route into Off-Broadway all year: 2-for-1 seats booked with code OBW26.",
-    "verified_at": "2026-10-04T00:02:42-04:00",
+    "verified_at": "2026-10-14T00:03:15-04:00",
     "top_pick": true,
     "occurrences": [
       {
         "source_key": "off-broadway-week-fall-2026",
-        "starts_at": "2026-10-05T00:00:00-04:00",
+        "starts_at": "2026-10-14T00:00:00-04:00",
         "ends_at": "2026-10-18T23:59:00-04:00"
       }
     ]
@@ -151,8 +131,8 @@
     "price_label": "Registration required",
     "currency": "USD",
     "fit_reason": "A queer community event with practical career-change support, workshops, and networking.",
-    "verified_at": "2026-10-12T00:05:14-04:00",
-    "top_pick": true,
+    "verified_at": "2026-10-14T00:03:15-04:00",
+    "top_pick": false,
     "occurrences": [
       {
         "source_key": "center-queer-in-every-career-2026",
@@ -182,7 +162,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free adult book-club night for horror, dark fantasy, and classic science fiction readers.",
-    "verified_at": "2026-10-10T16:24:46-04:00",
+    "verified_at": "2026-10-14T00:03:15-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -211,7 +191,7 @@
     "price_label": "Free drop-in access at 150+ sites; some sites and tours require advance tickets",
     "currency": "USD",
     "fit_reason": "Behind-the-scenes architecture and infrastructure access across the city, from landmark civic buildings to the systems underneath them.",
-    "verified_at": "2026-10-12T00:05:14-04:00",
+    "verified_at": "2026-10-14T00:03:15-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -243,14 +223,9 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free recurring outdoor fitness class in Manhattan with stairs, walking, and stretching for all levels.",
-    "verified_at": "2026-10-12T00:05:14-04:00",
+    "verified_at": "2026-10-14T00:03:15-04:00",
     "top_pick": false,
     "occurrences": [
-      {
-        "source_key": "fort-tryon-forest-fitness-2026-10-13",
-        "starts_at": "2026-10-13T07:30:00-04:00",
-        "ends_at": "2026-10-13T08:30:00-04:00"
-      },
       {
         "source_key": "fort-tryon-forest-fitness-2026-10-15",
         "starts_at": "2026-10-15T07:30:00-04:00",
@@ -265,6 +240,36 @@
         "source_key": "fort-tryon-forest-fitness-2026-10-22",
         "starts_at": "2026-10-22T07:30:00-04:00",
         "ends_at": "2026-10-22T08:30:00-04:00"
+      },
+      {
+        "source_key": "fort-tryon-forest-fitness-2026-10-27",
+        "starts_at": "2026-10-27T07:30:00-04:00",
+        "ends_at": "2026-10-27T08:30:00-04:00"
+      },
+      {
+        "source_key": "fort-tryon-forest-fitness-2026-10-29",
+        "starts_at": "2026-10-29T07:30:00-04:00",
+        "ends_at": "2026-10-29T08:30:00-04:00"
+      },
+      {
+        "source_key": "fort-tryon-forest-fitness-2026-11-03",
+        "starts_at": "2026-11-03T07:30:00-05:00",
+        "ends_at": "2026-11-03T08:30:00-05:00"
+      },
+      {
+        "source_key": "fort-tryon-forest-fitness-2026-11-05",
+        "starts_at": "2026-11-05T07:30:00-05:00",
+        "ends_at": "2026-11-05T08:30:00-05:00"
+      },
+      {
+        "source_key": "fort-tryon-forest-fitness-2026-11-10",
+        "starts_at": "2026-11-10T07:30:00-05:00",
+        "ends_at": "2026-11-10T08:30:00-05:00"
+      },
+      {
+        "source_key": "fort-tryon-forest-fitness-2026-11-12",
+        "starts_at": "2026-11-12T07:30:00-05:00",
+        "ends_at": "2026-11-12T08:30:00-05:00"
       }
     ]
   },
@@ -288,8 +293,8 @@
     "price_label": "Free to watch and march; paid tickets for special access",
     "currency": "USD",
     "fit_reason": "A free, iconic downtown night parade - a strong match for his queer nightlife and cultural-festival interests.",
-    "verified_at": "2026-10-10T16:24:46-04:00",
-    "top_pick": false,
+    "verified_at": "2026-10-14T00:03:15-04:00",
+    "top_pick": true,
     "occurrences": [
       {
         "source_key": "village-halloween-parade-2026",
@@ -321,7 +326,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "Free indie-games day built around the math, maker and electronics side of game design - gaming and making in one Queens afternoon.",
-    "verified_at": "2026-10-12T00:05:14-04:00",
+    "verified_at": "2026-10-14T00:03:15-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -353,7 +358,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "Free manga discussion at a Midtown library branch, with the volume readable through the library's comics database.",
-    "verified_at": "2026-10-12T00:05:14-04:00",
+    "verified_at": "2026-10-14T00:03:15-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -447,7 +452,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free weekend yoga hour, indoor and weather-proof, with the option to stay for the museum galleries.",
-    "verified_at": "2026-10-12T00:05:14-04:00",
+    "verified_at": "2026-10-14T00:03:15-04:00",
     "top_pick": false,
     "occurrences": [
       {
