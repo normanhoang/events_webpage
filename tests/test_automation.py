@@ -47,6 +47,30 @@ def test_validate_catalog_enforces_the_configured_bounds():
         validate_catalog(records(MAX_EVENTS + 1), now=now)
 
 
+def test_minimum_catalog_size_is_ten():
+    # Norman's choice (2026-10-19): a thin week publishes 10 verified events rather than withholding
+    # the whole catalog. Fails if the floor drifts back to 12.
+    from automation.publish_update import MIN_EVENTS, validate_catalog
+
+    now = datetime(2030, 5, 2, tzinfo=ZoneInfo("America/New_York"))
+    assert MIN_EVENTS == 10
+    validate_catalog(records(10), now=now)
+    with pytest.raises(ValueError):
+        validate_catalog(records(9), now=now)
+
+
+def test_interest_cluster_coverage_is_reported_not_enforced():
+    # Norman's choice (2026-10-19): an empty interest cluster is a warning in the run report, never a
+    # publish blocker. The fixture catalog is all one synthetic category, so every cluster is missing.
+    from automation.publish_update import MIN_EVENTS, REQUIRED_CATEGORIES, missing_clusters, validate_catalog
+
+    now = datetime(2030, 5, 2, tzinfo=ZoneInfo("America/New_York"))
+    catalog = records(MIN_EVENTS)
+    validate_catalog(catalog, now=now)
+    assert missing_clusters(catalog) == sorted(REQUIRED_CATEGORIES)
+    assert missing_clusters([{"category": c} for c in REQUIRED_CATEGORIES]) == []
+
+
 def test_catalog_bounds_leave_headroom_above_the_target():
     from automation.publish_update import MAX_EVENTS, MIN_EVENTS, TARGET_EVENTS
 

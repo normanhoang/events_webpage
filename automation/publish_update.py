@@ -14,13 +14,21 @@ from zoneinfo import ZoneInfo
 
 from automation.theater_deals import validate_theater_deals
 
-MIN_EVENTS = 12
+# Floor lowered from 12 to 10 (Norman, 2026-10-19) so one weekend of endings on the weekly cadence
+# does not withhold the whole catalog.
+MIN_EVENTS = 10
 TARGET_EVENTS = 20
 MAX_EVENTS = 24
-# The catalog is a personal digest, so every interest cluster needs something live in it: dropping
-# the last event of a cluster empties a section of the page without any record going malformed.
-# Coverage is therefore part of the publish contract, not a nicety of the seed data.
+# Every interest cluster SHOULD have something live, but coverage is reported, not enforced (Norman,
+# 2026-10-19): the research briefing and the publish text name any empty cluster, and the publish
+# still goes ahead.
 REQUIRED_CATEGORIES = frozenset({"theater", "queer", "tech", "comics", "gaming", "books", "fitness"})
+
+
+def missing_clusters(records):
+    """Sorted interest clusters with no event in `records` (a warning, never a gate)."""
+    present = {record.get("category") for record in records if isinstance(record, dict)}
+    return sorted(REQUIRED_CATEGORIES - present)
 # The headline section is a curation, not a slice of the feed; cap it explicitly.
 MAX_TOP_PICKS = 3
 # The card runs WEEKLY (Sunday 00:00 New York), so one interval between runs is seven days. The gate
