@@ -20,14 +20,9 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free weekly group run in Harlem with pacers for every pace - a standing Monday-night habit that costs nothing.",
-    "verified_at": "2026-10-19T00:45:00-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "top_pick": true,
     "occurrences": [
-      {
-        "source_key": "harlem-run-monday-night-2026-10-19",
-        "starts_at": "2026-10-19T18:45:00-04:00",
-        "ends_at": "2026-10-19T20:30:00-04:00"
-      },
       {
         "source_key": "harlem-run-monday-night-2026-10-26",
         "starts_at": "2026-10-26T18:45:00-04:00",
@@ -47,37 +42,11 @@
         "source_key": "harlem-run-monday-night-2026-11-16",
         "starts_at": "2026-11-16T18:45:00-05:00",
         "ends_at": "2026-11-16T20:30:00-05:00"
-      }
-    ]
-  },
-  {
-    "title": "Foundations of AI & Responsible Use",
-    "description": "A free, beginner-friendly NYPL Career Services class on how artificial intelligence works: core AI concepts, practical applications, ethical considerations, and best practices for safe daily use. This session meets in person at the Schomburg Center's American Negro Theater.",
-    "category": "tech",
-    "tags": [
-      "free",
-      "AI",
-      "technology",
-      "library",
-      "Harlem"
-    ],
-    "venue": "Schomburg Center for Research in Black Culture, American Negro Theater",
-    "neighborhood": "Harlem",
-    "borough": "Manhattan",
-    "official_url": "https://www.nypl.org/events/programs/2026/10/19/foundations-ai-responsible-use",
-    "image_url": "",
-    "price_label": "Free; ticketed registration via Eventbrite",
-    "price_min": 0,
-    "price_max": 0,
-    "currency": "USD",
-    "fit_reason": "A free AI-literacy class right in Harlem at the Schomburg Center - his AI interest at zero cost and minimal travel.",
-    "verified_at": "2026-10-19T00:45:00-04:00",
-    "top_pick": true,
-    "occurrences": [
+      },
       {
-        "source_key": "nypl-foundations-ai-schomburg-2026-10-19",
-        "starts_at": "2026-10-19T10:00:00-04:00",
-        "ends_at": "2026-10-19T11:00:00-04:00"
+        "source_key": "harlem-run-monday-night-2026-11-23",
+        "starts_at": "2026-11-23T18:45:00-05:00",
+        "ends_at": "2026-11-23T20:30:00-05:00"
       }
     ]
   },
@@ -99,76 +68,13 @@
     "image_url": "",
     "currency": "USD",
     "fit_reason": "Dozens of international food stalls and performances in one Queens park on a Saturday night.",
-    "verified_at": "2026-10-19T00:45:00-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "top_pick": false,
     "occurrences": [
-      {
-        "source_key": "queens-night-market-2026-10-24",
-        "starts_at": "2026-10-24T16:00:00-04:00",
-        "ends_at": "2026-10-25T00:00:00-04:00"
-      },
       {
         "source_key": "queens-night-market-2026-10-31",
         "starts_at": "2026-10-31T16:00:00-04:00",
         "ends_at": "2026-11-01T00:00:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "NewFest38 Closing Night: The Man I Love",
-    "description": "The closing-night film and party of NewFest, New York's LGBTQ+ film festival: Ira Sachs' new film about a downtown actor living with AIDS in late-1980s New York City, starring Rami Malek.",
-    "category": "queer",
-    "tags": [
-      "LGBTQ+",
-      "film festival",
-      "queer cinema",
-      "party",
-      "NewFest"
-    ],
-    "venue": "SVA Theatre, Silas",
-    "neighborhood": "",
-    "borough": "Manhattan",
-    "official_url": "https://newfest.org/events/the-man-i-love-closing-night-film-party/",
-    "image_url": "",
-    "currency": "USD",
-    "fit_reason": "The queer film festival's closing-night screening plus party - a queer night out built around a New York story.",
-    "verified_at": "2026-10-19T00:45:00-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "newfest38-closing-night-the-man-i-love-2026-10-25",
-        "starts_at": "2026-10-25T19:00:00-04:00"
-      }
-    ]
-  },
-  {
-    "title": "Horror and Dark Literature Book Club: The October Country",
-    "description": "An in-person adult discussion of Ray Bradbury’s The October Country, focused on horror and dark literature.",
-    "category": "books",
-    "tags": [
-      "books",
-      "horror",
-      "science fiction",
-      "Ray Bradbury",
-      "book club"
-    ],
-    "venue": "Stavros Niarchos Foundation Library (SNFL), Room 204",
-    "neighborhood": "Midtown",
-    "borough": "Manhattan",
-    "official_url": "https://nypl.org/events/programs/2026/10/19/horror-and-dark-literature-book-club-october-country",
-    "image_url": "",
-    "price_label": "Free; registration required",
-    "price_min": 0,
-    "price_max": 0,
-    "currency": "USD",
-    "fit_reason": "A free adult book-club night for horror, dark fantasy, and classic science fiction readers.",
-    "verified_at": "2026-10-19T00:45:00-04:00",
-    "top_pick": false,
-    "occurrences": [
-      {
-        "source_key": "nypl-horror-dark-literature-october-country-2026",
-        "starts_at": "2026-10-19T18:30:00-04:00",
-        "ends_at": "2026-10-19T19:30:00-04:00"
       }
     ]
   },
@@ -194,19 +100,9 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "A free recurring outdoor fitness class in Manhattan with stairs, walking, and stretching for all levels.",
-    "verified_at": "2026-10-17T00:03:00-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "top_pick": false,
     "occurrences": [
-      {
-        "source_key": "fort-tryon-forest-fitness-2026-10-20",
-        "starts_at": "2026-10-20T07:30:00-04:00",
-        "ends_at": "2026-10-20T08:30:00-04:00"
-      },
-      {
-        "source_key": "fort-tryon-forest-fitness-2026-10-22",
-        "starts_at": "2026-10-22T07:30:00-04:00",
-        "ends_at": "2026-10-22T08:30:00-04:00"
-      },
       {
         "source_key": "fort-tryon-forest-fitness-2026-10-27",
         "starts_at": "2026-10-27T07:30:00-04:00",
@@ -236,6 +132,21 @@
         "source_key": "fort-tryon-forest-fitness-2026-11-12",
         "starts_at": "2026-11-12T07:30:00-05:00",
         "ends_at": "2026-11-12T08:30:00-05:00"
+      },
+      {
+        "source_key": "fort-tryon-forest-fitness-2026-11-17",
+        "starts_at": "2026-11-17T07:30:00-05:00",
+        "ends_at": "2026-11-17T08:30:00-05:00"
+      },
+      {
+        "source_key": "fort-tryon-forest-fitness-2026-11-19",
+        "starts_at": "2026-11-19T07:30:00-05:00",
+        "ends_at": "2026-11-19T08:30:00-05:00"
+      },
+      {
+        "source_key": "fort-tryon-forest-fitness-2026-11-24",
+        "starts_at": "2026-11-24T07:30:00-05:00",
+        "ends_at": "2026-11-24T08:30:00-05:00"
       }
     ]
   },
@@ -259,7 +170,7 @@
     "price_label": "Free to watch and march; paid tickets for special access",
     "currency": "USD",
     "fit_reason": "A free, iconic downtown night parade - a strong match for his queer nightlife and cultural-festival interests.",
-    "verified_at": "2026-10-19T00:45:00-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "top_pick": true,
     "occurrences": [
       {
@@ -290,7 +201,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "Free manga discussion at a Midtown library branch, with the volume readable through the library's comics database.",
-    "verified_at": "2026-10-19T00:45:00-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -321,7 +232,7 @@
     "price_max": 0,
     "currency": "USD",
     "fit_reason": "Free, no-registration computer lab time at a public library branch, part of NYPL's TechConnect program.",
-    "verified_at": "2026-10-19T00:45:00-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
@@ -332,33 +243,120 @@
     ]
   },
   {
-    "title": "MoMI Halloween Party",
-    "description": "The Museum of the Moving Image's annual free Halloween bash, part of its Open Worlds program: DJ, Magic Lantern performances, raffle prizes, refreshments for purchase, and members' early entry with Dark Tours through the museum galleries.",
-    "category": "community",
+    "title": "How AI Civics Can Build Public Power Over Tech With Data & Society",
+    "description": "A free panel at the Stavros Niarchos Foundation Library with Meg Young, Khari Johnson, Sareeta Amrute, Hannah Sassaman, and Justin Hendrix on building a more democratic vision of public-interest technology through AI civics. In person on the 7th floor and livestreamed.",
+    "category": "tech",
     "tags": [
       "free",
-      "halloween",
-      "nightlife",
-      "DJ",
-      "museum social",
-      "Queens"
+      "AI",
+      "technology",
+      "panel",
+      "library",
+      "Midtown"
     ],
-    "venue": "Museum of the Moving Image",
-    "neighborhood": "Astoria",
-    "borough": "Queens",
-    "official_url": "https://movingimage.org/event/momi-halloween-party-2026/",
+    "venue": "Stavros Niarchos Foundation Library (SNFL), 7th Floor Event Center",
+    "neighborhood": "Midtown",
+    "borough": "Manhattan",
+    "official_url": "https://www.nypl.org/events/programs/2026/11/06/how-ai-civics-can-build-public-power-over-tech-data-society",
     "image_url": "",
-    "price_label": "Free; RSVP required",
+    "price_label": "Free; ticketed registration",
     "price_min": 0,
     "price_max": 0,
     "currency": "USD",
-    "fit_reason": "A free costume-night museum party with a DJ, performances and late gallery access - Halloween nightlife without a cover.",
-    "verified_at": "2026-10-19T00:45:00-04:00",
+    "fit_reason": "A free expert panel on AI and public power - his AI interest, in person at the flagship Midtown library.",
+    "verified_at": "2026-10-26T00:08:00-04:00",
+    "top_pick": true,
+    "occurrences": [
+      {
+        "source_key": "nypl-ai-civics-data-society-2026-11-06",
+        "starts_at": "2026-11-06T18:00:00-05:00",
+        "ends_at": "2026-11-06T19:00:00-05:00"
+      }
+    ]
+  },
+  {
+    "title": "Queer Book Club: Martyr!",
+    "description": "Morrisania Library's monthly book club centering LGBTQIA+ titles and authors. November's pick is Kaveh Akbar's novel Martyr!, with limited copies available for checkout at the branch.",
+    "category": "queer",
+    "tags": [
+      "LGBTQ+",
+      "book club",
+      "books",
+      "library",
+      "Bronx"
+    ],
+    "venue": "Morrisania Library, Adult Space",
+    "neighborhood": "Morrisania",
+    "borough": "Bronx",
+    "official_url": "https://www.nypl.org/events/programs/2026/11/24/queer-book-club-martyr",
+    "image_url": "",
+    "currency": "USD",
+    "fit_reason": "A monthly LGBTQIA+ book club - queer community and fiction in one library evening.",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "top_pick": false,
     "occurrences": [
       {
-        "source_key": "momi-halloween-party-2026-10-24",
-        "starts_at": "2026-10-24T19:30:00-04:00"
+        "source_key": "nypl-morrisania-queer-book-club-martyr-2026-11-24",
+        "starts_at": "2026-11-24T17:00:00-05:00",
+        "ends_at": "2026-11-24T18:00:00-05:00"
+      }
+    ]
+  },
+  {
+    "title": "Literary Lovers Open Book Club",
+    "description": "An adult open book club at Parkchester Library with reading sprints and book discussions. All genres welcome: bring your own book or pick one from the collection.",
+    "category": "books",
+    "tags": [
+      "books",
+      "book club",
+      "reading",
+      "library",
+      "Bronx"
+    ],
+    "venue": "Parkchester Library",
+    "neighborhood": "Parkchester",
+    "borough": "Bronx",
+    "official_url": "https://www.nypl.org/events/programs/2026/11/05/literary-lovers-open-book-club",
+    "image_url": "",
+    "price_label": "Online registration",
+    "currency": "USD",
+    "fit_reason": "A low-key, any-genre reading meetup - bring whatever sci-fi or fiction he is in the middle of.",
+    "verified_at": "2026-10-26T00:08:00-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "nypl-parkchester-literary-lovers-2026-11-05",
+        "starts_at": "2026-11-05T17:00:00-05:00",
+        "ends_at": "2026-11-05T18:30:00-05:00"
+      }
+    ]
+  },
+  {
+    "title": "Mott Haven November Book Club: Bury Our Bones in the Midnight Soil",
+    "description": "Mott Haven Library's monthly adult book club, meeting over snacks and coffee. November and December cover V.E. Schwab's Bury Our Bones in the Midnight Soil; read the first half for this meeting. No registration required.",
+    "category": "books",
+    "tags": [
+      "books",
+      "book club",
+      "fantasy",
+      "library",
+      "Bronx"
+    ],
+    "venue": "Mott Haven Library",
+    "neighborhood": "Mott Haven",
+    "borough": "Bronx",
+    "official_url": "https://www.nypl.org/events/programs/2026/11/02/november-book-club",
+    "image_url": "",
+    "price_label": "No registration required",
+    "currency": "USD",
+    "fit_reason": "A drop-in adult book club reading a V.E. Schwab fantasy novel - fiction, a short trip from Harlem.",
+    "verified_at": "2026-10-26T00:08:00-04:00",
+    "top_pick": false,
+    "occurrences": [
+      {
+        "source_key": "nypl-mott-haven-november-book-club-2026-11-02",
+        "starts_at": "2026-11-02T17:30:00-05:00",
+        "ends_at": "2026-11-02T18:30:00-05:00"
       }
     ]
   }

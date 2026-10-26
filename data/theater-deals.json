@@ -6,7 +6,7 @@
     "neighborhood": "Hell’s Kitchen",
     "official_url": "https://playbill.com/discount/playbill-discount-for-parcel-from-america",
     "image_url": "https://assets.playbill.com/playbill-covers/PfA-649-x-1024-px.jpg",
-    "verified_at": "2026-10-10T16:24:46-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -28,7 +28,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-six-the-musical",
     "image_url": "https://assets.playbill.com/playbill-covers/Six-Playbill-2025-02-01_Web.jpg",
-    "verified_at": "2026-10-10T16:24:46-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -50,7 +50,7 @@
     "neighborhood": "Hell's Kitchen",
     "official_url": "https://playbill.com/discount/playbill-discount-for-the-play-that-goes-wrong",
     "image_url": "https://assets.playbill.com/playbill-covers/The-Play-That-Goes-Wrong-Playbill-2019-04-01_Web_2025-10-21-173634_mpyf.jpg",
-    "verified_at": "2026-10-10T16:24:46-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -72,7 +72,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-the-fantasticks",
     "image_url": "https://assets.playbill.com/playbill-covers/The-Fantasticks-Playbill-2026-10-22_Web.jpg",
-    "verified_at": "2026-10-10T16:24:46-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -93,8 +93,19 @@
     "venue": "Ambassador Theatre",
     "neighborhood": "Theater District",
     "official_url": "https://www.broadwaybox.com/shows/chicago/",
-    "verified_at": "2026-10-12T00:05:14-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "offers": [
+      {
+        "source_key": "broadwaybox-discount-code",
+        "label": "Select-performance discount code",
+        "price_label": "$95 (reg. $105-$165) before fees",
+        "price_min": 95,
+        "price_max": 95,
+        "fees_included": null,
+        "restrictions": "Code CHBBX22; select performances through Nov 22, 2026; best pricing and availability Saturday and Sunday matinees; fulfilled by Telecharge.",
+        "eligible_until": "2026-11-22T23:59:59-05:00",
+        "official_url": "https://www.broadwaybox.com/shows/chicago/"
+      },
       {
         "source_key": "broadwaybox-general-rush",
         "label": "General rush",
@@ -123,7 +134,7 @@
     "venue": "Westside Theatre Upstairs",
     "neighborhood": "Hell's Kitchen",
     "official_url": "https://www.broadwaybox.com/shows/little-shop-of-horrors/",
-    "verified_at": "2026-10-12T00:05:14-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "offers": [
       {
         "source_key": "broadwaybox-digital-lottery",
@@ -143,7 +154,7 @@
     "venue": "The Ruby Theatre",
     "neighborhood": "Theater District",
     "official_url": "https://www.broadwaybox.com/shows/drunk-dracula/",
-    "verified_at": "2026-10-12T00:05:14-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "offers": [
       {
         "source_key": "broadwaybox-discount-code",
@@ -165,7 +176,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-the-ask",
     "image_url": "https://assets.playbill.com/playbill-covers/The-Ask-Key-Art-1.jpg",
-    "verified_at": "2026-10-10T16:24:46-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
@@ -187,7 +198,7 @@
     "neighborhood": "Theater District",
     "official_url": "https://playbill.com/discount/playbill-discount-for-the-visitors",
     "image_url": "https://assets.playbill.com/playbill-covers/The-Visitors-Playbill-2026-10-21_Web.jpg",
-    "verified_at": "2026-10-10T16:24:46-04:00",
+    "verified_at": "2026-10-26T00:08:00-04:00",
     "offers": [
       {
         "source_key": "playbill-discount-code",
